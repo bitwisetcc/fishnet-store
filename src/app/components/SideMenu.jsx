@@ -5,10 +5,9 @@ import { Fragment, useState } from "react";
 
 const SideMenuItems = {
   Home: "/",
-  Store: "/store",
-  Search: "/search",
-  Account: "/account",
-  Cart: "/cart",
+  Produtos: "/products",
+  Perfil: "/profile",
+  Carrinho: "/cart",
 };
 
 export default function SideMenu() {
@@ -21,10 +20,7 @@ export default function SideMenu() {
           {({ open, close }) => (
             <>
               <div className="relative flex h-full">
-                <Popover.Button
-                  data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-stone-300"
-                >
+                <Popover.Button className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-stone-300">
                   Menu
                 </Popover.Button>
               </div>
@@ -39,8 +35,8 @@ export default function SideMenu() {
                 leaveFrom="opacity-100 backdrop-blur-2xl"
                 leaveTo="opacity-0"
               >
-                <Popover.Panel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-30 inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
-                  <div className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-rounded justify-between p-6">
+                <Popover.Panel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-30 inset-x-0 text-sm m-2 backdrop-blur-2xl">
+                  <div className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-lg justify-between p-6">
                     <div className="flex justify-end" id="xmark">
                       <button onClick={close}>X</button>
                     </div>
@@ -50,7 +46,7 @@ export default function SideMenu() {
                           <li key={name}>
                             <a
                               href={href}
-                              className="text-3xl leading-10 hover:text-stone-600"
+                              className="text-3xl leading-10 text-stone-300 hover:text-stone-400 transition-colors duration-300"
                               onClick={close}
                             >
                               {name}
@@ -62,8 +58,8 @@ export default function SideMenu() {
                     <div className="flex flex-col gap-y-6">
                       <div
                         className="flex justify-between"
-                        onMouseEnter={toggleState.open}
-                        onMouseLeave={toggleState.close}
+                        onMouseEnter={() => toggleState(true)}
+                        onMouseLeave={() => toggleState(false)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

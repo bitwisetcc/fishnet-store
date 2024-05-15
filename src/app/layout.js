@@ -12,9 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}>
+      <body className={inter.className + " h-screen"}>
         <Nav />
-        <main className="relative">{children}</main>
+        <main className="relative h-full">{children}</main>
       </body>
     </html>
   );
