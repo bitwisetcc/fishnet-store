@@ -1,28 +1,21 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import ProductPreview from "../components/ProductPreview";
+import { useEffect } from "react";
+
+import { listAllProducts } from "../lib/query";
 
 export default () => {
-  const prods = {
-    items: [
-      {
-        id: 1,
-        name: "Nemo",
-        price: 200.5,
-        img: "https://images.unsplash.com/photo-1535591273668-578e31182c4f?q=80&w=2070",
-      },
-      {
-        id: 2,
-        name: "Dori",
-        price: 300.0,
-        img: "https://images.unsplash.com/photo-1602345726771-5abd3172481f?q=80&w=2070",
-      },
-      {
-        id: 3,
-        name: "Bruce",
-        price: 3000.0,
-        img: "https://images.unsplash.com/photo-1531959870249-9f9b729efcf4?q=80&w=2042",
-      },
-    ],
-  };
+  let prods = listAllProducts();
+
+  const params = useParams();
+  useEffect(() => {
+    console.log(params);
+  }, []);
+
+  if (params.sort == "az") prods.sort((a, b) => a.name < b.name);
+  if (params.sort == "za") prods.sort((a, b) => a.name > b.name);
 
   return (
     <article className="flex h-full bg-slate-50">
@@ -46,7 +39,7 @@ export default () => {
           Produtos
         </h1>
         <section className="grid grid-cols-4 gap-4 bg-slate-50">
-          {prods.items.map((prod) => (
+          {prods.map((prod) => (
             <ProductPreview product={prod} />
           ))}
         </section>

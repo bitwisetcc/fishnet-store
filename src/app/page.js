@@ -1,28 +1,8 @@
 import ProductRail from "./components/ProductRail";
+import { listAllProducts } from "./lib/query";
 
 export default () => {
-  const prods = {
-    items: [
-      {
-        id: 1,
-        name: "Nemo",
-        price: 200.50,
-        img: "https://images.unsplash.com/photo-1535591273668-578e31182c4f?q=80&w=2070",
-      },
-      {
-        id: 2,
-        name: "Dori",
-        price: 300.00,
-        img: "https://images.unsplash.com/photo-1602345726771-5abd3172481f?q=80&w=2070",
-      },
-      {
-        id: 3,
-        name: "Bruce",
-        price: 3000.00,
-        img: "https://images.unsplash.com/photo-1531959870249-9f9b729efcf4?q=80&w=2042",
-      },
-    ],
-  };
+  let prods = listAllProducts();
 
   return (
     <>
@@ -65,7 +45,7 @@ export default () => {
           </a>
         </div>
       </div>
-      <ProductRail products={prods.items} />
+      <ProductRail products={prods} />
     </>
   );
 }

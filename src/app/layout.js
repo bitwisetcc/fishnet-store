@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       <body className={inter.className + " h-screen"}>
         <Nav />
-        <main className="relative h-full">{children}</main>
+        <main className="relative h-full bg-slate-50 text-stone-800">{children}</main>
       </body>
     </html>
   );
