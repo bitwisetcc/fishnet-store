@@ -39,3 +39,11 @@ button.secondary {
 button.large {
   @apply bg-stone-800 shadow-sm
 }
+
+ul.product-description li * {
+  @apply text-stone-800 text-sm;
+}
+
+ul.product-description li h4 {
+  @apply text-stone-900 font-semibold;
+}
