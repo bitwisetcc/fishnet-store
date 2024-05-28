@@ -5,6 +5,7 @@ import { getProductById, listAllProducts } from "../../lib/query";
 import { useParams } from "next/navigation";
 import Options from "@/app/components/Options";
 import { useState } from "react";
+import { price } from "@/app/lib/format";
 
 export default () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ export default () => {
         alt={prod.name}
         width={500}
         height={500}
-        className="rounded-lg shadow-lg shadow-stone-300 border border-stone-500"
+        className="rounded-lg shadow-lg shadow-stone-300 border border-stone-500 mt-2"
       />
       <ProductOptions prod={prod} />
     </section>
@@ -42,6 +43,14 @@ function ProductOverview({ prod }) {
           <h4>Nome científico</h4>
           <p>{prod.scientificName}</p>
         </li>
+        <li>
+          <h4>Alimentação</h4>
+          <p>{prod.feeding}</p>
+        </li>
+        <li>
+          <h4>Tamanho de tanque</h4>
+          <p>{prod.tank_size}</p>
+        </li>
       </ul>
     </article>
   );
@@ -50,12 +59,23 @@ function ProductOverview({ prod }) {
 function ProductOptions({ prod }) {
   let sizeState = useState(prod.sizes[0]);
   return (
-    <article>
+    <article className="mt-10">
       <h2 className="text-2xl mb-3">Opções</h2>
       <div>
         <h3 className="text-lg mb-2">Tamanho</h3>
         <Options options={prod.sizes} state={sizeState} />
       </div>
+
+      <hr className="my-6" />
+
+      <h2 className="text-xl font-semibold mb-5">{price(prod.price)}</h2>
+
+      <button
+        disabled={prod.quantity <= 0}
+        className="secondary text-stone-100 bg-slate-900"
+      >
+        Adicionar ao carrinho
+      </button>
     </article>
   );
 }
