@@ -1,17 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { getProductById, listAllProducts } from "../../lib/query";
+import { getProductById } from "../../lib/query";
 import { useParams } from "next/navigation";
 import Options from "@/app/components/Options";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { price } from "@/app/lib/format";
 
 export default () => {
   const { id } = useParams();
   const prod = getProductById(id);
 
-  const prods = listAllProducts();
+  useEffect(() => {
+    if (window.localStorage.getItem("cart") === null) {
+      window.localStorage.setItem("cart", JSON.stringify([]));
+    }
+  }, []);
+
   return prod === undefined ? (
     <h1>Produto não encontrado</h1>
   ) : (

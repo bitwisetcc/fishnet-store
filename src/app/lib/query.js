@@ -53,3 +53,21 @@ export function listAllProducts() {
 export function getProductById(id) {
   return prods.items.find((prod) => prod.id == id);
 }
+
+export function addToCart(id, quantity) {
+  let cart = JSON.parse(window.localStorage.getItem("cart"));
+  let prod = prods.items.find((prod) => prod.id == id);
+  let item = cart.find((item) => item.id == id);
+
+  if (item) {
+    item.quantity += quantity;
+  } else {
+    cart.push({ ...prod, quantity });
+  }
+
+  window.localStorage.setItem("cart", JSON.stringify(cart));
+} 
+
+export function listCartItems() {
+  return JSON.parse(window.localStorage.getItem("cart"));
+}

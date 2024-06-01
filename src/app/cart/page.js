@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { listAllProducts } from "../lib/query";
 import { price } from "../lib/format";
+import { useEffect } from "react";
 
 export default () => {
   let prods = listAllProducts();
@@ -14,6 +17,12 @@ export default () => {
 };
 
 function CartItems({ prods }) {
+  useEffect(() => {
+    if (window.localStorage.getItem("cart") === null) {
+      window.localStorage.setItem("cart", JSON.stringify([]));
+    }
+  }, []);
+
   return (
     <article className="flex-[3]">
       <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
@@ -96,6 +105,7 @@ function Summary({ total }) {
       <span>Total:</span>
       <span>{price(total + shipping + tax)}</span>
     </div>
+    <button className="action"><a href="/checkout">Finalizar compra</a></button>
   </article>
   )
 }

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { price } from "../lib/format";
 
 export default async function ProductPreview({ product }) {
   return (
@@ -14,7 +15,7 @@ export default async function ProductPreview({ product }) {
         <div className="flex mt-4 justify-between">
           <p className="text-stone-700">{product.name}</p>
           <div className="flex items-center gap-x-2">
-            <p className="text-stone-500">{product.price}</p>
+            <p className="text-stone-500">{price(product.price)}</p>
           </div>
         </div>
       </div>
