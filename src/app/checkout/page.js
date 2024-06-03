@@ -4,11 +4,12 @@ import CartSummary from "../components/CartSummary";
 import FancyInput from "../components/FancyInput";
 import PrivacyPolicy from "../components/PrivacyPolicy";
 import ProductLine from "../components/ProductLine";
-import { listAllProducts } from "../lib/query";
-import { useState } from "react";
+import { listFullCartItems } from "../lib/cart";
+import { useEffect, useState } from "react";
 
 export default () => {
-  const cart = listAllProducts();
+  const cart = listFullCartItems();
+  useEffect(() => {console.log(cart[0])}, []);
   return (
     <section className="flex gap-16 p-8 pr-12 flex-col md:flex-row">
       <Checkout />

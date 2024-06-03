@@ -6,16 +6,12 @@ import { useParams } from "next/navigation";
 import Options from "@/app/components/Options";
 import { useEffect, useState } from "react";
 import { price } from "@/app/lib/format";
+import { ensureCart } from "@/app/lib/cart";
+import Counter from "@/app/components/Counter";
 
 export default () => {
   const { id } = useParams();
   const prod = getProductById(id);
-
-  useEffect(() => {
-    if (window.localStorage.getItem("cart") === null) {
-      window.localStorage.setItem("cart", JSON.stringify([]));
-    }
-  }, []);
 
   return prod === undefined ? (
     <h1>Produto não encontrado</h1>
@@ -28,6 +24,7 @@ export default () => {
         width={500}
         height={500}
         className="rounded-lg shadow-lg shadow-stone-300 border border-stone-500 mt-2"
+        priority
       />
       <ProductOptions prod={prod} />
     </section>
@@ -63,6 +60,22 @@ function ProductOverview({ prod }) {
 
 function ProductOptions({ prod }) {
   let sizeState = useState(prod.sizes[0]);
+  let [size] = sizeState;
+  let quantityState = useState(1);
+  let [quantity] = quantityState;
+
+  let [done, setDone] = useState(false);
+
+  function addToCart() {
+    ensureCart();
+    const cart = JSON.parse(window.localStorage.getItem("cart"));
+    cart.push({ id: prod.id, size, quantity });
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+
+    console.log(JSON.parse(localStorage.getItem("cart")));
+    setDone(true);
+  }
+
   return (
     <article className="mt-10">
       <h2 className="text-2xl mb-3">Opções</h2>
@@ -71,16 +84,38 @@ function ProductOptions({ prod }) {
         <Options options={prod.sizes} state={sizeState} />
       </div>
 
-      <hr className="my-6" />
+      <hr className="my-5" />
 
-      <h2 className="text-xl font-semibold mb-5">{price(prod.price)}</h2>
+      <div className="flex justify-between items-center">
+        <span className="text-xl font-semibold">{price(prod.price)}</span>
+        <Counter state={quantityState} max={prod.quantity} />
+      </div>
+
+      <hr className="my-5" />
 
       <button
-        disabled={prod.quantity <= 0}
-        className="secondary text-stone-100 bg-slate-900"
+        disabled={prod.quantity <= 0 || done}
+        className="secondary text-stone-100 bg-slate-900 inline"
+        onClick={addToCart}
       >
         Adicionar ao carrinho
       </button>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className={`size-6 ml-3 inline transition-opacity duration-500 ${
+          done ? "opacity-80" : "opacity-0"
+        }`}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+        />
+      </svg>
     </article>
   );
 }

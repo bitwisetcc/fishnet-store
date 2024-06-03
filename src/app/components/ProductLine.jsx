@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { price } from "../lib/format";
 
-export default async function ProductPreview({ product }) {
+export default function ProductPreview({ product }) {
   return (
     <div className="relative flex justify-between items-center text-sm">
       <a href={`/products/${product.id}`} className="group">
