@@ -5,7 +5,7 @@ import Nav from "./components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "FinFusion Store",
+  title: "FishNet Store",
   description: "Sistema de gerenciamento de vendas de peixes ornamentais.",
 };
 

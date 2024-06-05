@@ -13,7 +13,7 @@ export default async function Nav() {
 
           <div className="flex items-center h-full">
             <a href="/" className="text-sm hover:text-stone-800 uppercase">
-              FinFusion Store
+              FishNet Store
             </a>
           </div>
 

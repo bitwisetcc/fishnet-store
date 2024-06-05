@@ -1,4 +1,4 @@
-# FinFusion (FishNet???)
+# FishNet
 
 Parte do projeto integrador de 2024 na Fatec Antonio Russo. Um sistema de vendas de peixes ornamentais. Este repositório é dedicado à interface do cliente.
 

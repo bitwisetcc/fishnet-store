@@ -10,11 +10,11 @@ export default ({ open, setOpen }) => {
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-zinc-800/50">
         <DialogPanel className="max-w-lg space-y-4 border bg-slate-200 text-slate-800 p-12 h-[calc(100vh-4rem)] overflow-y-scroll">
           <DialogTitle className="font-bold">
-            Termos de Privacidade da FinFusion
+            Termos de Privacidade da FishNet
           </DialogTitle>
 
           <p>
-            A FinFusion ("FinFusion", "nós", "noso" ou "nosso") está
+            A FishNet ("FishNet", "nós", "noso" ou "nosso") está
             comprometida em proteger a privacidade de seus usuários ("usuário",
             "você" ou "seu"). Esta Política de Privacidade ("Política") descreve
             como coletamos, usamos e divulgamos suas informações pessoais quando
@@ -161,7 +161,7 @@ export default ({ open, setOpen }) => {
             </li>
             <li>
               Exclusão: Você pode solicitar que excluamos suas informações
-              pessoais entrando em contato conosco em https://www.finfusion.com
+              pessoais entrando em contato conosco em social.finfusion@gmail.com
             </li>
             <li>
               Descadastramento: Você pode cancelar o recebimento de e-mails de

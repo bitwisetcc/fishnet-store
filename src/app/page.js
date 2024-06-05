@@ -10,7 +10,7 @@ export default () => {
         <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center sm:p-32 gap-6">
           <span>
             <h1 className="text-3xl leading-10 text-stone-800 font-normal">
-              FinFusion Store
+              FishNet Store
             </h1>
             <h2 className="text-3xl leading-10 text-stone-700 font-normal">
               Powered by Next.js
@@ -23,7 +23,7 @@ export default () => {
             <button className="secondary">
               View on GitHub
               <a
-                href="https://github.com/bitwisetcc/finfusion-store"
+                href="https://github.com/bitwisetcc/fishnet-store"
                 target="_blank"
               >
                 <svg
