@@ -68,11 +68,7 @@ function ProductOptions({ prod }) {
 
   function addToCart() {
     ensureCart();
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    cart.push({ id: prod.id, size, quantity });
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    console.log(JSON.parse(localStorage.getItem("cart")));
+    addToCart(prod.id, size, quantity);
     setDone(true);
   }
 

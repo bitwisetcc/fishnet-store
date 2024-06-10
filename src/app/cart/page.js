@@ -5,7 +5,7 @@ import { getProductById } from "../lib/query";
 import { price } from "../lib/format";
 import { useEffect } from "react";
 import CartSummary from "../components/CartSummary";
-import { listFullCartItems, removeFromCart } from "../lib/cart";
+import { ensureCart, listFullCartItems, removeFromCart } from "../lib/cart";
 
 export default () => {
   let prods = listFullCartItems();
@@ -19,11 +19,7 @@ export default () => {
 };
 
 function CartItems({ prods }) {
-  useEffect(() => {
-    if (localStorage.getItem("cart") === null) {
-      localStorage.setItem("cart", JSON.stringify([]));
-    }
-  }, []);
+  useEffect(() => ensureCart, []);
 
   return (
     <article className="flex-[3]">
