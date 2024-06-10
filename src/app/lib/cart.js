@@ -29,16 +29,16 @@ const defaults = [
 export function ensureCart() {
   if (no_local) return;
 
-  if (localStorage.getItem("cart") === null) {
-    localStorage.setItem("cart", JSON.stringify([]));
-  }
+  // if (localStorage.getItem("cart") === null) {
+  //   localStorage.setItem("cart", JSON.stringify([]));
+  // }
 }
 
 export function listCartItems() {
   if (no_local) return defaults;
 
-  ensureCart();
-  return JSON.parse(localStorage.getItem("cart"));
+  // ensureCart();
+  // return JSON.parse(localStorage.getItem("cart"));
 }
 
 export function listFullCartItems() {
@@ -53,16 +53,16 @@ export function listFullCartItems() {
 export function removeFromCart(id) {
   if (no_local) return;
 
-  const cart = listCartItems();
-  const newCart = cart.filter((item) => item.id !== id);
-  localStorage.setItem("cart", JSON.stringify(newCart));
+  // const cart = listCartItems();
+  // const newCart = cart.filter((item) => item.id !== id);
+  // localStorage.setItem("cart", JSON.stringify(newCart));
 }
 
 export function addToCart(id, size, quantity) {
   if (no_local) return;
 
-  ensureCart();
-  const cart = listCartItems();
-  cart.push({ id, size, quantity });
-  localStorage.setItem("cart", JSON.stringify(cart));
+  // ensureCart();
+  // const cart = listCartItems();
+  // cart.push({ id, size, quantity });
+  // localStorage.setItem("cart", JSON.stringify(cart));
 }
