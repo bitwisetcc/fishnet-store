@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import Options from "@/app/components/Options";
 import { useEffect, useState } from "react";
 import { price } from "@/app/lib/format";
-import { ensureCart } from "@/app/lib/cart";
+import { addCartItem, ensureCart } from "@/app/lib/cart";
 import Counter from "@/app/components/Counter";
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
   return prod === undefined ? (
     <h1>Produto não encontrado</h1>
   ) : (
-    <section className="grid grid-cols-3 place-content-center h-full gap-16 p-8 pr-12">
+    <section className="lg:grid grid-cols-3 place-content-center h-full gap-16 p-8 pr-12">
       <ProductOverview prod={prod} />
       <Image
         src={prod.img}
@@ -68,7 +68,7 @@ function ProductOptions({ prod }) {
 
   function addToCart() {
     ensureCart();
-    addToCart(prod.id, size, quantity);
+    addCartItem(prod.id, size, quantity);
     setDone(true);
   }
 
@@ -91,7 +91,7 @@ function ProductOptions({ prod }) {
 
       <button
         disabled={prod.quantity <= 0 || done}
-        className="secondary text-stone-100 bg-slate-900 inline"
+        className="secondary text-stone-100 bg-slate-900 inline w-full"
         onClick={addToCart}
       >
         Adicionar ao carrinho

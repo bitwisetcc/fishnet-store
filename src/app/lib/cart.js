@@ -59,7 +59,7 @@ export function removeFromCart(id) {
   // localStorage.setItem("cart", JSON.stringify(newCart));
 }
 
-export function addToCart(id, size, quantity) {
+export function addCartItem(id, size, quantity) {
   if (no_local) return;
 
   // ensureCart();
