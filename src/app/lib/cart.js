@@ -1,14 +1,14 @@
 import { getProductById } from "./query";
 
 export function ensureCart() {
-  if (window.localStorage.getItem("cart") === null) {
-    window.localStorage.setItem("cart", JSON.stringify([]));
+  if (localStorage.getItem("cart") === null) {
+    localStorage.setItem("cart", JSON.stringify([]));
   }
 }
 
 export function listCartItems() {
   ensureCart();
-  return JSON.parse(window.localStorage.getItem("cart"));
+  return JSON.parse(localStorage.getItem("cart"));
 }
 
 export function listFullCartItems() {
@@ -23,5 +23,5 @@ export function listFullCartItems() {
 export function removeFromCart(id) {
   const cart = listCartItems();
   const newCart = cart.filter((item) => item.id !== id);
-  window.localStorage.setItem("cart", JSON.stringify(newCart));
+  localStorage.setItem("cart", JSON.stringify(newCart));
 }

@@ -20,8 +20,8 @@ export default () => {
 
 function CartItems({ prods }) {
   useEffect(() => {
-    if (window.localStorage.getItem("cart") === null) {
-      window.localStorage.setItem("cart", JSON.stringify([]));
+    if (localStorage.getItem("cart") === null) {
+      localStorage.setItem("cart", JSON.stringify([]));
     }
   }, []);
 
@@ -52,7 +52,7 @@ function CartItem({ cartItem }) {
 
   function remove() {
     removeFromCart(cartItem.id);
-    window.location.reload();
+    location.reload();
   }
 
   return (
@@ -71,7 +71,10 @@ function CartItem({ cartItem }) {
       </td>
       <td>
         <div className="flex items-center gap-2">
-          <button className="text-stone-600 hover:text-stone-700" onClick={remove}>
+          <button
+            className="text-stone-600 hover:text-stone-700"
+            onClick={remove}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
