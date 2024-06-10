@@ -1,6 +1,6 @@
-import { getProductById } from "./query";
+import { getProductById, listAllProducts } from "./query";
 
-const no_local = false;
+const no_local = true;
 
 const defaults = [
   {
@@ -43,6 +43,7 @@ export function listCartItems() {
 
 export function listFullCartItems() {
   ensureCart();
+  // return listAllProducts();
   const cart = listCartItems();
   return cart.map((item) => {
     const product = getProductById(item.id);
