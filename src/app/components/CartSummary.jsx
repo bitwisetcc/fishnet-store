@@ -4,7 +4,7 @@ export default ({ total, follow }) => {
   const shipping = 5;
   const tax = 0;
   return (
-    <article className="flex-1 mt-5">
+    <article className="flex-1 mt-10">
       <h2 className="text-2xl pb-5">Resumo</h2>
       <ul className="border-y border-y-stone-300 py-8 flex flex-col gap-6">
         <li className="flex justify-between text-sm">

@@ -11,7 +11,7 @@ export default () => {
   let prods = listFullCartItems();
 
   return (
-    <section className="flex gap-16 p-8 pr-12">
+    <section className="lg:flex gap-16 p-5 lg:mr-16">
       <CartItems prods={prods} />
       <CartSummary total={prods.reduce((a, b) => a + b.price, 0)} follow />
     </section>
@@ -22,15 +22,14 @@ function CartItems({ prods }) {
   useEffect(() => ensureCart, []);
 
   return (
-    <article className="flex-[3]">
+    <article className="flex-[3] mx-16 mt-10">
       <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
       <table className="table-auto w-full text-left">
         <thead>
-          <tr className="text-base border-b border-b-stone-300">
+          <tr className="text-sm border-b border-b-stone-300 md:text-base">
             <th className="h-10">Produto</th>
             <th>Quantidade</th>
-            <th>Preço</th>
-            <th>Total</th>
+            <th className="text-end">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -53,20 +52,20 @@ function CartItem({ cartItem }) {
 
   return (
     <tr className="max-h-10 border-b border-b-stone-300 hover:bg-slate-100 transition-colors duration-300">
-      <td className="flex gap-4 py-3 items-center ">
+      <td className="flex gap-3 md:gap-4 py-3 items-center">
         <Image
           src={prod.img}
           alt={prod.name}
           width={150}
           height={100}
-          className="rounded-lg shadow-sm"
+          className="rounded-lg shadow-sm w-20 md:w-36"
         />
         <div>
-          <h3>{prod.name}</h3>
+          <h3 className="text-sm md:text-base">{prod.name}</h3>
         </div>
       </td>
       <td>
-        <div className="flex items-center gap-2">
+        <div className="ml-3 md:m-0 flex items-center gap-2 w-max">
           <button
             className="text-stone-600 hover:text-stone-700"
             onClick={remove}
@@ -89,7 +88,7 @@ function CartItem({ cartItem }) {
           <span>{cartItem.quantity}</span>
         </div>
       </td>
-      <td>{price(prod.price)}</td>
+      {/* <td>{price(prod.price)}</td> */}
       <td>{price(prod.price * prod.quantity)}</td>
     </tr>
   );
