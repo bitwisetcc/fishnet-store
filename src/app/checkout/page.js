@@ -11,9 +11,9 @@ export default () => {
   const cart = listFullCartItems();
   useEffect(() => {console.log(cart[0])}, []);
   return (
-    <section className="flex gap-16 p-8 pr-12 flex-col md:flex-row">
+    <section className="md:flex gap-16 p-8 pr-12">
       <Checkout />
-      <section className="flex-1">
+      <section className="flex-1 hidden md:block">
         <CartSummary total={cart.reduce((a, b) => a + b.price, 0)} />
         <ul>
           {cart.map((product) => (
@@ -30,11 +30,11 @@ export default () => {
 function Checkout() {
   const [privacyOpen, setPrivacyOpen] = useState(false);
   return (
-    <section className="flex-[2] pr-4 lg:pr-24">
+    <section className="flex-[2] pr-4 lg:px-24">
       <h1 className="text-2xl font-semibold mb-8">Finalização</h1>
       <article>
         <h2 className="text-xl mb-4">Endereço de entrega</h2>
-        <form className="grid grid-cols-2 gap-4">
+        <form className="grid md:grid-cols-2 gap-4">
           <FancyInput label="Nome" required />
           <FancyInput label="Sobrenome" required />
           <FancyInput label="Endereço" required />
@@ -86,8 +86,8 @@ function Checkout() {
 
         <button className="action">Finalizar compra</button>
 
-        <p className="mt-3 text-sm">
-          Ao finalizar a compra você concorda com a nossa
+        <p className="mt-3 text-xs md:text-sm">
+          Ao finalizar a compra você concorda com a nossa{" "}
           <button
             className="text-cyan-700"
             onClick={() => setPrivacyOpen(true)}

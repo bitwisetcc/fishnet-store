@@ -22,7 +22,7 @@ function CartItems({ prods }) {
   useEffect(() => ensureCart, []);
 
   return (
-    <article className="flex-[3] mx-16 mt-10">
+    <article className="flex-[3] md:mx-16 mt-10">
       <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
       <table className="table-auto w-full text-left">
         <thead>
