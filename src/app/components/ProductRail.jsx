@@ -23,7 +23,7 @@ export default ({ products }) => {
           </svg>
         </a>
       </div>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-24 sm:gap-y-36">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8">
         {products.map((product) => (
           <li key={product.id}>
             <ProductPreview product={product} />

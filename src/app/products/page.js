@@ -18,8 +18,8 @@ export default () => {
   if (params.sort == "za") prods.sort((a, b) => a.name > b.name);
 
   return (
-    <article className="flex h-full bg-slate-50">
-      <aside className="border border-stone-200 p-7 px-16 text-stone-600 min-w-fit">
+    <article className="md:flex h-full bg-slate-50 p-7 md:p-12 lg:p-16">
+      <aside className="md:border-b-0 md:border-r md:pr-12 border-stone-200 text-stone-600 min-w-fit">
         <ul className="text-sm flex flex-col gap-3">
           <li>
             <a href="/products?sort=last" className="text-stone-900">
@@ -34,11 +34,12 @@ export default () => {
           </li>
         </ul>
       </aside>
-      <div className="p-14">
+      <hr className="md:hidden border-stone-200 my-5" />
+      <div className="md:pl-10">
         <h1 className="col-span-4 text-3xl text-stone-800 font-semibold mb-5">
           Produtos
         </h1>
-        <section className="grid grid-cols-4 gap-4 bg-slate-50">
+        <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-slate-50">
           {prods.map((prod) => (
             <ProductPreview product={prod} />
           ))}

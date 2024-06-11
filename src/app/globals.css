@@ -33,7 +33,11 @@ body {
 }
 
 button.secondary {
-  @apply transition-colors relative inline-flex w-[calc(100%-3rem)] lg:w-fit items-center justify-center overflow-hidden rounded-md border border-stone-300 outline-none shadow-md bg-slate-100 text-stone-800 disabled:bg-slate-200 hover:bg-slate-200 active:bg-slate-200 focus:bg-slate-200 text-sm gap-x-1.5 px-3 py-1.5;
+  @apply transition-colors relative inline-flex lg:w-fit items-center justify-center overflow-hidden rounded-md border border-stone-300 outline-none shadow-md bg-slate-100 text-stone-800 disabled:bg-slate-200 hover:bg-slate-200 active:bg-slate-200 focus:bg-slate-200 text-sm gap-x-1.5 px-3 py-1.5;
+}
+
+button.secondary.buy {
+  @apply w-[calc(100%-3rem)];
 }
 
 button.large {

@@ -91,7 +91,7 @@ function ProductOptions({ prod }) {
 
       <button
         disabled={prod.quantity <= 0 || done}
-        className="secondary text-stone-100 bg-slate-900 inline w-full"
+        className="secondary buy text-stone-100 bg-slate-900 inline w-full"
         onClick={addToCart}
       >
         Adicionar ao carrinho

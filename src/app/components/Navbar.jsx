@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SideMenu from "./SideMenu";
 
 export default async function Nav() {
@@ -12,8 +13,9 @@ export default async function Nav() {
           </div>
 
           <div className="flex items-center h-full">
-            <a href="/" className="text-sm hover:text-stone-800 uppercase">
+            <a href="/" className="text-sm hover:text-stone-800 uppercase flex items-center">
               FishNet Store
+              <Image src="/static/logo.jpg" alt="Logo da FishNet" width={40} height={40} className="rounded-full" />
             </a>
           </div>
 
