@@ -89,6 +89,16 @@ function ProductOptions({ prod }) {
 
       <hr className="my-5" />
 
+      {prod.warning && (
+        <>
+          <div className="bg-yellow-100 border border-yellow-500 p-4 rounded-lg">
+            <p className="text-yellow-700 font-semibold mb-2">Atenção</p>
+            <p className="text-yellow-600">{prod.warning}</p>
+          </div>
+          <hr className="my-5" />
+        </>
+      )}
+
       <button
         disabled={prod.quantity <= 0 || done}
         className="secondary buy text-stone-100 bg-slate-900 inline w-full"
