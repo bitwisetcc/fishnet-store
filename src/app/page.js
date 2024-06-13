@@ -37,7 +37,15 @@ export default () => {
           </a>
         </div>
       </div>
-      <ProductRail products={prods} />
+
+      <article className="px-10">
+        <ProductRail products={prods.slice(0, 3)} title="Produtos recentes" link />
+        <hr />
+        <ProductRail
+          products={prods.slice(3, 6)}
+          title="Sugerido com base na suas buscas ✨"
+        />
+      </article>
     </>
   );
 };
