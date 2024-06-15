@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <>
-      <div className="h-80 md:h-[75vh] w-full border-b relative bg-slate-100">
+      <div className="h-80 md:h-96 w-full border-b relative bg-slate-100">
         <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center sm:p-32 gap-6">
           <span>
             <h1 className="text-2xl md:text-3xl leading-10 text-stone-800">

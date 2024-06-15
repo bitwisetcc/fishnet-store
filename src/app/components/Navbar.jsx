@@ -3,7 +3,7 @@ import SideMenu from "./SideMenu";
 
 export default async function Nav() {
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group text-stone-600">
+    <div className="sticky top-0 inset-x-0 z-50 group text-slate-700">
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-stone-300 px-5">
         <nav className="content-container text-sm text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
@@ -13,7 +13,7 @@ export default async function Nav() {
           </div>
 
           <div className="flex items-center h-full">
-            <a href="/" className="text-sm hover:text-stone-800 uppercase flex items-center">
+            <a href="/" className="text-sm font-semibold hover:text-stone-800 uppercase flex items-center">
               FishNet Store
               <Image src="/static/logo.jpg" alt="Logo da FishNet" width={40} height={40} className="rounded-full" />
             </a>
