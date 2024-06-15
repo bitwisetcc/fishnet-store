@@ -7,7 +7,6 @@ const SideMenuItems = {
   Home: "/",
   Produtos: "/products",
   Perfil: "/profile",
-  // Carrinho: "/cart",
 };
 
 export default function SideMenu() {
@@ -50,8 +49,8 @@ export default function SideMenu() {
               >
                 <Popover.Panel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-30 inset-x-0 text-sm m-2 backdrop-blur-2xl">
                   <div className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-lg justify-between p-6">
-                    <div className="flex justify-end" id="xmark">
-                      <button onClick={close}>X</button>
+                    <div className="flex justify-end text-2xl text-stone-300" id="xmark">
+                      <button onClick={close}>×</button>
                     </div>
                     <ul className="flex flex-col gap-6 items-start justify-start">
                       <li>

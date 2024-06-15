@@ -39,7 +39,11 @@ export default () => {
       </div>
 
       <article className="px-10">
-        <ProductRail products={prods.slice(0, 3)} title="Produtos recentes" link />
+        <ProductRail
+          products={prods.slice(0, 3)}
+          title="Produtos recentes"
+          link
+        />
         <hr />
         <ProductRail
           products={prods.slice(3, 6)}
