@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { price } from "../lib/format";
+import { price } from "@/app/lib/format";
 
 export default function ProductPreview({ product }) {
   return (

@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { getProductById } from "../../lib/query";
+import { getProductById } from "../../../lib/query";
 import { useParams } from "next/navigation";
-import Options from "@/app/components/Options";
-import { useEffect, useState } from "react";
+import Options from "../../components/Options";
+import { useState } from "react";
 import { price } from "@/app/lib/format";
 import { addCartItem, ensureCart } from "@/app/lib/cart";
-import Counter from "@/app/components/Counter";
+import Counter from "../../components/Counter";
 
 export default () => {
   const { id } = useParams();

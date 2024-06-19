@@ -1,5 +1,5 @@
 import ProductRail from "./components/ProductRail";
-import { listAllProducts } from "./lib/query";
+import { listAllProducts } from "../lib/query";
 
 export default () => {
   let prods = listAllProducts();

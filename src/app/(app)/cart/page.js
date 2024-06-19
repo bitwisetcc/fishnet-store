@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { getProductById } from "../lib/query";
-import { price } from "../lib/format";
+import { getProductById } from "@/app/lib/query";
+import { price } from "@/app/lib/format";
 import { useEffect } from "react";
 import CartSummary from "../components/CartSummary";
-import { ensureCart, listFullCartItems, removeFromCart } from "../lib/cart";
+import { ensureCart, listFullCartItems, removeFromCart  } from "@/app/lib/cart";
 
 export default () => {
   let prods = listFullCartItems();

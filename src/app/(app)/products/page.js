@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import ProductPreview from "../components/ProductPreview";
 import { useEffect } from "react";
 
-import { listAllProducts } from "../lib/query";
+import { listAllProducts } from "../../lib/query";
 
 export default () => {
   let prods = listAllProducts();

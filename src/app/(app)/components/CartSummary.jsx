@@ -1,4 +1,4 @@
-import { price } from "../lib/format";
+import { price } from "@/app/lib/format";
 
 export default ({ total, follow }) => {
   const shipping = 5;

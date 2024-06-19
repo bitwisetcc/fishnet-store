@@ -4,12 +4,14 @@ import CartSummary from "../components/CartSummary";
 import FancyInput from "../components/FancyInput";
 import PrivacyPolicy from "../components/PrivacyPolicy";
 import ProductLine from "../components/ProductLine";
-import { listFullCartItems } from "../lib/cart";
+import { listFullCartItems } from "@/app/lib/cart";
 import { useEffect, useState } from "react";
 
 export default () => {
   const cart = listFullCartItems();
-  useEffect(() => {console.log(cart[0])}, []);
+  useEffect(() => {
+    console.log(cart[0]);
+  }, []);
   return (
     <section className="md:flex gap-16 p-8 pr-12">
       <Checkout />
@@ -72,7 +74,7 @@ function Checkout() {
         </ul>
       </form>
       <hr className="my-6" />
-      <form>
+      <form action="/">
         <h2 className="text-xl mb-4">Pagamento</h2>
         <ul className="radio-list">
           <FancyRadio label="Cartão de débito" name="payment" value="debito" />
