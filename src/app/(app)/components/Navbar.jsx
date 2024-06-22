@@ -28,6 +28,25 @@ export default async function Nav() {
                 Account
               </a>
             </div>
+            <div className="relative">
+              <input type="text" name="search" placeholder="Busca..."
+              className="border border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:border-stone-500"
+              />
+                  <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 text-stone-500"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+                />
+              </svg>
+          </div>
             <a href="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
