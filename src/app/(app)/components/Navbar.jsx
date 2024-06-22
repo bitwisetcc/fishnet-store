@@ -4,7 +4,7 @@ import { Rubik } from "next/font/google";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-export default async function Nav() {
+export default function Nav() {
   return (
     <div className={"sticky top-0 inset-x-0 z-50 group text-slate-700 " + rubik.className}>
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-stone-300 px-5">
