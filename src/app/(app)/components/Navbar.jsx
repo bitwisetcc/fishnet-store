@@ -6,7 +6,11 @@ const rubik = Rubik({ subsets: ["latin"] });
 
 export default function Nav() {
   return (
-    <div className={"sticky top-0 inset-x-0 z-50 group text-slate-700 " + rubik.className}>
+    <div
+      className={
+        "sticky top-0 inset-x-0 z-50 group text-slate-700 " + rubik.className
+      }
+    >
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-stone-300 px-5">
         <nav className="content-container text-sm text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
@@ -16,9 +20,18 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center h-full">
-            <a href="/" className="text-sm font-semibold hover:text-stone-800 uppercase flex items-center">
+            <a
+              href="/"
+              className="text-sm font-semibold hover:text-stone-800 uppercase flex items-center"
+            >
               FishNet Store
-              <Image src="/static/logo.jpg" alt="Logo da FishNet" width={40} height={40} className="rounded-full" />
+              <Image
+                src="/static/logo.jpg"
+                alt="Logo da FishNet"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
             </a>
           </div>
 
@@ -29,10 +42,13 @@ export default function Nav() {
               </a>
             </div>
             <div className="relative">
-              <input type="text" name="search" placeholder="Busca..."
-              className="border border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:border-stone-500"
+              <input
+                type="text"
+                name="search"
+                placeholder="Busca..."
+                className="border border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:border-stone-500"
               />
-                  <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -46,7 +62,7 @@ export default function Nav() {
                   d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
                 />
               </svg>
-          </div>
+            </div>
             <a href="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

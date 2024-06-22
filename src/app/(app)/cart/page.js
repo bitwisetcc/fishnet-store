@@ -1,14 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { getProductById } from "@/app/lib/query";
+import { getProductById, listAllProducts } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CartSummary from "../components/CartSummary";
-import { ensureCart, listFullCartItems, removeFromCart  } from "@/app/lib/cart";
+// import { ensureCart, removeFromCart } from "@/app/lib/cart";
 
 export default () => {
-  let prods = listFullCartItems();
+  let [prods, setProds] = useState([]);
+
+  useEffect(() => {
+    listAllProducts()
+      .then((data) =>
+        data.filter(
+          (prod) =>
+            prod.id == "665df63d63d2f7c6c73305f9" ||
+            prod.id == "665df63d63d2f7c6c7330629" ||
+            prod.id == "665df63d63d2f7c6c7330619"
+        )
+      )
+      .then((res) => setProds(res));
+  }, []);
 
   return (
     <section className="lg:flex gap-16 p-5 lg:mr-16">
@@ -19,11 +32,12 @@ export default () => {
 };
 
 function CartItems({ prods }) {
-  useEffect(() => ensureCart, []);
+  // useEffect(() => ensureCart, []);
 
   return (
     <article className="flex-[3] md:mx-16 mt-10">
       <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
+      <p>{prods?.[0]?.name}</p>
       <table className="table-auto w-full text-left">
         <thead>
           <tr className="text-sm border-b border-b-stone-300 md:text-base">
@@ -34,7 +48,7 @@ function CartItems({ prods }) {
         </thead>
         <tbody>
           {prods.map((prod) => (
-            <CartItem cartItem={prod} key={prod.id} />
+            <CartItem prod={prod} key={prod.id} />
           ))}
         </tbody>
       </table>
@@ -42,11 +56,11 @@ function CartItems({ prods }) {
   );
 }
 
-function CartItem({ cartItem }) {
-  const prod = getProductById(cartItem.id);
+function CartItem({ prod }) {
+  // const prod = getProductById(cartItem.id);
 
   function remove() {
-    removeFromCart(cartItem.id);
+    // removeFromCart(cartItem.id);
     location.reload();
   }
 
@@ -85,7 +99,7 @@ function CartItem({ cartItem }) {
               />
             </svg>
           </button>
-          <span>{cartItem.quantity}</span>
+          <span>{prod.quantity}</span>
         </div>
       </td>
       {/* <td>{price(prod.price)}</td> */}

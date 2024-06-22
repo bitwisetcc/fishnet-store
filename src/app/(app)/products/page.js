@@ -11,7 +11,7 @@ export default () => {
 
   const params = useParams();
   useEffect(() => {
-    listAllProducts().then((data) => (setProds(data)));
+    listAllProducts().then(setProds);
   }, []);
 
   if (params.sort == "az") prods.sort((a, b) => a.name < b.name);

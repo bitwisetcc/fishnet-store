@@ -1,16 +1,16 @@
 function parseProduct(prod) {
   return {
-    id: prod._id,
-    name: prod.name_species.match(/^[^\(]+/)[0],
-    scientificName: prod.name_species.match(/(?<=\()[^\(|"]+/)[0],
+    id: String(prod._id),
+    name: String(prod.name_species.match(/^[^\(]+/)[0]),
+    scientificName: String(prod.name_species.match(/(?<=\()[^\(|"]+/)[0]),
     quantity: 10,
-    feeding: prod.feeding,
-    tankSize: prod.tank_size,
+    feeding: String(prod.feeding),
+    tankSize: String(prod.tank_size),
     sizes: prod.size.match(/(\d*\scm)+/g) || ["Tamanho não informado"],
     category: "Peixe",
     price: Number(prod.price.replace("$", "").trim()),
     img: "https:" + prod.picture,
-    description: prod.description,
+    description: String(prod.description),
   };
 }
 
