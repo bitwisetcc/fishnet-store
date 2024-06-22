@@ -3,8 +3,6 @@
 import ProductRail from "./components/ProductRail";
 import { listAllProducts } from "../lib/query";
 import { useEffect, useState } from "react";
-import "../slideshow.css";
-import "../lib/swipecontent";
 
 export default () => {
   let [prods, setProds] = useState([]);

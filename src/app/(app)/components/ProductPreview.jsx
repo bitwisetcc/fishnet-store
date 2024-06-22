@@ -9,7 +9,7 @@ export default function ProductPreview({ product }) {
           src={product.img}
           height={100}
           width={200}
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: "100%", height: "160px" }}
           className="rounded-lg group-hover:shadow-lg transition-shadow duration-300 ease-in-out border border-stone-300 object-cover"
           alt={`Imagem de ${product.name}`}
         />
