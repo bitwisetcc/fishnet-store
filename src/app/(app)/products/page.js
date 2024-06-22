@@ -2,16 +2,16 @@
 
 import { useParams } from "next/navigation";
 import ProductPreview from "../components/ProductPreview";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { listAllProducts } from "../../lib/query";
 
 export default () => {
-  let prods = listAllProducts();
+  let [prods, setProds] = useState([]);
 
   const params = useParams();
   useEffect(() => {
-    console.log(params);
+    listAllProducts().then((data) => (setProds(data)));
   }, []);
 
   if (params.sort == "az") prods.sort((a, b) => a.name < b.name);
@@ -41,7 +41,7 @@ export default () => {
         </h1>
         <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-slate-50">
           {prods.map((prod) => (
-            <ProductPreview product={prod} />
+            <ProductPreview product={prod} key={prod.id} />
           ))}
         </section>
       </div>

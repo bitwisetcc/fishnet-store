@@ -4,14 +4,18 @@ import Image from "next/image";
 import { getProductById } from "../../../lib/query";
 import { useParams } from "next/navigation";
 import Options from "../../components/Options";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { price } from "@/app/lib/format";
 import { addCartItem, ensureCart } from "@/app/lib/cart";
 import Counter from "../../components/Counter";
 
 export default () => {
   const { id } = useParams();
-  const prod = getProductById(id);
+  const [prod, setProd] = useState(undefined);
+
+  useEffect(() => {
+    getProductById(id).then((p) => setProd(p));
+  }, []);
 
   return prod === undefined ? (
     <h1>Produto não encontrado</h1>
@@ -43,7 +47,7 @@ function ProductOverview({ prod }) {
       <ul className="product-description">
         <li>
           <h4>Nome científico</h4>
-          <p>{prod.scientificName}</p>
+          <p className="italic">{prod.scientificName}</p>
         </li>
         <li>
           <h4>Alimentação</h4>
@@ -51,7 +55,7 @@ function ProductOverview({ prod }) {
         </li>
         <li>
           <h4>Tamanho de tanque</h4>
-          <p>{prod.tank_size}</p>
+          <p>{prod.tankSize}</p>
         </li>
       </ul>
     </article>
