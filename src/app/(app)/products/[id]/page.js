@@ -12,14 +12,29 @@ import Counter from "../../components/Counter";
 export default () => {
   const { id } = useParams();
   const [prod, setProd] = useState(undefined);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    getProductById(id).then((p) => setProd(p));
-  }, []);
+    getProductById(id)
+      .then((p) => {
+        setProd(p);
+      })
+      .finally(() => {
+        setLoading(false); 
+      });
+  }, [id]); 
 
-  return prod === undefined ? (
-    <h1>Produto não encontrado</h1>
-  ) : (
+  
+  if (loading) {
+    return <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-200"><img src="/static/loading.gif" width={40} height={40} alt="Loading..." /></div>;
+  }
+
+  
+  if (!prod) {
+    return <h1>Produto não encontrado</h1>;
+  }
+
+  return (
     <section className="lg:grid grid-cols-3 place-content-center h-full gap-16 p-8 pr-12">
       <ProductOverview prod={prod} />
       <Image
@@ -74,6 +89,7 @@ function ProductOptions({ prod }) {
     ensureCart();
     addCartItem(prod.id, size, quantity);
     setDone(true);
+    console.log(addCartItem);
   }
 
   return (
@@ -102,14 +118,14 @@ function ProductOptions({ prod }) {
           <hr className="my-5" />
         </>
       )}
-
       <button
         disabled={prod.quantity <= 0 || done}
         className="secondary buy text-stone-100 bg-slate-900 inline w-full"
-        onClick={addToCart}
+        onClick={addToCart}   
       >
         Adicionar ao carrinho
       </button>
+      <a href="/cart">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -125,7 +141,7 @@ function ProductOptions({ prod }) {
           strokeLinejoin="round"
           d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
         />
-      </svg>
+      </svg></a>
     </article>
   );
 }

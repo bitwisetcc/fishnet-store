@@ -14,13 +14,16 @@ function parseProduct(prod) {
   };
 }
 
-export async function listAllProducts() {
+export async function listAllProducts(page = 1, limit = 10) {
   try {
     const data = await fetch("https://fishnet-api.onrender.com/fishs");
     const prods = await data.json();
-    return prods.slice(10, 40).map(parseProduct);
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    return prods.slice(start, end).map(parseProduct);
   } catch (error) {
     console.error(error.message);
+    return [];
   }
 }
 
@@ -29,3 +32,4 @@ export async function getProductById(id) {
   const prod = await data.json();
   return parseProduct(prod);
 }
+

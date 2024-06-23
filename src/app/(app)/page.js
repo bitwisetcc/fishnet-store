@@ -4,6 +4,7 @@ import ProductRail from "./components/ProductRail";
 import { listAllProducts } from "../lib/query";
 import { useEffect, useState } from "react";
 
+
 export default () => {
   let [prods, setProds] = useState([]);
 
