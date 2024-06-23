@@ -3,7 +3,7 @@ function parseProduct(prod) {
     id: String(prod._id),
     name: String(prod.name_species.match(/^[^\(]+/)[0]),
     scientificName: String(prod.name_species.match(/(?<=\()[^\(|"]+/)[0]),
-    quantity: 10,
+    quantity: 5,
     feeding: String(prod.feeding),
     tankSize: String(prod.tank_size),
     sizes: prod.size.match(/(\d*\scm)+/g) || ["Tamanho não informado"],

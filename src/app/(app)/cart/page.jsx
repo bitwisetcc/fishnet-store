@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { getProductById, listAllProducts } from "@/app/lib/query";
+import { listAllProducts } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
 import { useEffect, useState } from "react";
 import CartSummary from "../components/CartSummary";
@@ -9,6 +9,7 @@ import CartSummary from "../components/CartSummary";
 
 export default () => {
   let [prods, setProds] = useState([]);
+  let [total, setTotal] = useState(0);
 
   useEffect(() => {
     listAllProducts()
@@ -20,13 +21,16 @@ export default () => {
             prod.id == "665df63d63d2f7c6c7330619"
         )
       )
-      .then((res) => setProds(res));
+      .then((res) => {
+        setProds(res);
+        setTotal(res.reduce((a, b) => a + b.price * b.quantity, 0));
+      });
   }, []);
 
   return (
     <section className="lg:flex gap-16 p-5 lg:mr-16">
       <CartItems prods={prods} />
-      <CartSummary total={prods.reduce((a, b) => a + b.price, 0)} follow />
+      <CartSummary total={total} follow />
     </section>
   );
 };
@@ -37,7 +41,6 @@ function CartItems({ prods }) {
   return (
     <article className="flex-[3] md:mx-16 mt-10">
       <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
-      <p>{prods?.[0]?.name}</p>
       <table className="table-auto w-full text-left">
         <thead>
           <tr className="text-sm border-b border-b-stone-300 md:text-base">
@@ -73,6 +76,7 @@ function CartItem({ prod }) {
           width={150}
           height={100}
           className="rounded-lg shadow-sm w-20 md:w-36"
+          priority
         />
         <div>
           <h3 className="text-sm md:text-base">{prod.name}</h3>
