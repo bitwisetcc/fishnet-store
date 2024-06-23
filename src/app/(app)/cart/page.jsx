@@ -146,6 +146,7 @@ function CartItem({ cartItem, onRemove }) {
           width={150}
           height={100}
           className="rounded-lg shadow-sm w-20 md:w-36"
+          priority
         />
         <div>
           <h3 className="text-sm md:text-base">{cartItem.name}</h3>
@@ -172,7 +173,7 @@ function CartItem({ cartItem, onRemove }) {
               />
             </svg>
           </button>
-          <span>{cartItem.quantity}</span>
+          <span>{prod.quantity}</span>
         </div>
       </td>
       <td className="text-end">{price(cartItem.price * cartItem.quantity)}</td>

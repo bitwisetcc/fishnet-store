@@ -1,17 +1,31 @@
 "use client";
 
+// import { listFullCa  rtItems } from "@/app/lib/cart";
+import { useEffect, useState } from "react";
 import CartSummary from "../components/CartSummary";
 import FancyInput from "../components/FancyInput";
 import PrivacyPolicy from "../components/PrivacyPolicy";
 import ProductLine from "../components/ProductLine";
-import { listFullCartItems } from "@/app/lib/cart";
-import { useEffect, useState } from "react";
+import { listAllProducts } from "@/app/lib/query";
 
 export default () => {
-  const cart = listFullCartItems();
+  const [cart, setCart] = useState([]);
+
   useEffect(() => {
-    console.log(cart[0]);
+    listAllProducts()
+      .then((data) =>
+        data.filter(
+          (prod) =>
+            prod.id == "665df63d63d2f7c6c73305f9" ||
+            prod.id == "665df63d63d2f7c6c7330629" ||
+            prod.id == "665df63d63d2f7c6c7330619"
+        )
+      )
+      .then((res) => {
+        setCart(res);
+      });
   }, []);
+
   return (
     <section className="md:flex gap-16 p-8 pr-12">
       <Checkout />
