@@ -4,7 +4,12 @@ import Image from "next/image";
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 import CartSummary from "../components/CartSummary";
-import { ensureCart, removeFromCart, addCartItem, listCartItems } from "@/app/lib/cart";
+import {
+  ensureCart,
+  removeFromCart,
+  addCartItem,
+  listCartItems,
+} from "@/app/lib/cart";
 
 export default function CartPage() {
   const [prods, setProds] = useState([]);
@@ -20,7 +25,7 @@ export default function CartPage() {
           cartItems.map(async (item) => {
             const product = await getProductById(item.id);
             return { ...product, ...item };
-          })
+          }),
         );
         setProds(fullCartItems || []); // Ensure fullCartItems is an array
       } catch (error) {
@@ -50,7 +55,7 @@ export default function CartPage() {
           return prevProds.map((item) =>
             item.id === productId
               ? { ...item, quantity: item.quantity + quantity }
-              : item
+              : item,
           );
         } else {
           return [...prevProds, productToAdd];
@@ -62,16 +67,18 @@ export default function CartPage() {
 
   const handleRemoveFromCart = (productId) => {
     setProds((prevProds) => {
-      const updatedProds = prevProds.map((item) => {
-        if (item.id === productId) {
-          if (item.quantity > 1) {
-            return { ...item, quantity: item.quantity - 1 };
-          } else {
-            return null; // Flag for removal
+      const updatedProds = prevProds
+        .map((item) => {
+          if (item.id === productId) {
+            if (item.quantity > 1) {
+              return { ...item, quantity: item.quantity - 1 };
+            } else {
+              return null; // Flag for removal
+            }
           }
-        }
-        return item;
-      }).filter(Boolean); // Remove flagged items
+          return item;
+        })
+        .filter(Boolean); // Remove flagged items
       if (!updatedProds.find((item) => item.id === productId)) {
         removeFromCart(productId);
       }
@@ -88,12 +95,18 @@ export default function CartPage() {
   };
 
   const calculateTotal = () => {
-    return prods ? prods.reduce((total, prod) => total + prod.price * prod.quantity, 0) : 0;
+    return prods
+      ? prods.reduce((total, prod) => total + prod.price * prod.quantity, 0)
+      : 0;
   };
 
   return (
-    <section className="lg:flex gap-16 p-5 lg:mr-16">
-      <CartItems prods={prods} onRemove={handleRemoveFromCart} onConfirmRemove={handleConfirmRemove} />
+    <section className="gap-16 p-5 lg:mr-16 lg:flex">
+      <CartItems
+        prods={prods}
+        onRemove={handleRemoveFromCart}
+        onConfirmRemove={handleConfirmRemove}
+      />
       <CartSummary subtotal={calculateTotal()} follow />
     </section>
   );
@@ -101,14 +114,14 @@ export default function CartPage() {
 
 function CartItems({ prods, onRemove, onConfirmRemove }) {
   return (
-    <article className="flex-[3] md:mx-16 mt-10">
-      <h1 className="text-2xl font-semibold mb-8">Carrinho</h1>
+    <article className="mt-10 flex-[3] md:mx-16">
+      <h1 className="mb-8 text-2xl font-semibold">Carrinho</h1>
       {prods.length === 0 ? (
         <p>O carrinho está vazio.</p>
       ) : (
-        <table className="table-auto w-full text-left">
+        <table className="w-full table-auto text-left">
           <thead>
-            <tr className="text-sm border-b border-b-stone-300 md:text-base">
+            <tr className="border-b border-b-stone-300 text-sm md:text-base">
               <th className="h-10">Produto</th>
               <th>Quantidade</th>
               <th className="text-end">Total</th>
@@ -138,21 +151,21 @@ function CartItems({ prods, onRemove, onConfirmRemove }) {
 
 function CartItem({ cartItem, onRemove }) {
   return (
-    <tr className="max-h-10 border-b border-b-stone-300 hover:bg-slate-100 transition-colors duration-300">
-      <td className="flex gap-3 md:gap-4 py-3 items-center">
+    <tr className="max-h-10 border-b border-b-stone-300 transition-colors duration-300 hover:bg-slate-100">
+      <td className="flex items-center gap-3 py-3 md:gap-4">
         <Image
           src={cartItem.img}
           alt={cartItem.name}
           width={150}
           height={100}
-          className="rounded-lg shadow-sm w-20 md:w-36"
+          className="w-20 rounded-lg shadow-sm md:w-36"
         />
         <div>
           <h3 className="text-sm md:text-base">{cartItem.name}</h3>
         </div>
       </td>
       <td>
-        <div className="ml-3 md:m-0 flex items-center gap-2 w-max">
+        <div className="ml-3 flex w-max items-center gap-2 md:m-0">
           <button
             className="text-stone-600 hover:text-stone-700"
             onClick={() => onRemove(cartItem.id)}
@@ -163,7 +176,7 @@ function CartItem({ cartItem, onRemove }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"

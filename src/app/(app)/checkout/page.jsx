@@ -18,8 +18,8 @@ export default () => {
           (prod) =>
             prod.id == "665df63d63d2f7c6c73305f9" ||
             prod.id == "665df63d63d2f7c6c7330629" ||
-            prod.id == "665df63d63d2f7c6c7330619"
-        )
+            prod.id == "665df63d63d2f7c6c7330619",
+        ),
       )
       .then((res) => {
         setCart(res);
@@ -27,9 +27,9 @@ export default () => {
   }, []);
 
   return (
-    <section className="md:flex gap-16 p-8 pr-12">
+    <section className="gap-16 p-8 pr-12 md:flex">
       <Checkout />
-      <section className="flex-1 hidden md:block">
+      <section className="hidden flex-1 md:block">
         <CartSummary total={cart.reduce((a, b) => a + b.price, 0)} />
         <ul>
           {cart.map((product) => (
@@ -47,10 +47,10 @@ function Checkout() {
   const [privacyOpen, setPrivacyOpen] = useState(false);
   return (
     <section className="flex-[2] pr-4 lg:px-24">
-      <h1 className="text-2xl font-semibold mb-8">Finalização</h1>
+      <h1 className="mb-8 text-2xl font-semibold">Finalização</h1>
       <article>
-        <h2 className="text-xl mb-4">Endereço de entrega</h2>
-        <form className="grid md:grid-cols-2 gap-4">
+        <h2 className="mb-4 text-xl">Endereço de entrega</h2>
+        <form className="grid gap-4 md:grid-cols-2">
           <FancyInput label="Nome" required />
           <FancyInput label="Sobrenome" required />
           <FancyInput label="Endereço" required />
@@ -63,7 +63,7 @@ function Checkout() {
       </article>
       <hr className="my-6" />
       <form>
-        <h2 className="text-xl mb-4">Entrega</h2>
+        <h2 className="mb-4 text-xl">Entrega</h2>
         <ul className="radio-list">
           <FancyRadio
             label="Correios (5-7 dias úteis)"
@@ -89,7 +89,7 @@ function Checkout() {
       </form>
       <hr className="my-6" />
       <form action="/">
-        <h2 className="text-xl mb-4">Pagamento</h2>
+        <h2 className="mb-4 text-xl">Pagamento</h2>
         <ul className="radio-list">
           <FancyRadio label="Cartão de débito" name="payment" value="debito" />
           <FancyRadio
@@ -120,7 +120,7 @@ function Checkout() {
 
 function FancyRadio({ label, name, value }) {
   return (
-    <li className="has-[:checked]:bg-sky-100 has-[:checked]:border-cyan-600">
+    <li className="has-[:checked]:border-cyan-600 has-[:checked]:bg-sky-100">
       <input type="radio" name={name} value={value} required />
       <label>{label}</label>
     </li>

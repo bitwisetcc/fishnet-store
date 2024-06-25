@@ -4,7 +4,6 @@ import ProductRail from "./components/ProductRail";
 import { listAllProducts } from "../lib/query";
 import { useEffect, useState } from "react";
 
-
 export default () => {
   let [prods, setProds] = useState([]);
 
@@ -40,10 +39,10 @@ function SlideShow() {
     <p class="sr-only">Slideshow Items</p>
 
     <ul class="slideshow__content">
-      <li class="slideshow__item bg-white js-slideshow__item" style="">
-        <div class="w-[calc(100%_-_2.5rem)] lg:w-[calc(100%_-_4rem)] mx-auto max-w-3xl">
+      <li class="slideshow__item js-slideshow__item bg-white" style="">
+        <div class="mx-auto w-[calc(100%_-_2.5rem)] max-w-3xl lg:w-[calc(100%_-_4rem)]">
           <div>
-            <h1 class="text-4xl mb-2">Slide Number One</h1>
+            <h1 class="mb-2 text-4xl">Slide Number One</h1>
             <p class="text-lg">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
               quo dolores dolor reprehenderit iure laborum atque.
@@ -52,8 +51,8 @@ function SlideShow() {
         </div>
       </li>
 
-      <li class="slideshow__item bg-white js-slideshow__item" style="">
-        <div class="w-[calc(100%_-_2.5rem)] lg:w-[calc(100%_-_4rem)] mx-auto max-w-3xl">
+      <li class="slideshow__item js-slideshow__item bg-white" style="">
+        <div class="mx-auto w-[calc(100%_-_2.5rem)] max-w-3xl lg:w-[calc(100%_-_4rem)]">
           <div>
             <p class="text-lg">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla
@@ -62,10 +61,10 @@ function SlideShow() {
             </p>
           </div>
           <div class="mt-5 lg:mt-8">
-            <div class="flex flex-wrap justify-center items-center gap-3 lg:gap-5">
+            <div class="flex flex-wrap items-center justify-center gap-3 lg:gap-5">
               <a
                 href="#0"
-                class="bg-indigo-700 text-white shadow-md text-[1em] px-4 py-2 rounded-md relative inline-flex justify-center items-center whitespace-nowrap cursor-pointer no-underline leading-tight transition-all duration-200 hover:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700"
+                class="relative inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md bg-indigo-700 px-4 py-2 text-[1em] leading-tight text-white no-underline shadow-md transition-all duration-200 hover:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700"
               >
                 Download
               </a>
@@ -77,8 +76,8 @@ function SlideShow() {
         </div>
       </li>
 
-      <li class="slideshow__item bg-white js-slideshow__item" style="">
-        <div class="w-[calc(100%_-_2.5rem)] lg:w-[calc(100%_-_4rem)] mx-auto max-w-3xl">
+      <li class="slideshow__item js-slideshow__item bg-white" style="">
+        <div class="mx-auto w-[calc(100%_-_2.5rem)] max-w-3xl lg:w-[calc(100%_-_4rem)]">
           <div class="text-center">
             <h1 class="text-4xl">Slide Four</h1>
           </div>
@@ -90,7 +89,7 @@ function SlideShow() {
       <li class="slideshow__control js-slideshow__control">
         <button class="slideshow__btn js-tab-focus">
           <svg
-            class="icon h-[1.6em] w-[1.6em] inline-block text-inherit fill-current leading-none shrink-0"
+            class="icon inline-block h-[1.6em] w-[1.6em] shrink-0 fill-current leading-none text-inherit"
             viewBox="0 0 32 32"
           >
             <title>Show previous slide</title>
@@ -102,7 +101,7 @@ function SlideShow() {
       <li class="slideshow__control js-slideshow__control">
         <button class="slideshow__btn js-tab-focus">
           <svg
-            class="icon h-[1.6em] w-[1.6em] inline-block text-inherit fill-current leading-none shrink-0"
+            class="icon inline-block h-[1.6em] w-[1.6em] shrink-0 fill-current leading-none text-inherit"
             viewBox="0 0 32 32"
           >
             <title>Show next slide</title>

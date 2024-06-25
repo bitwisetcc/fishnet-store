@@ -32,4 +32,3 @@ export async function getProductById(id) {
   const prod = await data.json();
   return parseProduct(prod);
 }
-
