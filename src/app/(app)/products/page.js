@@ -62,6 +62,21 @@ export default () => {
           <li>
             <a href="/products?sort=za">Alfabético Z-A</a>
           </li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Água doce</li>
+          <li>Água salgada</li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Herbívoro</li>
+          <li>Onívoro</li>
+          <li>Carnívoro</li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Ofertas</li>
         </ul>
       </aside>
       <hr className="my-5 border-stone-200 md:hidden" />

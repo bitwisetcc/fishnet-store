@@ -125,6 +125,19 @@ function ProductOptions({ prod }) {
           <hr className="my-5" />
         </>
       )}
+      {(prod.feeding.toLowerCase().includes("omnivorous") ||
+        prod.feeding.toLowerCase().includes("carnivorous")) && (
+        <>
+          <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
+            <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
+            <p className="text-yellow-600">
+              Pode ser predador de espécies menores. De preferência, separe um
+              aquário reservado.
+            </p>
+          </div>
+          <hr className="my-5" />
+        </>
+      )}
       <button
         disabled={prod.quantity <= 0 || done}
         className="secondary buy inline w-full bg-slate-900 text-stone-100"
