@@ -8,21 +8,21 @@ export default function Nav() {
   return (
     <div
       className={
-        "sticky top-0 inset-x-0 z-50 group text-slate-700 " + rubik.className
+        "group sticky inset-x-0 top-0 z-50 text-slate-700 " + rubik.className
       }
     >
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-stone-300 px-5">
-        <nav className="content-container text-sm text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
+      <header className="relative mx-auto h-16 border-b border-stone-300 bg-white px-5 duration-200">
+        <nav className="content-container text-ui-fg-subtle text-small-regular flex h-full w-full items-center justify-between text-sm">
+          <div className="flex h-full flex-1 basis-0 items-center">
             <div className="h-full">
               <SideMenu />
             </div>
           </div>
 
-          <div className="flex items-center h-full">
+          <div className="hidden h-full items-center md:flex">
             <a
               href="/"
-              className="text-sm font-semibold hover:text-stone-800 uppercase flex items-center"
+              className="flex items-center text-sm font-semibold uppercase hover:text-stone-800"
             >
               FishNet Store
               <Image
@@ -35,8 +35,8 @@ export default function Nav() {
             </a>
           </div>
 
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
+          <div className="flex h-full flex-1 basis-0 items-center justify-end gap-x-6">
+            <div className="small:flex hidden h-full items-center gap-x-6">
               <a className="hover:text-stone-800" href="/account">
                 Account
               </a>
@@ -46,7 +46,7 @@ export default function Nav() {
                 type="text"
                 name="search"
                 placeholder="Busca..."
-                className="border border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:border-stone-500"
+                className="rounded-md border border-stone-600 px-3 py-2 focus:border-stone-500 focus:outline-none"
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ export default function Nav() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 text-stone-500"
+                className="absolute right-3 top-1/2 h-5 -translate-y-1/2 transform text-stone-500"
               >
                 <path
                   strokeLinecap="round"

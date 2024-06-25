@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { price } from "@/app/lib/format"; 
+import { price } from "@/app/lib/format";
 
 export default function ProductPreview({ product }) {
   return (
@@ -10,11 +10,11 @@ export default function ProductPreview({ product }) {
           height={100}
           width={200}
           style={{ width: "100%", height: "160px" }}
-          className="rounded-lg group-hover:shadow-lg transition-shadow duration-300 ease-in-out border border-stone-300 object-cover"
+          className="rounded-lg border border-stone-300 object-cover transition-shadow duration-300 ease-in-out group-hover:shadow-lg"
           alt={`Imagem de ${product.name}`}
         />
-        <div className="md:flex mt-4 justify-between">
-          <p className="text-stone-700 truncate">{product.name}</p>
+        <div className="mt-4 justify-between md:flex">
+          <p className="truncate text-stone-700">{product.name}</p>
           <div className="flex items-center gap-x-2">
             <p className="text-stone-500">{price(product.price)}</p>
           </div>

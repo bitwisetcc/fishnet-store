@@ -2,13 +2,13 @@ import ProductPreview from "./ProductPreview";
 
 export default ({ products, title, link, ai }) => {
   return (
-    <div className="content-center bg-slate-50 py-8 small:py-24">
-      <div className="flex justify-between mb-8">
+    <div className="small:py-24 content-center bg-slate-50 py-8">
+      <div className="mb-8 flex justify-between">
         <p className="text-lg text-stone-700">{title}</p>
         {link && (
           <a
             href="/products"
-            className="text-indigo-400 flex items-center gap-1"
+            className="flex items-center gap-1 text-indigo-400"
           >
             Ver todos
             <svg
@@ -17,7 +17,7 @@ export default ({ products, title, link, ai }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-4 h-4 stroke-2"
+              className="h-4 w-4 stroke-2"
             >
               <path
                 strokeLinecap="round"
@@ -28,7 +28,7 @@ export default ({ products, title, link, ai }) => {
           </a>
         )}
       </div>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8">
+      <ul className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
         {products.map((product) => (
           <li key={product.id}>
             <ProductPreview product={product} />

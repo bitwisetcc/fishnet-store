@@ -11,7 +11,7 @@ export default ({ options, state }) => {
               pick === idx
                 ? "bg-slate-500 text-slate-50"
                 : "bg-slate-300 text-stone-700"
-            } px-4 py-2 rounded-lg shadow-sm`}
+            } rounded-lg px-4 py-2 shadow-sm`}
             onClick={() => setPick(idx)}
           >
             {option}

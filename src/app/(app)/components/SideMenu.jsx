@@ -14,12 +14,12 @@ export default function SideMenu() {
 
   return (
     <div className="h-full">
-      <div className="flex items-center h-full">
-        <Popover className="h-full flex">
+      <div className="flex h-full items-center">
+        <Popover className="flex h-full">
           {({ open, close }) => (
             <>
               <div className="relative flex h-full">
-                <Popover.Button className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-stone-300">
+                <Popover.Button className="relative flex h-full items-center transition-all duration-200 ease-out hover:text-stone-300 focus:outline-none">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -47,16 +47,19 @@ export default function SideMenu() {
                 leaveFrom="opacity-100 backdrop-blur-2xl"
                 leaveTo="opacity-0"
               >
-                <Popover.Panel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-30 inset-x-0 text-sm m-2 backdrop-blur-2xl">
-                  <div className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-lg justify-between p-6">
-                    <div className="flex justify-end text-2xl text-stone-300" id="xmark">
+                <Popover.Panel className="absolute inset-x-0 z-30 m-2 flex h-[calc(100vh-1rem)] w-full flex-col pr-4 text-sm backdrop-blur-2xl sm:w-1/3 sm:min-w-min sm:pr-0 2xl:w-1/4">
+                  <div className="flex h-full flex-col justify-between rounded-lg bg-[rgba(3,7,18,0.5)] p-6">
+                    <div
+                      className="flex justify-end text-2xl text-stone-300"
+                      id="xmark"
+                    >
                       <button onClick={close}>×</button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
+                    <ul className="flex flex-col items-start justify-start gap-6">
                       <li>
                         <a
                           href="/"
-                          className="text-3xl leading-10 text-stone-300 hover:text-stone-400 transition-colors duration-300 flex gap-3 items-center *:stroke-2"
+                          className="flex items-center gap-3 text-3xl leading-10 text-stone-300 transition-colors duration-300 *:stroke-2 hover:text-stone-400"
                           onClick={close}
                         >
                           <svg
@@ -79,7 +82,7 @@ export default function SideMenu() {
                       <li>
                         <a
                           href="/products"
-                          className="text-3xl leading-10 text-stone-300 hover:text-stone-400 transition-colors duration-300 flex gap-3 items-center *:stroke-2"
+                          className="flex items-center gap-3 text-3xl leading-10 text-stone-300 transition-colors duration-300 *:stroke-2 hover:text-stone-400"
                           onClick={close}
                         >
                           <svg
@@ -102,7 +105,7 @@ export default function SideMenu() {
                       <li>
                         <a
                           href="/profile"
-                          className="text-3xl leading-10 text-stone-300 hover:text-stone-400 transition-colors duration-300 flex gap-3 items-center *:stroke-2"
+                          className="flex items-center gap-3 text-3xl leading-10 text-stone-300 transition-colors duration-300 *:stroke-2 hover:text-stone-400"
                           onClick={close}
                         >
                           <svg
@@ -135,7 +138,7 @@ export default function SideMenu() {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className={`w-6 h-6 transition-transform duration-150 ${
+                          className={`h-6 w-6 transition-transform duration-150 ${
                             toggleState ? "-rotate-90" : ""
                           }`}
                         >

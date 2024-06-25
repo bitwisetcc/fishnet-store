@@ -7,18 +7,18 @@ export default ({ open, setOpen }) => {
       onClose={() => setOpen(false)}
       className="relative z-50"
     >
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-zinc-800/50">
-        <DialogPanel className="max-w-lg space-y-4 border bg-slate-200 text-slate-800 p-12 h-[calc(100vh-4rem)] overflow-y-scroll">
+      <div className="fixed inset-0 flex w-screen items-center justify-center bg-zinc-800/50 p-4">
+        <DialogPanel className="h-[calc(100vh-4rem)] max-w-lg space-y-4 overflow-y-scroll border bg-slate-200 p-12 text-slate-800">
           <DialogTitle className="font-bold">
             Termos de Privacidade da FishNet
           </DialogTitle>
 
           <p>
-            A FishNet ("FishNet", "nós", "noso" ou "nosso") está
-            comprometida em proteger a privacidade de seus usuários ("usuário",
-            "você" ou "seu"). Esta Política de Privacidade ("Política") descreve
-            como coletamos, usamos e divulgamos suas informações pessoais quando
-            você usa nosso site, aplicativo móvel ou outros serviços online
+            A FishNet ("FishNet", "nós", "noso" ou "nosso") está comprometida em
+            proteger a privacidade de seus usuários ("usuário", "você" ou
+            "seu"). Esta Política de Privacidade ("Política") descreve como
+            coletamos, usamos e divulgamos suas informações pessoais quando você
+            usa nosso site, aplicativo móvel ou outros serviços online
             (coletivamente, os "Serviços").
           </p>
 

@@ -6,19 +6,19 @@ export default ({ state, max = -1 }) => {
   const decrement = () => count > 1 && setCount(count - 1);
 
   return (
-    <div className="inline-flex w-fit items-center justify-center overflow-hidden rounded-md border border-stone-300 outline-none shadow-md bg-slate-100 text-stone-800 text-sm gap-x-1.5 px-3 pr-2 py-1.5">
+    <div className="inline-flex w-fit items-center justify-center gap-x-1.5 overflow-hidden rounded-md border border-stone-300 bg-slate-100 px-3 py-1.5 pr-2 text-sm text-stone-800 shadow-md outline-none">
       <span className="border-0 border-r border-r-stone-300 pr-2 font-mono">
         {count}
       </span>
       <button
         onClick={() => increment()}
-        className="transition-all rounded hover:bg-slate-200 active:bg-slate-200 focus:bg-slate-200 px-1 hover:shadow-sm shadow-slate-200"
+        className="rounded px-1 shadow-slate-200 transition-all hover:bg-slate-200 hover:shadow-sm focus:bg-slate-200 active:bg-slate-200"
       >
         +
       </button>
       <button
         onClick={() => decrement()}
-        className="transition-all rounded hover:bg-slate-200 active:bg-slate-200 focus:bg-slate-200 px-1 hover:shadow-sm shadow-slate-200"
+        className="rounded px-1 shadow-slate-200 transition-all hover:bg-slate-200 hover:shadow-sm focus:bg-slate-200 active:bg-slate-200"
       >
         -
       </button>
