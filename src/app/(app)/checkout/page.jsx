@@ -37,11 +37,6 @@ export default () => {
     <section className="gap-16 p-8 pr-12 md:flex">
       <Checkout />
       <section className="hidden flex-1 md:block">
-        <CartItems
-          prods={cart}
-          onRemove={handleRemoveFromCart}
-          onConfirmRemove={handleConfirmRemove}
-        />
         <CartSummary total={calculateTotal()} />
       </section>
     </section>
