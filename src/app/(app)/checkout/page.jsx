@@ -7,6 +7,7 @@ import FancyInput from "../components/FancyInput";
 import PrivacyPolicy from "../components/PrivacyPolicy";
 import ProductLine from "../components/ProductLine";
 import { listAllProducts } from "@/app/lib/query";
+import CartItems from "../components/CartItems";
 
 export default () => {
   const [cart, setCart] = useState([]);
@@ -26,18 +27,22 @@ export default () => {
       });
   }, []);
 
+  const calculateTotal = () => {
+    return cart
+      ? cart.reduce((total, prod) => total + prod.price * prod.quantity, 0)
+      : 0;
+  };
+
   return (
     <section className="gap-16 p-8 pr-12 md:flex">
       <Checkout />
       <section className="hidden flex-1 md:block">
-        <CartSummary total={cart.reduce((a, b) => a + b.price, 0)} />
-        <ul>
-          {cart.map((product) => (
-            <li key={product.id} className="mt-3">
-              <ProductLine product={product} />
-            </li>
-          ))}
-        </ul>
+        <CartItems
+          prods={cart}
+          onRemove={handleRemoveFromCart}
+          onConfirmRemove={handleConfirmRemove}
+        />
+        <CartSummary total={calculateTotal()} />
       </section>
     </section>
   );

@@ -125,8 +125,8 @@ function ProductOptions({ prod }) {
           <hr className="my-5" />
         </>
       )}
-      {(prod.feeding.toLowerCase().includes("omnivorous") ||
-        prod.feeding.toLowerCase().includes("carnivorous")) && (
+      {(prod.feeding.toLowerCase().includes("omnivor") ||
+        prod.feeding.toLowerCase().includes("carnivor")) && (
         <>
           <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
             <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
