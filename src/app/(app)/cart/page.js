@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 import CartSummary from "../components/CartSummary";
@@ -103,6 +102,7 @@ export default function CartPage() {
 
   return (
     <section className="gap-16 p-5 lg:mr-16 lg:flex">
+      <CartItems prods={prods} onConfirmRemove={handleConfirmRemove} onRemove={handleRemoveFromCart} />
       <CartSummary subtotal={calculateTotal()} follow />
     </section>
   );

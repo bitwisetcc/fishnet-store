@@ -1,3 +1,6 @@
+import { price } from "@/app/lib/format";
+import Image from "next/image";
+
 function CartItems({ prods, onRemove, onConfirmRemove }) {
   return (
     <article className="mt-10 flex-[3] md:mx-16">
