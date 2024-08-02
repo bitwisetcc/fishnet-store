@@ -84,7 +84,7 @@ export default () => {
         <h1 className="col-span-4 mb-5 text-3xl font-semibold text-stone-800">
           Produtos
         </h1>
-        <section className="grid grid-cols-1 gap-4 bg-slate-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <section className="grid grid-cols-1 gap-10 bg-slate-50 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {prods.map((prod, index) => (
             <ProductPreview product={prod} key={`${prod.id}-${index}`} />
           ))}
