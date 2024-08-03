@@ -1,15 +1,10 @@
 "use client";
 
+import CartItems from "@/app/components/CartItems";
+import CartSummary from "@/app/components/CartSummary";
+import { addCartItem, listCartItems, removeFromCart } from "@/app/lib/cart";
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
-import CartSummary from "../components/CartSummary";
-import {
-  ensureCart,
-  removeFromCart,
-  addCartItem,
-  listCartItems,
-} from "@/app/lib/cart";
-import CartItems from "../components/CartItems";
 
 export default function CartPage() {
   const [prods, setProds] = useState([]);
@@ -102,7 +97,11 @@ export default function CartPage() {
 
   return (
     <section className="gap-16 p-5 lg:mr-16 lg:flex">
-      <CartItems prods={prods} onConfirmRemove={handleConfirmRemove} onRemove={handleRemoveFromCart} />
+      <CartItems
+        prods={prods}
+        onConfirmRemove={handleConfirmRemove}
+        onRemove={handleRemoveFromCart}
+      />
       <CartSummary subtotal={calculateTotal()} follow />
     </section>
   );

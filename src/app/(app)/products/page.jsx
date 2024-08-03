@@ -1,12 +1,12 @@
-"use client"; // Marca o arquivo como um Client Component
+"use client";
 
 import { price } from "@/app/lib/format";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { listAllProducts } from "../../lib/query";
-import ProductPreview from "../components/ProductPreview";
+import ProductPreview from "@/app/components/ProductPreview";
+import { listAllProducts } from "@/app/lib/query";
 
 export default () => {
   const [prods, setProds] = useState([]);
@@ -121,8 +121,8 @@ function SideBar() {
             list="price-marks"
             min={0}
             max={500}
-            // defaultValue={250}
             step={10}
+            className="accent-golden-fish"
             onInput={(e) => setMaxPrice(e.target.value)}
           />
         </li>

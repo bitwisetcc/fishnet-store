@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import CartSummary from "../components/CartSummary";
-import FancyInput from "../components/FancyInput";
-import PrivacyPolicy from "../components/PrivacyPolicy";
 import { listAllProducts } from "@/app/lib/query";
+import { useEffect, useState } from "react";
+import CartSummary from "@/app/components/CartSummary";
+import FancyInput from "@/app/components/FancyInput";
+import PrivacyPolicy from "@/app/components/PrivacyPolicy";
 
 export default () => {
   const [cart, setCart] = useState([]);

@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import Nav from "./components/Navbar";
+import Nav from "@/app/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 

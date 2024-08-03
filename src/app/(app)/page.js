@@ -1,7 +1,7 @@
 "use client";
 
-import ProductRail from "./components/ProductRail";
-import { listAllProducts } from "../lib/query";
+import ProductRail from "@/app/components/ProductRail";
+import { listAllProducts } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 
 export default () => {
