@@ -38,23 +38,15 @@ export default () => {
   if (!prod) return <h1>Produto não encontrado</h1>;
 
   return (
-    <section className="h-full grid-cols-2 place-content-center gap-16 p-8 pr-12 lg:grid">
+    <div className="h-full p-8">
       <ImageDialog
         prod={prod}
         open={imgDialogOpen}
         setOpen={setImgDialogOpen}
       />
-      <Image
-        src={prod.img}
-        alt={prod.name}
-        width={500}
-        height={500}
-        className="mt-2 cursor-zoom-in rounded-lg border border-stone-500 shadow-lg shadow-stone-300"
-        onClick={() => setImgDialogOpen(true)}
-        priority
-      />
       <ProductOverview prod={prod} />
-    </section>
+      <ProductDescription prod={prod} />
+    </div>
   );
 };
 
@@ -76,85 +68,94 @@ function ProductOverview({ prod }) {
   }
 
   return (
-    <article>
+    <article className="mb-8 grid-cols-2 place-content-center gap-16 pr-12 lg:grid">
+      <Image
+        src={prod.img}
+        alt={prod.name}
+        width={500}
+        height={500}
+        className="mt-2 cursor-zoom-in rounded-lg border border-stone-500 shadow-lg shadow-stone-300"
+        onClick={() => setImgDialogOpen(true)}
+        priority
+      />
+
       <section>
-        <h1 className="mb-3 text-3xl">{prod.name}</h1>
-        <p className="text-sm leading-6 text-stone-700">{prod.description}</p>
-      </section>
+        <h1 className="text-3xl mb-2">{prod.name}</h1>
+        <p className="text-xs text-stone-500">ID: {prod.id}</p>
 
-      <hr className="my-6" />
+        <hr className="my-5" />
 
-      <section>
-        <h2 className="mb-3 text-2xl font-semibold">
-          {price(prod.price * DOLAR)}
-        </h2>
+        <div className="flex flex-col gap-4 mb-5">
+          <h2 className="text-2xl font-semibold">
+            {price(prod.price * DOLAR)}
+          </h2>
 
-        <div className="flex items-center justify-between gap-2">
-          <Counter state={quantityState} max={prod.quantity} />
+          <div className="flex items-center justify-between gap-2">
+            <Counter state={quantityState} max={prod.quantity} />
+            <button
+              disabled={prod.quantity <= 0 || done}
+              className="action inline w-full font-semibold"
+              onClick={addToCart}
+            >
+              Adicionar ao carrinho
+            </button>
+            <a href="/cart">
+              <ShoppingCartIcon
+                className={`ml-3 inline size-6 transition-opacity duration-500 ${done ? "opacity-80" : "opacity-0"}`}
+              />
+            </a>
+          </div>
 
-          <button
-            disabled={prod.quantity <= 0 || done}
-            className="action inline w-full font-semibold"
-            onClick={addToCart}
-          >
-            Adicionar ao carrinho
-          </button>
-          <a href="/cart">
-            <ShoppingCartIcon
-              className={`ml-3 inline size-6 transition-opacity duration-500 ${done ? "opacity-80" : "opacity-0"}`}
-            />
-          </a>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg">Tamanho:</h3>
+            <Options options={prod.sizes} state={sizeState} />
+          </div>
         </div>
+
+        {prod.warning && (
+          <>
+            <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
+              <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
+              <p className="text-yellow-600">{prod.warning}</p>
+            </div>
+          </>
+        )}
+        {hasWarning(prod) && (
+          <>
+            <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
+              <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
+              <p className="text-yellow-600">
+                Pode ser predador de espécies menores. De preferência, separe um
+                aquário reservado.
+              </p>
+            </div>
+          </>
+        )}
       </section>
+    </article>
+  );
+}
 
-      <hr className="my-6" />
-
-      <ul className="product-description">
-        <li>
-          <h4>Nome científico</h4>
-          <p className="italic">{prod.scientificName}</p>
-        </li>
-        <li>
-          <h4>Alimentação</h4>
-          <p>{prod.feeding}</p>
-        </li>
-        <li>
-          <h4>Tamanho de tanque</h4>
-          <p>{prod.tankSize}</p>
-        </li>
-      </ul>
-
-      <h2 className="mb-3 text-2xl">Opções</h2>
-      <div>
-        <h3 className="mb-2 text-lg">Tamanho</h3>
-        <Options options={prod.sizes} state={sizeState} />
-      </div>
-
-      <hr className="my-5" />
-
-      <hr className="my-5" />
-
-      {prod.warning && (
-        <>
-          <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
-            <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
-            <p className="text-yellow-600">{prod.warning}</p>
-          </div>
-          <hr className="my-5" />
-        </>
-      )}
-      {hasWarning(prod) && (
-        <>
-          <div className="rounded-lg border border-yellow-500 bg-yellow-100 p-4">
-            <p className="mb-2 font-semibold text-yellow-700">Atenção</p>
-            <p className="text-yellow-600">
-              Pode ser predador de espécies menores. De preferência, separe um
-              aquário reservado.
-            </p>
-          </div>
-          <hr className="my-5" />
-        </>
-      )}
+function ProductDescription({ prod }) {
+  return (
+    <article className="grid-cols-3 lg:grid">
+      <section className="col-span-2">
+        <h2 className="mb-4 text-3xl">Descrição</h2>
+        <ul className="product-description">
+          <li>
+            <h4>Nome científico</h4>
+            <p className="italic">{prod.scientificName}</p>
+          </li>
+          <li>
+            <h4>Alimentação</h4>
+            <p>{prod.feeding}</p>
+          </li>
+          <li>
+            <h4>Tamanho de tanque</h4>
+            <p>{prod.tankSize}</p>
+          </li>
+        </ul>
+      </section>
     </article>
   );
 }
