@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { addCartItem, ensureCart } from "@/app/lib/cart";
+import { addCartItem, ensureCart, DOLAR } from "@/app/lib/cart";
 import { getProductById } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
 import Counter from "@/app/components/Counter";
@@ -38,7 +38,7 @@ export default () => {
   if (!prod) return <h1>Produto não encontrado</h1>;
 
   return (
-    <section className="h-full grid-cols-4 place-content-center gap-16 p-8 pr-12 lg:grid">
+    <section className="h-full grid-cols-2 place-content-center gap-16 p-8 pr-12 lg:grid">
       <ImageDialog
         prod={prod}
         open={imgDialogOpen}
@@ -49,44 +49,16 @@ export default () => {
         alt={prod.name}
         width={500}
         height={500}
-        className="col-span-2 mt-2 cursor-zoom-in rounded-lg border border-stone-500 shadow-lg shadow-stone-300"
+        className="mt-2 cursor-zoom-in rounded-lg border border-stone-500 shadow-lg shadow-stone-300"
         onClick={() => setImgDialogOpen(true)}
         priority
       />
       <ProductOverview prod={prod} />
-      <ProductOptions prod={prod} />
     </section>
   );
 };
 
 function ProductOverview({ prod }) {
-  return (
-    <article>
-      <h2 className="mb-3 text-lg text-stone-400">{prod.category}</h2>
-      <h1 className="mb-3 text-3xl">{prod.name}</h1>
-      <p className="text-sm leading-6 text-stone-700">{prod.description}</p>
-
-      <hr className="my-6" />
-
-      <ul className="product-description">
-        <li>
-          <h4>Nome científico</h4>
-          <p className="italic">{prod.scientificName}</p>
-        </li>
-        <li>
-          <h4>Alimentação</h4>
-          <p>{prod.feeding}</p>
-        </li>
-        <li>
-          <h4>Tamanho de tanque</h4>
-          <p>{prod.tankSize}</p>
-        </li>
-      </ul>
-    </article>
-  );
-}
-
-function ProductOptions({ prod }) {
   let sizeState = useState(prod.sizes[0]);
   let [size] = sizeState;
   let quantityState = useState(1);
@@ -104,7 +76,54 @@ function ProductOptions({ prod }) {
   }
 
   return (
-    <article className="mt-10">
+    <article>
+      <section>
+        <h1 className="mb-3 text-3xl">{prod.name}</h1>
+        <p className="text-sm leading-6 text-stone-700">{prod.description}</p>
+      </section>
+
+      <hr className="my-6" />
+
+      <section>
+        <h2 className="mb-3 text-2xl font-semibold">
+          {price(prod.price * DOLAR)}
+        </h2>
+
+        <div className="flex items-center justify-between gap-2">
+          <Counter state={quantityState} max={prod.quantity} />
+
+          <button
+            disabled={prod.quantity <= 0 || done}
+            className="action inline w-full font-semibold"
+            onClick={addToCart}
+          >
+            Adicionar ao carrinho
+          </button>
+          <a href="/cart">
+            <ShoppingCartIcon
+              className={`ml-3 inline size-6 transition-opacity duration-500 ${done ? "opacity-80" : "opacity-0"}`}
+            />
+          </a>
+        </div>
+      </section>
+
+      <hr className="my-6" />
+
+      <ul className="product-description">
+        <li>
+          <h4>Nome científico</h4>
+          <p className="italic">{prod.scientificName}</p>
+        </li>
+        <li>
+          <h4>Alimentação</h4>
+          <p>{prod.feeding}</p>
+        </li>
+        <li>
+          <h4>Tamanho de tanque</h4>
+          <p>{prod.tankSize}</p>
+        </li>
+      </ul>
+
       <h2 className="mb-3 text-2xl">Opções</h2>
       <div>
         <h3 className="mb-2 text-lg">Tamanho</h3>
@@ -112,11 +131,6 @@ function ProductOptions({ prod }) {
       </div>
 
       <hr className="my-5" />
-
-      <div className="flex items-center justify-between">
-        <span className="text-xl font-semibold">{price(prod.price)}</span>
-        <Counter state={quantityState} max={prod.quantity} />
-      </div>
 
       <hr className="my-5" />
 
@@ -141,18 +155,6 @@ function ProductOptions({ prod }) {
           <hr className="my-5" />
         </>
       )}
-      <button
-        disabled={prod.quantity <= 0 || done}
-        className="secondary buy inline w-full bg-slate-900 text-stone-100"
-        onClick={addToCart}
-      >
-        Adicionar ao carrinho
-      </button>
-      <a href="/cart">
-        <ShoppingCartIcon
-          className={`ml-3 inline size-6 transition-opacity duration-500 ${done ? "opacity-80" : "opacity-0"}`}
-        />
-      </a>
     </article>
   );
 }

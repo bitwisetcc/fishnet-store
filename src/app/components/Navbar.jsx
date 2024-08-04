@@ -1,5 +1,4 @@
 import Image from "next/image";
-import SideMenu from "./SideMenu";
 import { Rubik } from "next/font/google";
 import {
   ChatBubbleLeftRightIcon,
