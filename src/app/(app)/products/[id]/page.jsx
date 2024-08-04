@@ -45,14 +45,14 @@ export default () => {
         open={imgDialogOpen}
         setOpen={setImgDialogOpen}
       />
-      <ProductOverview prod={prod} />
+      <ProductOverview prod={prod} openImg={() => setImgDialogOpen(true)} />
       <ProductDescription prod={prod} />
       <RelatedProducts prod={prod} />
     </div>
   );
 };
 
-function ProductOverview({ prod }) {
+function ProductOverview({ prod, openImg }) {
   let sizeState = useState(prod.sizes[0]);
   let [size] = sizeState;
   let quantityState = useState(1);
@@ -77,7 +77,7 @@ function ProductOverview({ prod }) {
         width={500}
         height={500}
         className="mt-2 cursor-zoom-in rounded-lg border border-stone-500 shadow-lg shadow-stone-300"
-        onClick={() => setImgDialogOpen(true)}
+        onClick={openImg}
         priority
       />
 
