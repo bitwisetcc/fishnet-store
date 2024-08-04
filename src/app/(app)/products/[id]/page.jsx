@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { addCartItem, ensureCart, DOLAR } from "@/app/lib/cart";
-import { getProductById } from "@/app/lib/query";
+import { getProductById, listAllProducts } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
 import Counter from "@/app/components/Counter";
 import Options from "@/app/components/Options";
+import ProductRail from "@/app/components/ProductRail";
 
 export default () => {
   const { id } = useParams();
@@ -46,6 +47,7 @@ export default () => {
       />
       <ProductOverview prod={prod} />
       <ProductDescription prod={prod} />
+      <RelatedProducts prod={prod} />
     </div>
   );
 };
@@ -80,12 +82,12 @@ function ProductOverview({ prod }) {
       />
 
       <section>
-        <h1 className="text-3xl mb-2">{prod.name}</h1>
+        <h1 className="mb-2 text-3xl">{prod.name}</h1>
         <p className="text-xs text-stone-500">ID: {prod.id}</p>
 
         <hr className="my-5" />
 
-        <div className="flex flex-col gap-4 mb-5">
+        <div className="mb-5 flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
             {price(prod.price * DOLAR)}
           </h2>
@@ -157,6 +159,22 @@ function ProductDescription({ prod }) {
         </ul>
       </section>
     </article>
+  );
+}
+
+function RelatedProducts({ prod }) {
+  const [related, setRelated] = useState([]);
+
+  useEffect(() => {
+    const x = prod.name.split(" ")[0].length;
+    listAllProducts().then((data) => setRelated(data.slice(x, x + 5))); // TODO: implement actuall similarity algorithm
+  }, [prod]);
+
+  return (
+    <section className="mt-8">
+      <h2 className="text-3xl -mb-8">Produtos relacionados</h2>
+      <ProductRail products={related} />
+    </section>
   );
 }
 

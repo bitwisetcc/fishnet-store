@@ -29,7 +29,7 @@ export default ({ products, title, link, ai }) => {
         )}
       </div>
       <ul className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
-        {products.map((product) => (
+        {products.length && products.map((product) => (
           <li key={product.id}>
             <ProductPreview product={product} />
           </li>
