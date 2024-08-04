@@ -95,6 +95,7 @@ export default () => {
               src="/static/loading.gif"
               width={40}
               height={40}
+              className="mt-3"
               alt="Loading..."
             />
           </div>
