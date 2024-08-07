@@ -33,6 +33,7 @@ export default function Page() {
 function SlideShow() {
   const images = [
     "static/banner-lançamentos.png",
+    "static/banner-betta.png",
     "https://www.petz.com.br/blog/wp-content/uploads/2017/02/tipos-de-peixe-pet.jpg",
     "/path/to/image3.jpg",
   ];
