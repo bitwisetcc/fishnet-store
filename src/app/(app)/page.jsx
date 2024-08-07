@@ -21,6 +21,7 @@ export default function Page() {
     <>
       <SlideShow />
       <Shipping />
+      <Categories />
       <article className="px-10">
         <ProductRail
           products={prods.slice(0, 3)}
@@ -143,4 +144,18 @@ function Shipping() {
       </div>
     </section>
   );
+}
+
+function Categories() {
+  return (
+    <section className="flex gap-4 bg-slate-200 border-y border-y-slate-500 py-5 justify-center *:rounded-full *:border-2 *:border-accent-middle *:w-24 *:aspect-square">
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+    </section>
+  )
 }
