@@ -8,6 +8,8 @@ import {
   HandThumbUpIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -147,15 +149,67 @@ function Shipping() {
 }
 
 function Categories() {
+  const categories = [
+    {
+      name: "Peixes Betta",
+      image: "https://aquaticarts.com/cdn/shop/products/Deluxe-Beta-3_1800x1800.jpg",
+      id: "betta",
+    },
+    {
+      name: "Peixes Farpados",
+      image: "https://aquaticarts.com/cdn/shop/products/RedPandaBarb5_1800x1800.jpg",
+      id: "barb",
+    },
+    {
+      name: "Peixes Tetra",
+      image: "https://aquaticarts.com/cdn/shop/products/Silver-Tip-Tetra-Small-1_1800x1800.jpg",
+      id: "tetra",
+    },
+    {
+      name: "Peixes Tigre",
+      image: "https://aquaticarts.com/cdn/shop/products/Tiger_Oscar_7_1800x1800.jpg",
+      id: "tiger",
+    },
+    {
+      name: "Carnívoros",
+      image: "https://pixfeeds.com/images/12/369931/1200-521801388-red-scorpionfish.jpg",
+      id: "carnivore",
+    },
+    {
+      name: "Onívoros",
+      image: "https://aquaticarts.com/cdn/shop/products/Blue-Zebra-Angelfish-3_1800x1800.jpg",
+      id: "omnivore",
+    },
+    {
+      name: "Água doce",
+      image: "https://aquaticarts.com/cdn/shop/products/Blue-Zebra-Angelfish-3_1800x1800.jpg",
+      id: "freshwater",
+    },
+    {
+      name: "Água salgada",
+      image: "https://aquaticarts.com/cdn/shop/products/Blue-Zebra-Angelfish-3_1800x1800.jpg",
+      id: "saltwater",
+    },
+  ];
+
   return (
-    <section className="flex gap-4 bg-slate-200 border-y border-y-slate-500 py-5 justify-center *:rounded-full *:border-2 *:border-accent-middle *:w-24 *:aspect-square">
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
-      <img src="/static/categories/betta.jpg" alt="Peixes Betta" title="Peixes Betta" />
+    <section className="flex justify-center gap-10 border-b border-slate-300 bg-slate-100 py-5 pt-8 shadow-inner shadow-slate-500">
+      {categories.map((category) => (
+        <Link
+          className="flex flex-col items-center gap-2"
+          key={category.id}
+          href={`/products?category=${category.id}`}
+        >
+          <Image
+            src={category.image}
+            alt={category.name}
+            width={100}
+            height={100}
+            className="aspect-square w-24 rounded-full object-cover border-2 border-accent-middle"
+          />
+          <span>{category.name}</span>
+        </Link>
+      ))}
     </section>
-  )
+  );
 }
