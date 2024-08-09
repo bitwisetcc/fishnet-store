@@ -19,6 +19,7 @@ module.exports = {
         "golden-fish": "#CBAD51",
         "coral": "#C2745F"
       }
+      
     },
   },
   plugins: [],
