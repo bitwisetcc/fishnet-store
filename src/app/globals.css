@@ -105,14 +105,13 @@ form ul.radio-list li {
   background-size: calc(4 * var(--s)) calc(12 * var(--s));
 }
 
-
+/* for footer on main page */
 .section-footer {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 60vh;
   overflow: hidden;
 }
-
 
 .section-footer .wave {
   position: absolute;
