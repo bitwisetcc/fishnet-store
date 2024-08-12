@@ -33,19 +33,15 @@ body {
 }
 
 button.secondary {
-  @apply transition-colors relative inline-flex lg:w-fit items-center justify-center overflow-hidden rounded-md border border-stone-300 outline-none shadow-md bg-slate-100 text-stone-800 disabled:bg-slate-200 hover:bg-slate-200 active:bg-slate-200 focus:bg-slate-200 text-sm gap-x-1.5 px-3 py-1.5;
-}
-
-button.secondary.buy {
-  @apply w-[calc(100%-3rem)];
+  @apply relative inline-flex items-center justify-center gap-x-1.5 overflow-hidden rounded-md border border-stone-300 bg-slate-100 px-3 py-1.5 text-sm text-stone-800 shadow-md outline-none transition-colors hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200 disabled:bg-slate-200 lg:w-fit;
 }
 
 button.large {
-  @apply bg-stone-800 shadow-sm text-stone-100
+  @apply bg-stone-800 text-stone-100 shadow-sm;
 }
 
 button.action {
-  @apply bg-gradient-to-b from-slate-700 to-stone-900 text-stone-100 shadow-md border border-stone-700 rounded-lg py-2 px-10 mt-3 w-full;
+  @apply w-full rounded-md border border-stone-700 bg-accent/90 px-10 py-2 text-stone-100 shadow-md hover:bg-accent transition-colors duration-200;
 }
 
 ul.product-description {
@@ -53,11 +49,11 @@ ul.product-description {
 }
 
 ul.product-description li * {
-  @apply text-stone-800 text-sm;
+  @apply text-sm text-stone-800;
 }
 
 ul.product-description li h4 {
-  @apply text-stone-900 font-semibold;
+  @apply font-semibold text-stone-900;
 }
 
 form .field {
@@ -65,15 +61,15 @@ form .field {
 }
 
 form .field label {
-  @apply text-stone-500 text-sm absolute top-3 mx-3 transition-all;
+  @apply absolute top-3 mx-3 text-sm text-stone-500 transition-all;
 }
 
 form .field input {
-  @apply w-full px-3 py-2 pt-4 text-sm border border-stone-300 rounded-md shadow-sm focus:ring-stone-500 focus:border-stone-500;
+  @apply w-full rounded-md border border-stone-300 px-3 py-2 pt-4 text-sm shadow-sm focus:border-stone-500 focus:ring-stone-500;
 }
 
-form input:not([type=radio]):required ~ label::after {
-  @apply content-['*'] text-zinc-600;
+form input:not([type="radio"]):required ~ label::after {
+  @apply text-zinc-600 content-['*'];
 }
 
 form ul.radio-list {
@@ -81,7 +77,7 @@ form ul.radio-list {
 }
 
 form ul.radio-list li {
-  @apply flex gap-3 border border-stone-300 rounded-lg shadow-sm w-full py-4 px-10;
+  @apply flex w-full gap-3 rounded-lg border border-stone-300 px-10 py-4 shadow-sm;
 }
 
 .login-bg {
@@ -95,8 +91,11 @@ form ul.radio-list li {
   --g2: radial-gradient(var(--_s) 0, #0000 32%, var(--c1) var(--_g));
   --g3: radial-gradient(var(--_s) 100%, #0000 32%, var(--c2) var(--_g));
   --g4: radial-gradient(var(--_s) 0, #0000 32%, var(--c2) var(--_g));
-  background: var(--g1), var(--g2) 0 calc(3 * var(--s)),
-    var(--g3) var(--s) calc(3 * var(--s)), var(--g4) var(--s) calc(6 * var(--s)),
+  background:
+    var(--g1),
+    var(--g2) 0 calc(3 * var(--s)),
+    var(--g3) var(--s) calc(3 * var(--s)),
+    var(--g4) var(--s) calc(6 * var(--s)),
     var(--g1) calc(2 * var(--s)) calc(6 * var(--s)),
     var(--g2) calc(2 * var(--s)) calc(9 * var(--s)),
     var(--g3) calc(3 * var(--s)) calc(9 * var(--s)),

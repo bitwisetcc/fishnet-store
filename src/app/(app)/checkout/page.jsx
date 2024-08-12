@@ -1,13 +1,10 @@
 "use client";
 
-// import { listFullCa  rtItems } from "@/app/lib/cart";
-import { useEffect, useState } from "react";
-import CartSummary from "../components/CartSummary";
-import FancyInput from "../components/FancyInput";
-import PrivacyPolicy from "../components/PrivacyPolicy";
-import ProductLine from "../components/ProductLine";
 import { listAllProducts } from "@/app/lib/query";
-import CartItems from "../components/CartItems";
+import { useEffect, useState } from "react";
+import CartSummary from "@/app/components/CartSummary";
+import FancyInput from "@/app/components/FancyInput";
+import PrivacyPolicy from "@/app/components/PrivacyPolicy";
 
 export default () => {
   const [cart, setCart] = useState([]);
