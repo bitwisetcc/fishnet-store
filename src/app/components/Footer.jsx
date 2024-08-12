@@ -3,16 +3,16 @@ export default function Footer() {
         <div>
             <section className="section-footer bg-slate-50">
                 <div className="wave wave1">
-                    <img className="size-full" />
+                    <img className="" />
                 </div>
                 <div className="wave wave2">
-                    <img className="size-full" />
+                    <img className="" />
                 </div>
                 <div className="wave wave3">
-                    <img className="size-full" />
+                    <img className="" />
                 </div>
                 <div className="wave wave4">
-                    <img className="size-full" />
+                    <img className="" />
                 </div>
             </section>
 
@@ -20,9 +20,9 @@ export default function Footer() {
                 <div className="grid grid-cols-3">
                     <div className="flex justify-center items-center">
                     <img
-                        src="/static/logo2.jpg"
+                        src="/static/logo2.png"
                         alt="Logo FishNet"
-                        className="size-44 brightness-[96.5%] rounded-lg shadow-lg"
+                        className="size-56 brightness-[96.5%] bg-transparent"
                     />
                     </div>
                     <div>tesdte</div>
