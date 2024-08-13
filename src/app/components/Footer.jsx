@@ -25,9 +25,50 @@ export default function Footer() {
                         className="size-56 brightness-[96.5%] bg-transparent"
                     />
                     </div>
-                    <div>tesdte</div>
-                    <div>teste</div>
+                    <div className="flex justify-center items-center">
+                        <ul>
+                            <li><h1>Nossos Contatos</h1></li>
+                            <li>FishNet@gmail.com</li>
+                            <li>+55 11 96954-4326</li>
+                        </ul>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <ul>
+                            <li>asdasd</li>
+                            <li>asdasd</li>
+                            <li>asdasd</li>
+                        </ul>
+                    </div>
                 </div>
+                <div className="flex space-x-10 pl-[12%]">
+                    <a href="//www.instagram.com"> 
+                        <img
+                            src="/static/igIcon2.png"
+                            alt="Instagram Icon"
+                            className="size-10 brightness-[96.5%] bg-transparent"
+                            
+                        />
+                    </a>   
+                    <img
+                        src="/static/wppIcon.png"
+                        alt="Whatsapp Icon"
+                        className="size-10 brightness-[96.5%] bg-transparent"
+                    />
+                    <img
+                        src="/static/fbIcon.png"
+                        alt="Facebook Icon"
+                        className="size-10 brightness-[96.5%] bg-transparent"
+                    />
+                    <img
+                        src="/static/ytIcon.png"
+                        alt="Youtube Icon"
+                        className="size-10 brightness-[96.5%] bg-transparent"
+                    />
+                </div>
+                <div className="flex pb-8 pt-6">
+                    <hr className="flex w-full h-3"></hr>
+                </div>
+                    
             </section>
         </div>
     );    
