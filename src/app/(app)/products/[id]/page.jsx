@@ -72,7 +72,7 @@ function ProductOverview({ prod, openImg }) {
   return (
     <article className="mb-8 grid-cols-2 place-content-center gap-16 pr-12 lg:grid">
       <Image
-        src={prod.img}
+        src={prod.picture}
         alt={prod.name}
         width={500}
         height={500}
@@ -172,7 +172,7 @@ function RelatedProducts({ prod }) {
 
   return (
     <section className="mt-8">
-      <h2 className="text-3xl -mb-8">Produtos relacionados</h2>
+      <h2 className="-mb-8 text-3xl">Produtos relacionados</h2>
       <ProductRail products={related} />
     </section>
   );
@@ -188,7 +188,7 @@ function ImageDialog({ prod, open, setOpen }) {
       <div className="fixed inset-0 flex w-screen items-center justify-center bg-slate-800/80 pt-10">
         <DialogPanel className="relative">
           <Image
-            src={prod.img}
+            src={prod.picture}
             alt={prod.name}
             width={500}
             height={500}
