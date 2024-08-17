@@ -51,29 +51,54 @@ export default () => {
   };
 
   return (
-    <article className="h-full bg-slate-50 p-6 md:flex md:p-12 lg:pr-16">
-      <SideBar />
-
+    <article className="h-full bg-slate-50 p-7 md:flex md:p-12 lg:p-16">
+      <aside className="min-w-fit border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
+        <ul className="flex flex-col gap-3 text-sm">
+          <li>
+            <a href="/products?sort=last" className="text-stone-900">
+              Lançamento
+            </a>
+          </li>
+          <li>
+            <a href="/products?sort=az">Alfabético A-Z</a>
+          </li>
+          <li>
+            <a href="/products?sort=za">Alfabético Z-A</a>
+          </li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Água doce</li>
+          <li>Água salgada</li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Herbívoro</li>
+          <li>Onívoro</li>
+          <li>Carnívoro</li>
+          <li>
+            <hr className="border-stone-200" />
+          </li>
+          <li>Ofertas</li>
+        </ul>
+      </aside>
       <hr className="my-5 border-stone-200 md:hidden" />
-
-      <div className="mb-5 md:pl-10">
-        <header className="mb-5 flex w-full justify-between">
-          <h1 className="text-3xl font-semibold text-stone-800">Produtos</h1>
-          <OrderingDropdown />
-        </header>
-
-        <section className="grid grid-cols-1 gap-4 bg-slate-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="md:pl-10">
+        <h1 className="col-span-4 mb-5 text-3xl font-semibold text-stone-800">
+          Produtos
+        </h1>
+        <section className="grid grid-cols-1 gap-10 bg-slate-50 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {prods.map((prod, index) => (
             <ProductPreview product={prod} key={`${prod.id}-${index}`} />
           ))}
         </section>
-
         {loading && (
           <div>
             <img
               src="/static/loading.gif"
               width={40}
               height={40}
+              className="mt-5"
               alt="Loading..."
             />
           </div>
