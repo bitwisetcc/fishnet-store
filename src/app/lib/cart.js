@@ -1,7 +1,5 @@
 import { getProductById } from "./query";
 
-export const DOLAR = 5.5;
-
 const no_local = false;
 
 export function ensureCart() {

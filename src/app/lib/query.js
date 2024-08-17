@@ -3,6 +3,7 @@ const API_URL = "https://fishnet-api-py.onrender.com"
 function parseProduct(prod) {
   return {
     ...prod,
+    id: prod._id,
     quantity: 5,
     feeding: String(prod.feeding),
     tankSize: String(prod.tank_size),

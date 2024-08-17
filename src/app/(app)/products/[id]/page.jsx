@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { addCartItem, ensureCart, DOLAR } from "@/app/lib/cart";
+import { addCartItem, ensureCart } from "@/app/lib/cart";
 import { getProductById, listAllProducts } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
 import Counter from "@/app/components/Counter";
@@ -89,7 +89,7 @@ function ProductOverview({ prod, openImg }) {
 
         <div className="mb-5 flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
-            {price(prod.price * DOLAR)}
+            {price(prod.price)}
           </h2>
 
           <div className="flex items-center justify-between gap-2">
