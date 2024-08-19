@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { addCartItem, ensureCart, DOLAR } from "@/app/lib/cart";
+import { addCartItem, ensureCart } from "@/app/lib/cart";
 import { getProductById, listAllProducts } from "@/app/lib/query";
 import { price } from "@/app/lib/format";
 import Counter from "@/app/components/Counter";
@@ -72,7 +72,7 @@ function ProductOverview({ prod, openImg }) {
   return (
     <article className="mb-8 grid-cols-2 place-content-center gap-16 pr-12 lg:grid">
       <Image
-        src={prod.img}
+        src={prod.picture}
         alt={prod.name}
         width={500}
         height={500}
@@ -89,7 +89,7 @@ function ProductOverview({ prod, openImg }) {
 
         <div className="mb-5 flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
-            {price(prod.price * DOLAR)}
+            {price(prod.price)}
           </h2>
 
           <div className="flex items-center justify-between gap-2">
@@ -172,7 +172,7 @@ function RelatedProducts({ prod }) {
 
   return (
     <section className="mt-8">
-      <h2 className="text-3xl -mb-8">Produtos relacionados</h2>
+      <h2 className="-mb-8 text-3xl">Produtos relacionados</h2>
       <ProductRail products={related} />
     </section>
   );
@@ -188,7 +188,7 @@ function ImageDialog({ prod, open, setOpen }) {
       <div className="fixed inset-0 flex w-screen items-center justify-center bg-slate-800/80 pt-10">
         <DialogPanel className="relative">
           <Image
-            src={prod.img}
+            src={prod.picture}
             alt={prod.name}
             width={500}
             height={500}
