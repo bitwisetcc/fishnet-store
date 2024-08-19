@@ -43,7 +43,7 @@ export default function Footer() {
                 <div className="flex space-x-10 pl-[12%]">
                     <a href="//www.instagram.com"> 
                         <img
-                            src="/static/igIcon2.png"
+                            src="/static/igIcon.png"
                             alt="Instagram Icon"
                             className="size-10 brightness-[96.5%] bg-transparent"
                             
