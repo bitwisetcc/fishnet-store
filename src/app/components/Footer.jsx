@@ -40,7 +40,7 @@ export default function Footer() {
                         </ul>
                     </div>
                 </div>
-                <div className="flex space-x-10 pl-[12%]">
+                <div className="flex space-x-10 pl-[9%]">
                     <a href="//www.instagram.com"> 
                         <img
                             src="/static/igIcon.png"
