@@ -30,3 +30,17 @@ export async function getProductById(id) {
   const prod = await data.json();
   return parseProduct(prod);
 }
+
+// Função para extrair apenas o nome dos produtos
+export async function listProductNames(page = 1, limit = 10) {
+  try {
+    const data = await fetch(`${API_URL}/itens`);
+    const prods = await data.json();
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    return prods.slice(start, end).map(prod => prod.name || "Nome não disponível");
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+}

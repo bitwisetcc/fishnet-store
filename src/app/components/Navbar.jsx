@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   ChatBubbleLeftRightIcon,
@@ -8,25 +8,35 @@ import {
   ShoppingCartIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { listProductNames } from '../lib/query';
 
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [officialStores, setOfficialStores] = useState([]);
+  const [cachedProducts, setCachedProducts] = useState([]);
 
-  const items = ["tenis", "tenis masculinos", "tenis nike", "televisores", "tablet", "tenis femininos"];
   const stores = [
     { name: "Loja oficial Decathlon Oficial", link: "#decathlon" },
     { name: "Loja oficial Ollie", link: "#ollie" },
     { name: "Loja oficial adidas", link: "#adidas" },
   ];
 
+  //Função utilizada para armazenar os resultados da API, assim fazendo com que não haja diversas requisições para trazer os nomes
+  useEffect(() => {
+    async function fetchProducts() {
+      const products = await listProductNames();
+      setCachedProducts(products);
+    }
+    fetchProducts();
+  }, []);
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
 
     if (value) {
-      setResults(items.filter((item) => item.toLowerCase().includes(value.toLowerCase())));
+      setResults(cachedProducts.filter((item) => item.toLowerCase().includes(value.toLowerCase())));
       setOfficialStores(stores.filter((store) => store.name.toLowerCase().includes(value.toLowerCase())));
     } else {
       setResults([]);
@@ -81,7 +91,7 @@ export default function Nav() {
                     ))}
                   </ul>
                   <hr className="my-2" />
-                  <div className="px-4 py-2 text-gray-500 text-sm">Lojas oficiais</div>
+                  <div className="px-4 py-2 text-gray-500 text-sm">Algum outro tipo de filtro</div>
                   <ul>
                     {officialStores.map((store, index) => (
                       <li
