@@ -26,7 +26,7 @@ export async function listAllProducts(page = 1, limit = 10) {
 }
 
 export async function getProductById(id) {
-  const data = await fetch(`${API_URL}/itens/${id}`);
+  const data = await fetch(`${API_URL}/itens/{id}`);
   const prod = await data.json();
   return parseProduct(prod);
 }

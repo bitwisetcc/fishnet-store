@@ -64,7 +64,7 @@ export default function Nav() {
               <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-1/2 transform text-stone-500" />
 
               {results.length > 0 && (
-                <div className="absolute mt-1 w-full bg-white border border-stone-600 rounded-lg shadow-lg z-10">
+                <div className="absolute mt-1 w-full bg-white border border-stone-600 rounded-lg shadow-lg z-80">
                   <ul className="divide-y divide-gray-300">
                     {results.map((result, index) => (
                       <li
