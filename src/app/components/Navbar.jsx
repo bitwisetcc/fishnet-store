@@ -13,14 +13,7 @@ import { listProductNames } from '../lib/query';
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
-  const [officialStores, setOfficialStores] = useState([]);
   const [cachedProducts, setCachedProducts] = useState([]);
-
-  const stores = [
-    { name: "Loja oficial Decathlon Oficial", link: "#decathlon" },
-    { name: "Loja oficial Ollie", link: "#ollie" },
-    { name: "Loja oficial adidas", link: "#adidas" },
-  ];
 
   //Função utilizada para armazenar os resultados da API, assim fazendo com que não haja diversas requisições para trazer os nomes
   useEffect(() => {
@@ -37,10 +30,8 @@ export default function Nav() {
 
     if (value) {
       setResults(cachedProducts.filter((item) => item.toLowerCase().includes(value.toLowerCase())));
-      setOfficialStores(stores.filter((store) => store.name.toLowerCase().includes(value.toLowerCase())));
     } else {
       setResults([]);
-      setOfficialStores([]);
     }
   };
 
@@ -87,21 +78,6 @@ export default function Nav() {
                       >
                         <MagnifyingGlassIcon className="h-4 text-gray-500" />
                         {result}
-                      </li>
-                    ))}
-                  </ul>
-                  <hr className="my-2" />
-                  <div className="px-4 py-2 text-gray-500 text-sm">Algum outro tipo de filtro</div>
-                  <ul>
-                    {officialStores.map((store, index) => (
-                      <li
-                        key={index}
-                        className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
-                      >
-                        <MagnifyingGlassIcon className="h-4 text-gray-500" />
-                        <span>
-                          {searchTerm} em <a href={store.link} className="text-blue-500">{store.name}</a>
-                        </span>
                       </li>
                     ))}
                   </ul>
