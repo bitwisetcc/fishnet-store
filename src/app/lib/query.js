@@ -38,7 +38,13 @@ export async function listProductNames(page = 1, limit = 10) {
     const prods = await data.json();
     const start = (page - 1) * limit;
     const end = start + limit;
-    return prods.slice(start, end).map(prod => prod.name || "Nome não disponível");
+
+    
+    return prods.slice(start, end).map(prod => ({
+      id: prod.id || "ID não disponível",
+      name: prod.name || "Nome não disponível"
+    }));
+    
   } catch (error) {
     console.error(error.message);
     return [];

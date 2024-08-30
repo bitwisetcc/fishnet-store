@@ -54,19 +54,23 @@ export default function Footer() {
                         alt="Whatsapp Icon"
                         className="size-10 brightness-[96.5%] bg-transparent"
                     />
-                    <img
-                        src="/static/fbIcon.png"
-                        alt="Facebook Icon"
-                        className="size-10 brightness-[96.5%] bg-transparent"
-                    />
-                    <img
-                        src="/static/ytIcon.png"
-                        alt="Youtube Icon"
-                        className="size-10 brightness-[96.5%] bg-transparent"
-                    />
+                    <a href="//www.facebook.com">
+                        <img
+                            src="/static/fbIcon.png"
+                            alt="Facebook Icon"
+                            className="size-10 brightness-[96.5%] bg-transparent"
+                        />
+                    </a>
+                    <a href="//youtube.com">
+                        <img
+                            src="/static/ytIcon.png"
+                            alt="Youtube Icon"
+                            className="size-10 brightness-[96.5%] bg-transparent"
+                        />
+                    </a>
                 </div>
                 <div className="flex pb-8 pt-6">
-                    <hr className="flex w-full h-3"></hr>
+                    <hr className="flex w-full border-golden-fish"></hr>
                 </div>
                     
             </section>

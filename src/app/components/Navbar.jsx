@@ -1,7 +1,8 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ChatBubbleLeftRightIcon,
   MagnifyingGlassIcon,
@@ -14,8 +15,8 @@ export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [cachedProducts, setCachedProducts] = useState([]);
+  const router = useRouter(); // Para navegar programaticamente
 
-  //Função utilizada para armazenar os resultados da API, assim fazendo com que não haja diversas requisições para trazer os nomes
   useEffect(() => {
     async function fetchProducts() {
       const products = await listProductNames();
@@ -29,10 +30,18 @@ export default function Nav() {
     setSearchTerm(value);
 
     if (value) {
-      setResults(cachedProducts.filter((item) => item.toLowerCase().includes(value.toLowerCase())));
+      setResults(
+        cachedProducts.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        )
+      );
     } else {
       setResults([]);
     }
+  };
+
+  const handleProductClick = (id) => {
+    router.push(`/products/${id}`);
   };
 
   return (
@@ -67,19 +76,21 @@ export default function Nav() {
               {results.length > 0 && (
                 <div className="absolute mt-1 w-full bg-white border border-stone-600 rounded-lg shadow-lg z-80">
                   <ul className="divide-y divide-gray-300">
-                    {results.map((result, index) => (
+                  {results.map((result, index) => (
+                    <a key={index} href={`/products/${result.id}`}>
                       <li
-                        key={index}
                         className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
                         onClick={() => {
-                          setSearchTerm(result);
+                          console.log("Produto selecionado:", result);
+                          setSearchTerm(result.name);
                           setResults([]);
                         }}
                       >
                         <MagnifyingGlassIcon className="h-4 text-gray-500" />
-                        {result}
+                        {result.name}
                       </li>
-                    ))}
+                    </a>
+                  ))}
                   </ul>
                 </div>
               )}
