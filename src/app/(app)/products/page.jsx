@@ -24,7 +24,7 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    loadProducts(1, 10); // Load first 10 products initially
+    loadProducts(1, 12); // Load first 10 products initially
   }, []);
 
   useEffect(() => {
