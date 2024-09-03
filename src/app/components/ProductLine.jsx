@@ -6,7 +6,7 @@ export default function ProductPreview({ product }) {
     <div className="relative flex items-center justify-between text-sm">
       <a href={`/products/${product.id}`} className="group">
         <Image
-          src={product.img}
+          src={product.picture}
           height={40}
           width={60}
           style={{ width: "auto" }}
