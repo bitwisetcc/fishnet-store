@@ -31,22 +31,24 @@ export async function getProductById(id) {
   return parseProduct(prod);
 }
 
-// Função para extrair apenas o nome dos produtos
+
 export async function listProductNames(page = 1, limit = 10) {
   try {
-    const data = await fetch(`${API_URL}/itens`);
-    const prods = await data.json();
+    const response = await fetch(`${API_URL}/itens/filtro`);
+    const prods = await response.json();
+    console.log("Resposta da API:", prods);  // Verifique a resposta da API
+
+    // Se os produtos são retornados corretamente, eles devem ser um array de objetos
     const start = (page - 1) * limit;
     const end = start + limit;
 
-    
     return prods.slice(start, end).map(prod => ({
-      id: prod.id || "ID não disponível",
+      id: prod._id || "ID não disponível",
       name: prod.name || "Nome não disponível"
     }));
-    
+
   } catch (error) {
-    console.error(error.message);
+    console.error("Erro ao buscar produtos:", error.message);
     return [];
   }
 }

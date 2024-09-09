@@ -40,10 +40,6 @@ export default function Nav() {
     }
   };
 
-  const handleProductClick = (id) => {
-    router.push(`/products/${id}`);
-  };
-
   return (
     <div className="group sticky inset-x-0 top-0 z-50 text-slate-200">
       <header className="relative mx-auto h-20 text-nowrap border-b border-slate-900 bg-accent px-10 duration-200">
@@ -80,11 +76,6 @@ export default function Nav() {
                     <a key={index} href={`/products/${result.id}`}>
                       <li
                         className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
-                        onClick={() => {
-                          console.log("Produto selecionado:", result);
-                          setSearchTerm(result.name);
-                          setResults([]);
-                        }}
                       >
                         <MagnifyingGlassIcon className="h-4 text-gray-500" />
                         {result.name}
