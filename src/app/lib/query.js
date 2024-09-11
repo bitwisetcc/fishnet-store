@@ -32,15 +32,12 @@ export async function getProductById(id) {
 }
 
 
-export async function listProductNames(page = 1, limit = 10) {
+export async function listProductNames(query = "", page = 1, limit = 10) {
   try {
-    const response = await fetch(`${API_URL}/itens/filtro`);
+    const response = await fetch(`${API_URL}/itens/filtro?query=${encodeURIComponent(query)}&page=${page}&limit=${limit}`);
     const prods = await response.json();
-    console.log("Resposta da API:", prods);  // Verifique a resposta da API
+    console.log("Resposta da API:", prods);  
 
-
-
-    // Se os produtos são retornados corretamente, eles devem ser um array de objetos
     const start = (page - 1) * limit;
     const end = start + limit;
 
