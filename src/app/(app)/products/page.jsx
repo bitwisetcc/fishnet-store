@@ -1,93 +1,67 @@
 "use client";
 
 import { price } from "@/app/lib/format";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ProductPreview from "@/app/components/ProductPreview";
-import { listAllProducts } from "@/app/lib/query";
+import { listAllProducts, getProductByFilter } from "@/app/lib/query";
 
-export default () => {
+export default function ProductPage() {
   const [prods, setProds] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const [filters, setFilters] = useState({});
   const params = useParams();
   const PRODUCTS_PER_PAGE = 20;
 
   const loadProducts = useCallback(async (page, limit) => {
     setLoading(true);
-    const data = await listAllProducts(page, limit);
+    let data;
+    if (Object.keys(filters).length > 0) {
+      data = await getProductByFilter(filters);
+    } else {
+      data = await listAllProducts(page, limit);
+    }
     setProds((prevProds) => [...prevProds, ...data]);
     setLoading(false);
-  }, []);
+  }, [filters]);
 
   useEffect(() => {
-    loadProducts(1, 12); // Load first 10 products initially
-  }, []);
+    loadProducts(1, PRODUCTS_PER_PAGE); // Load first batch
+  }, [loadProducts]);
 
   useEffect(() => {
     if (page > 1) {
       loadProducts(page, PRODUCTS_PER_PAGE);
     }
-  }, [page]);
+  }, [page, loadProducts]);
 
   useEffect(() => {
     // Sort products based on params
-    if (params.sort === "az") {
-      setProds((prevProds) =>
-        [...prevProds].sort((a, b) => a.name.localeCompare(b.name)),
-      );
-    } else if (params.sort === "za") {
-      setProds((prevProds) =>
-        [...prevProds].sort((a, b) => b.name.localeCompare(a.name)),
-      );
+    if (params.sort) {
+      const sortedProds = [...prods].sort((a, b) => {
+        if (params.sort === "az") return a.name.localeCompare(b.name);
+        if (params.sort === "za") return b.name.localeCompare(a.name);
+      });
+      setProds(sortedProds);
     }
-  }, [params.sort]);
+  }, [params.sort, prods]);
 
-  const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+  const loadMore = () => setPage((prevPage) => prevPage + 1);
+
+  const handleFilterChange = (newFilter) => {
+    setPage(1); // Reset page on filter change
+    setProds([]); // Clear products
+    setFilters((prevFilters) => ({ ...prevFilters, ...newFilter })); // Update filters
   };
 
   return (
-    <article className="h-full bg-slate-50 p-7 md:flex md:p-12 lg:p-16">
-      <aside className="min-w-fit border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
-        <ul className="flex flex-col gap-3 text-sm">
-          <li>
-            <a href="/products?sort=last" className="text-stone-900">
-              Lançamento
-            </a>
-          </li>
-          <li>
-            <a href="/products?sort=az">Alfabético A-Z</a>
-          </li>
-          <li>
-            <a href="/products?sort=za">Alfabético Z-A</a>
-          </li>
-          <li>
-            <hr className="border-stone-200" />
-          </li>
-          <li>Água doce</li>
-          <li>Água salgada</li>
-          <li>
-            <hr className="border-stone-200" />
-          </li>
-          <li>Herbívoro</li>
-          <li>Onívoro</li>
-          <li>Carnívoro</li>
-          <li>
-            <hr className="border-stone-200" />
-          </li>
-          <li>Ofertas</li>
-        </ul>
-      </aside>
+    <div className="h-full bg-slate-50 p-7 md:flex md:p-12 lg:p-16">
+      <SideBar onFilterChange={handleFilterChange} />
       <hr className="my-5 border-stone-200 md:hidden" />
       <div className="md:pl-10">
-        <h1 className="col-span-4 mb-5 text-3xl font-semibold text-stone-800">
-          Produtos
-        </h1>
-        <section className="grid grid-cols-1 gap-10 bg-slate-50 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <h1 className="mb-5 text-3xl font-semibold text-stone-800">Produtos</h1>
+        <section className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {prods.map((prod, index) => (
             <ProductPreview product={prod} key={`${prod.id}-${index}`} />
           ))}
@@ -111,95 +85,70 @@ export default () => {
           Ver mais
         </button>
       </div>
-    </article>
+    </div>
   );
-};
+}
 
-function SideBar() {
+function SideBar({ onFilterChange }) {
   const [maxPrice, setMaxPrice] = useState(250);
 
-  return (
-    <aside className="min-w-fit border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
-      <ul className="flex flex-col gap-3 text-sm">
-        <li className="font-semibold text-accent">Ambiente</li>
-        <li>Água doce</li>
-        <li>Água salgada</li>
-        <li>
-          <hr className="border-stone-200" />
-        </li>
-        <li className="font-semibold text-accent">Alimentação</li>
-        <li>Herbívoro</li>
-        <li>Onívoro</li>
-        <li>Carnívoro</li>
-        <li>
-          <hr className="border-stone-200" />
-        </li>
-        <li className="font-semibold text-accent">Preços</li>
-        <li>Ofertas</li>
-        <li>
-          <label htmlFor="price-range">Preço: {price(maxPrice)}</label>
-          <br />
-          <input
-            type="range"
-            name="price-range"
-            id="price-range"
-            list="price-marks"
-            min={0}
-            max={500}
-            step={10}
-            className="accent-golden-fish"
-            onInput={(e) => setMaxPrice(e.target.value)}
-          />
-        </li>
+  const handleFilterClick = (filter) => {
+    onFilterChange(filter);
+  };
 
-        <datalist id="price-marks">
-          <option value="0">R$0</option>
-          <option value="250">R$250</option>
-          <option value="500">R$500</option>
-        </datalist>
+  return (
+    <aside className="w-64 min-w-[16rem] max-w-[16rem] border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
+      <ul className="flex flex-col gap-3 text-sm">
+        <Category
+          title="Ambiente"
+          items={[
+            <button onClick={() => handleFilterClick({ tags: "freshwater" })}>Água doce</button>,
+            <button onClick={() => handleFilterClick({ tags: "agua-salgada" })}>Água salgada</button>,
+          ]}
+        />
+        <Category
+          title="Alimentação"
+          items={[
+            <button onClick={() => handleFilterClick({ feeding: "Herb" })}>Herbívoro</button>,
+            <button onClick={() => handleFilterClick({ feeding: "Omni" })}>Onívoro</button>,
+            <button onClick={() => handleFilterClick({ feeding: "Carn" })}>Carnívoro</button>,
+          ]}
+        />
+        <Category
+          title="Valores"
+          items={[
+            <>
+              <label htmlFor="price-range">Preço: {price(maxPrice)}</label>
+              <input
+                type="range"
+                name="price-range"
+                id="price-range"
+                min={0}
+                max={500}
+                step={10}
+                value={maxPrice}
+                onInput={(e) => {
+                  setMaxPrice(Number(e.target.value));
+                  handleFilterClick({ preco: `ate-${e.target.value}` });
+                }}
+                className="accent-golden-fish"
+              />
+            </>,
+          ]}
+        />
       </ul>
     </aside>
   );
 }
 
-function OrderingDropdown() {
-  const [ordering, setOrdering] = useState("hot");
-  const [orderingTitle, setOrderingTitle] = useState("Relevância");
-
-  const orderings = [
-    { key: "hot", title: "Relevância" },
-    { key: "top", title: "Mais vendidos" },
-    { key: "+price", title: "Maior preço" },
-    { key: "-price", title: "Menor preço" },
-    { key: "date", title: "Mais recente" },
-    { key: "az", title: "Alfabético" },
-  ];
-
+function Category({ title, items }) {
   return (
-    <Menu>
-      <MenuButton className="flex items-center gap-1 rounded-xl border border-accent-middle bg-accent-light px-2 py-1">
-        Ordenar por: {orderingTitle}
-        <ChevronDownIcon className="size-3 stroke-2" />
-      </MenuButton>
-      <MenuItems
-        anchor="bottom"
-        className="mt-2 w-52 rounded-xl border border-accent-middle bg-slate-100 px-3 py-2 text-accent shadow-lg"
-      >
-        {orderings.map((item) => (
-          <MenuItem key={item.key}>
-            <button
-              onClick={() => {
-                setOrdering(item.key);
-                setOrderingTitle(item.title);
-              }}
-              className="block data-[focus]:bg-blue-100"
-              href={`/products?sort=${item.key}`}
-            >
-              {item.title}
-            </button>
-          </MenuItem>
-        ))}
-      </MenuItems>
-    </Menu>
+    <>
+      <li className="font-semibold text-accent">{title}</li>
+      {items.map((item, idx) => (
+        <li key={idx}>{item}</li>
+      ))}
+      <hr className="border-stone-200" />
+    </>
   );
 }
