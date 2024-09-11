@@ -5,10 +5,10 @@ function parseProduct(prod) {
     ...prod,
     id: prod._id,
     quantity: 5,
-    feeding: String(prod.feeding),
-    tankSize: String(prod.tank_size),
-    sizes: prod.size.match(/(\d*\scm)+/g) || ["Tamanho não informado"],
-    price: Number(prod.price.replace("$", "").trim()),
+    feeding: String(prod.feeding, "Alimentação não informada"),
+    tankSize: String(prod.tank_size, "Tamanho do tanque não informado"),
+    sizes: (prod.size ? String(prod.size).match(/\d+\s*cm/g) : null) || ["Tamanho não informado"],
+    price: prod.price ? Number(String(prod.price).replace("$", "").trim()) : 0,
   };
 }
 
@@ -37,6 +37,8 @@ export async function listProductNames(page = 1, limit = 10) {
     const response = await fetch(`${API_URL}/itens/filtro`);
     const prods = await response.json();
     console.log("Resposta da API:", prods);  // Verifique a resposta da API
+
+
 
     // Se os produtos são retornados corretamente, eles devem ser um array de objetos
     const start = (page - 1) * limit;

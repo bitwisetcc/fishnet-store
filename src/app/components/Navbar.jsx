@@ -15,7 +15,6 @@ export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [cachedProducts, setCachedProducts] = useState([]);
-  const router = useRouter(); // Para navegar programaticamente
 
   useEffect(() => {
     async function fetchProducts() {
