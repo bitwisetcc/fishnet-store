@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { MagnifyingGlassIcon, ChatBubbleLeftRightIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { listProductNames } from '../lib/query';
-import debounce from 'lodash.debounce';  // Se você instalou lodash.debounce
+import debounce from 'lodash.debounce';
 
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Controla a visibilidade do dropdown
+  const searchRef = useRef(null); 
+  const resultsRef = useRef(null);
 
   // Função para buscar produtos
   const fetchProducts = useCallback(debounce(async (query) => {
@@ -18,14 +21,42 @@ export default function Nav() {
     } else {
       setResults([]);
     }
-  }, 500), []); // O delay de 500ms pode ser ajustado conforme necessário
+  }, 500), []);
 
   useEffect(() => {
     fetchProducts(searchTerm);
   }, [searchTerm, fetchProducts]);
 
+  // Detecta cliques fora do campo de busca e do dropdown
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        searchRef.current && !searchRef.current.contains(event.target) &&
+        resultsRef.current && !resultsRef.current.contains(event.target)
+      ) {
+        setIsDropdownVisible(false); // Esconde o dropdown ao clicar fora
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
+    if (e.target.value) {
+      setIsDropdownVisible(true); // Mostra o dropdown ao digitar
+    } else {
+      setIsDropdownVisible(false); // Esconde o dropdown se não houver texto
+    }
+  };
+
+  const handleInputFocus = () => {
+    if (searchTerm) {
+      setIsDropdownVisible(true); // Mostra o dropdown ao focar, se houver texto
+    }
   };
 
   return (
@@ -46,19 +77,23 @@ export default function Nav() {
               />
               FISHNET STORE
             </a>
-            <div className="relative ml-5">
+            <div className="relative ml-5" ref={searchRef}>
               <input
                 type="text"
                 name="search"
                 placeholder="O que você procura?"
                 value={searchTerm}
                 onChange={handleInputChange}
+                onFocus={handleInputFocus} // Mostra o dropdown ao focar
                 className="rounded-full border border-stone-600 px-3 py-2 focus:border-stone-500 focus:outline-none w-96"
               />
               <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-1/2 transform text-stone-500" />
 
-              {results.length > 0 && (
-                <div className="absolute mt-1 w-full bg-white border border-stone-600 rounded-lg shadow-lg z-80">
+              {isDropdownVisible && results.length > 0 && (
+                <div
+                  className="absolute mt-1 w-full bg-white border border-stone-600 rounded-lg shadow-lg z-80"
+                  ref={resultsRef} // Referência para o dropdown
+                >
                   <ul className="divide-y divide-gray-300">
                     {results.map((result, index) => (
                       <a key={index} href={`/products/${result.id}`}>
