@@ -1,17 +1,15 @@
 # FishNet
 
-Parte do projeto integrador de 2024 na Fatec Antonio Russo. Um sistema de vendas de peixes ornamentais. Este repositório é dedicado à interface do cliente.
+> Parte do projeto integrador de 2024 na Fatec Antonio Russo. Um sistema de gerenciamento de vendas. Este repositório é dedicado à interface do cliente.
+
+![Landing page](.github/images/landing-page.png)
 
 ## Prefácio
 
-Este é um projeto [Next.js](https://nextjs.org/) inicializado com [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-Para rodar a loja localmente, digite `npm run dev` no terminal.
-
-As páginas do app são arquivos `page.js` nos diretórios descendentes de `src/app`. As mudanças de qualquer arquivo automaticamente atualizam o servidor.
+Este é um projeto [Next.js](https://nextjs.org/). Para rodar a loja localmente, execute `npm run dev` no terminal. As páginas do app são arquivos `page.js` nos diretórios descendentes de `src/app`. As mudanças de qualquer arquivo automaticamente atualizam o servidor.
 
 > [!IMPORTANT]
-> Crie um pull request ao enviar seu código para que um administrador possa realizar revisões necessárias.
+> Crie um pull request dar merge em uma branch para que um administrador possa realizar revisões necessárias.
 
 ## Saiba mais
 

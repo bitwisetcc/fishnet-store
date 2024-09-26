@@ -2,11 +2,13 @@
 
 import CartItems from "@/app/components/CartItems";
 import CartSummary from "@/app/components/CartSummary";
+import { useAuth } from "@/app/lib/auth";
 import { addCartItem, listCartItems, removeFromCart } from "@/app/lib/cart";
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 
 export default function CartPage() {
+  useAuth();
   const [prods, setProds] = useState([]);
 
   useEffect(() => {
