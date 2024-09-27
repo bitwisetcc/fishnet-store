@@ -20,7 +20,10 @@ export default () => {
 
   useEffect(() => {
     getProductById(id)
-      .then((p) => setProd(p))
+    .then((p) => {
+      console.log(p); // Verifique se a URL da imagem está aqui
+      setProd(p);
+    })
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -72,7 +75,7 @@ function ProductOverview({ prod, openImg }) {
   return (
     <article className="mb-8 grid-cols-2 place-content-center gap-16 pr-12 lg:grid">
       <Image
-        src={prod.picture}
+        src={prod.pictures[0]}
         alt={prod.name}
         width={500}
         height={500}
@@ -188,7 +191,7 @@ function ImageDialog({ prod, open, setOpen }) {
       <div className="fixed inset-0 flex w-screen items-center justify-center bg-slate-800/80 pt-10">
         <DialogPanel className="relative">
           <Image
-            src={prod.picture}
+            src={prod.pictures[0]}
             alt={prod.name}
             width={500}
             height={500}
