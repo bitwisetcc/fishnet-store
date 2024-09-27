@@ -21,7 +21,6 @@ export default () => {
   useEffect(() => {
     getProductById(id)
     .then((p) => {
-      console.log(p); // Verifique se a URL da imagem está aqui
       setProd(p);
     })
       .finally(() => setLoading(false));
@@ -40,6 +39,8 @@ export default () => {
     );
 
   if (!prod) return <h1>Produto não encontrado</h1>;
+
+  // const imageSrc = prod.pictures.length > 0 ? prod.pictures[0] : '/static/default-image.jpg'; //Podemos implementar isso para aparecer uma imagem padrão caso não ache a imagem da API!
 
   return (
     <div className="h-full p-8">
