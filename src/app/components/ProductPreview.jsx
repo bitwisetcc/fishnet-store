@@ -65,7 +65,7 @@ export default function ProductPreview({ product }) {
         <div className="flex items-center justify-between">
           {hasDiscount ? (
             <div className="flex flex-col items-start">
-              <p className="text-lg font-bold text-gray-600 line-through">{price(product.price)}</p>
+              <p className="text-md font-bold text-gray-600 line-through">{price(product.price)}</p>
               <p className="text-lg font-bold text-green-500">{price(discountedPrice)}</p>
             </div>
           ) : (

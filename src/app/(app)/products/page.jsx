@@ -52,7 +52,7 @@ export default function ProductPage() {
   const handleFilterChange = (newFilter) => {
     setPage(1); // Reset page on filter change
     setProds([]); // Clear products
-    setFilters((prevFilters) => ({ ...prevFilters, ...newFilter })); // Update filters
+    setFilters((prevFilters) => ({ ...prevFilters, ...newFilter }));
   };
 
   return (
@@ -91,6 +91,8 @@ export default function ProductPage() {
 
 function SideBar({ onFilterChange }) {
   const [maxPrice, setMaxPrice] = useState(250);
+  const [minSize, setMinSize] = useState(1);
+  const [maxSize, setMaxSize] = useState(10);
 
   const handleFilterClick = (filter) => {
     onFilterChange(filter);
@@ -99,29 +101,64 @@ function SideBar({ onFilterChange }) {
   return (
     <aside className="w-64 min-w-[16rem] max-w-[16rem] border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
       <ul className="flex flex-col gap-3 text-sm">
+        {/* Ordenar com dropdown */}
+        <Category
+          title="Ordenar"
+          items={[
+            <select
+              onChange={(e) => handleFilterClick({ ordem: e.target.value })}
+              className="p-2 border rounded-md"
+            >
+              <option value="maior-preco">Maior preço</option>
+              <option value="menor-preco">Menor preço</option>
+              <option value="recentes">Mais recentes</option>
+              <option value="procurados">Mais procurados</option>
+              <option value="Alfabetica-a-z">Ordem alfabética A-Z</option>
+              <option value="Alfabetica-z-a">Ordem alfabética Z-A</option>
+            </select>,
+          ]}
+        />
+
+        {/* Ambiente com ícones */}
         <Category
           title="Ambiente"
           items={[
-            <button onClick={() => handleFilterClick({ tags: "freshwater" })}>Água doce</button>,
-            <button onClick={() => handleFilterClick({ tags: "agua-salgada" })}>Água salgada</button>,
+            <button onClick={() => handleFilterClick({ tags: "freshwater" })}>
+              🌿 Água doce
+            </button>,
+            <button onClick={() => handleFilterClick({ tags: "saltwater" })}>
+              🌊 Água salgada
+            </button>,
+            <button onClick={() => handleFilterClick({ tags: "brackish" })}>
+              🌍 Mistura (Água Salobra)
+            </button>,
           ]}
         />
+
+        {/* Alimentação com ícones */}
         <Category
           title="Alimentação"
           items={[
-            <button onClick={() => handleFilterClick({ feeding: "Herb" })}>Herbívoro</button>,
-            <button onClick={() => handleFilterClick({ feeding: "Omni" })}>Onívoro</button>,
-            <button onClick={() => handleFilterClick({ feeding: "Carn" })}>Carnívoro</button>,
+            <button onClick={() => handleFilterClick({ feeding: "Herb" })}>
+              🌱 Herbívoro
+            </button>,
+            <button onClick={() => handleFilterClick({ feeding: "Omni" })}>
+              🍽️ Onívoro
+            </button>,
+            <button onClick={() => handleFilterClick({ feeding: "Carn" })}>
+              🍖 Carnívoro
+            </button>,
           ]}
         />
+
+        {/* Slider de preço */}
         <Category
           title="Valores"
           items={[
             <>
-              <label htmlFor="price-range">Preço: {price(maxPrice)}</label>
+              <label htmlFor="price-range">Preço: R${maxPrice}</label>
               <input
                 type="range"
-                name="price-range"
                 id="price-range"
                 min={0}
                 max={500}
@@ -136,12 +173,65 @@ function SideBar({ onFilterChange }) {
             </>,
           ]}
         />
+
+        {/* Filtro de tamanho */}
+        <Category
+          title="Tamanho"
+          items={[
+            <>
+              <label htmlFor="min-size">Tamanho Mínimo: {minSize} cm</label>
+              <input
+                type="range"
+                id="min-size"
+                min={1}
+                max={20}
+                step={1}
+                value={minSize}
+                onInput={(e) => {
+                  setMinSize(Number(e.target.value));
+                  handleFilterClick({ minSize: e.target.value });
+                }}
+                className="accent-golden-fish"
+              />
+              <label htmlFor="max-size">Tamanho Máximo: {maxSize} cm</label>
+              <input
+                type="range"
+                id="max-size"
+                min={1}
+                max={20}
+                step={1}
+                value={maxSize}
+                onInput={(e) => {
+                  setMaxSize(Number(e.target.value));
+                  handleFilterClick({ maxSize: e.target.value });
+                }}
+                className="accent-golden-fish"
+              />
+            </>,
+          ]}
+        />
+
+        {/* Filtro por comportamento social */}
+        <Category
+          title="Comportamento Social"
+          items={[
+            <button onClick={() => handleFilterClick({ behavior: "peaceful" })}>
+              🕊️ Pacífico
+            </button>,
+            <button onClick={() => handleFilterClick({ behavior: "aggressive" })}>
+              🦈 Agressivo
+            </button>,
+            <button onClick={() => handleFilterClick({ behavior: "schooling" })}>
+              🐟 Em cardume
+            </button>,
+          ]}
+        />
       </ul>
     </aside>
   );
 }
 
-function Category({ title, items }) {
+function Category({ title, items = [] }) {
   return (
     <>
       <li className="font-semibold text-accent">{title}</li>
