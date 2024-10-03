@@ -44,7 +44,7 @@ export default function CartPage() {
         name: prod.name,
         quantity: quantity,
         price: prod.price,
-        img: prod.picture,
+        img: prod.pictures[0],
       };
       setProds((prevProds) => {
         const existingItem = prevProds.find((item) => item.id === productId);

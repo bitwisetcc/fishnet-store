@@ -43,7 +43,7 @@ function CartItem({ cartItem, onRemove }) {
     <tr className="max-h-10 border-b border-b-stone-300 transition-colors duration-300 hover:bg-slate-100">
       <td className="flex items-center gap-3 py-3 md:gap-4">
         <Image
-          src={cartItem.picture}
+          src={cartItem.pictures[0]}
           alt={cartItem.name}
           width={150}
           height={100}
