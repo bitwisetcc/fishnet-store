@@ -10,8 +10,13 @@ export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Controla a visibilidade do dropdown
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado de autenticação
   const searchRef = useRef(null); 
   const resultsRef = useRef(null);
+
+  // Simular uma função de login
+  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => setIsLoggedIn(false);
 
   // Função para buscar produtos
   const fetchProducts = useCallback(debounce(async (query) => {
@@ -112,18 +117,45 @@ export default function Nav() {
           </div>
 
           <div className="flex h-full basis-0 items-center justify-end gap-x-6">
-            <span href="/contact" className="flex items-center gap-2">
-              <ChatBubbleLeftRightIcon className="size-6 text-golden-fish" />
-              Entre em contato
-            </span>
-            <a href="/profile" className="flex items-center gap-2">
-              <UserCircleIcon className="size-6 text-golden-fish" />
-              Bem vindo!
-            </a>
+            {/* Verifica se o usuário está logado */}
+            {!isLoggedIn ? (
+              <>
+                <span href="/contact" className="flex items-center gap-2">
+                  <ChatBubbleLeftRightIcon 
+                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
+                  />
+                  Entre em contato
+                </span>
+                <a href="/login" className="flex items-center gap-2 transform hover:scale-110 duration-300" onClick={handleLogin}>
+                  <UserCircleIcon 
+                    className="size-6 text-golden-fish transition duration-300" 
+                  />
+                  Entrar
+                </a>
+              </>
+            ) : (
+              <>
+                <span className="flex items-center gap-2">
+                  <ChatBubbleLeftRightIcon 
+                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
+                  />
+                  Olá, Usuário!
+                </span>
+                <a href="/login" className="flex items-center gap-2 transform hover:scale-110 duration-300">
+                  <UserCircleIcon 
+                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
+                  />
+                  Minha conta
+                </a>
+                <button className="text-red-600 hover:text-red-400" onClick={handleLogout}>Sair</button>
+              </>
+            )}
             <a href="/cart">
-              <ShoppingCartIcon className="size-6 text-golden-fish" />
+              <ShoppingCartIcon 
+                className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
+              />
             </a>
-          </div>
+          </div>  
         </nav>
       </header>
     </div>
