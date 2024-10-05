@@ -31,7 +31,8 @@ export async function login(email, password) {
     console.log("Autenticação completa");
   } catch (error) {
     console.error("Erro durante o login:", error);
-    throw error;
+    
+
   }
 }
 
