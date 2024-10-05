@@ -34,9 +34,10 @@ export default function Footer() {
                     </div>
                     <div className="flex justify-center items-center">
                         <ul>
-                            <li>asdasd</li>
-                            <li>asdasd</li>
-                            <li>asdasd</li>
+                            <li className="transform hover:text-golden-fish hover:scale-105 transition duration-300">
+                            <a href="https://fishnet-management.vercel.app">Entre como Funcionário Aqui</a>
+                            </li>
+                            <li></li>
                         </ul>
                     </div>
                 </div>
