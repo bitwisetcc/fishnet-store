@@ -31,20 +31,8 @@ export async function login(email, password) {
     console.log("Autenticação completa");
   } catch (error) {
     console.error("Erro durante o login:", error);
-    
-
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 //Conexao padrão com a API
 /* export async function login(email, password) {
