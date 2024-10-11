@@ -20,7 +20,9 @@ export default () => {
 
   useEffect(() => {
     getProductById(id)
-      .then((p) => setProd(p))
+    .then((p) => {
+      setProd(p);
+    })
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -37,6 +39,8 @@ export default () => {
     );
 
   if (!prod) return <h1>Produto não encontrado</h1>;
+
+  // const imageSrc = prod.pictures.length > 0 ? prod.pictures[0] : '/static/default-image.jpg'; //Podemos implementar isso para aparecer uma imagem padrão caso não ache a imagem da API!
 
   return (
     <div className="h-full p-8">
@@ -72,7 +76,7 @@ function ProductOverview({ prod, openImg }) {
   return (
     <article className="mb-8 grid-cols-2 place-content-center gap-16 pr-12 lg:grid">
       <Image
-        src={prod.picture}
+        src={prod.pictures[0]}
         alt={prod.name}
         width={500}
         height={500}
@@ -188,7 +192,7 @@ function ImageDialog({ prod, open, setOpen }) {
       <div className="fixed inset-0 flex w-screen items-center justify-center bg-slate-800/80 pt-10">
         <DialogPanel className="relative">
           <Image
-            src={prod.picture}
+            src={prod.pictures[0]}
             alt={prod.name}
             width={500}
             height={500}

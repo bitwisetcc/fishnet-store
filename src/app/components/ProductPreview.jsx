@@ -23,7 +23,7 @@ export default function ProductPreview({ product }) {
         className="block relative overflow-hidden rounded-t-lg"
       >
         <Image
-          src={product.picture}
+          src={product.pictures[0]}
           height={100}
           width={200}
           style={{ width: "100%", height: "160px" }}
