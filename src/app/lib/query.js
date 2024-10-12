@@ -6,9 +6,10 @@ function parseProduct(prod) {
     ...prod,
     id: prod._id,
     quantity: 5,
-    feeding: String(prod.feeding),
-    tankSize: String(prod.tank_size),
-    sizes: prod.size.match(/(\d*\scm)+/g) || ["Tamanho não informado"],
+    feeding: String(prod.feeding || "Alimentação não informada"),
+    tankSize: String(prod.tank_size || "Tamanho do tanque não informado"),
+    sizes: (prod.size ? String(prod.size).match(/\d+\s*cm/g) : null) || ["Tamanho não informado"],
+    price: prod.price ? Number(String(prod.price).replace("$", "").trim()) : 0,
   };
 }
 
@@ -62,5 +63,23 @@ export async function listProductNames(query = "", page = 1, limit = 10) {
   } catch (error) {
     console.error("Erro ao buscar produtos:", error.message);
     return [];
+  }
+}
+
+export async function getProductByFilter(filters) {
+  try {
+    const query = new URLSearchParams(filters).toString();
+    const data = await fetch(`${API_URL}/prods/filtros?${query}`);
+    console.log(data);
+    const prods = await data.json();
+
+    if (!Array.isArray(prods)) {
+      return []; // Garante que retornamos um array vazio caso 'prods' não seja um array
+    }
+
+    return prods.map(parseProduct);
+  } catch (error) {
+    console.error(error.message);
+    return []; // Retorna um array vazio em caso de erro
   }
 }
