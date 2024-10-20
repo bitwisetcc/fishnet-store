@@ -1,10 +1,11 @@
-export const API_URL = "https://fishnet-api-py.onrender.com";
+export const API_URL = "https://fishnet-api-py-dev.onrender.com";
 
 
 function parseProduct(prod) {
   return {
     ...prod,
     id: prod._id,
+    image: prod.image || "/static/placeholder.png", 
     quantity: 5,
     feeding: String(prod.feeding || "Alimentação não informada"),
     tankSize: String(prod.tank_size || "Tamanho do tanque não informado"),
@@ -70,7 +71,6 @@ export async function getProductByFilter(filters) {
   try {
     const query = new URLSearchParams(filters).toString();
     const data = await fetch(`${API_URL}/prods/filtros?${query}`);
-    console.log(data);
     const prods = await data.json();
 
     if (!Array.isArray(prods)) {
@@ -83,3 +83,4 @@ export async function getProductByFilter(filters) {
     return []; // Retorna um array vazio em caso de erro
   }
 }
+
