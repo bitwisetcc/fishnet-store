@@ -9,16 +9,15 @@ import debounce from 'lodash.debounce';
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Controla a visibilidade do dropdown
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado de autenticação
-  const searchRef = useRef(null); 
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileSearchVisible, setIsMobileSearchVisible] = useState(false);
+  const searchRef = useRef(null);
   const resultsRef = useRef(null);
 
-  // Simular uma função de login
   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
 
-  // Função para buscar produtos
   const fetchProducts = useCallback(debounce(async (query) => {
     if (query) {
       const products = await listProductNames(query, 1, 10);
@@ -32,7 +31,6 @@ export default function Nav() {
     fetchProducts(searchTerm);
   }, [searchTerm, fetchProducts]);
 
-  // Detecta cliques fora do campo de busca e do dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -60,15 +58,20 @@ export default function Nav() {
 
   const handleInputFocus = () => {
     if (searchTerm) {
-      setIsDropdownVisible(true); 
+      setIsDropdownVisible(true);
     }
+  };
+
+  const toggleMobileSearch = () => {
+    setIsMobileSearchVisible(!isMobileSearchVisible);
   };
 
   return (
     <div className="group sticky inset-x-0 top-0 z-50 text-slate-200">
-      <header className="relative mx-auto h-20 text-nowrap border-b border-slate-900 bg-accent px-10 duration-200">
+      <header className="relative mx-auto h-16 sm:h-20 text-nowrap border-b border-slate-900 bg-accent px-4 sm:px-10 duration-200">
         <nav className="content-container flex h-full items-center justify-between text-sm">
-          <div className="hidden items-center md:flex">
+          {/* Logo */}
+          <div className="flex items-center">
             <a
               href="/"
               className="flex items-center gap-3 text-sm text-golden-fish font-semibold hover:text-yellow-600 duration-150"
@@ -76,87 +79,84 @@ export default function Nav() {
               <Image
                 src="/static/logo.jpg"
                 alt="Logo da FishNet"
-                width={40}
-                height={40}
-                className="rounded-full"
+                width={32}
+                height={32}
+                className="rounded-full sm:w-10 sm:h-10"
               />
-              FISHNET STORE
+              <span className="hidden sm:block">FISHNET STORE</span>
             </a>
-            <div className="relative ml-5" ref={searchRef}>
-              <input
-                type="text"
-                name="search"
-                placeholder="O que você procura?"
-                value={searchTerm}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus} // Mostra o dropdown ao focar
-                className="rounded-full border border-stone-600 px-3 py-2 focus:border-stone-500 focus:outline-none w-96 text-black"
-              />
-              <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-1/2 transform text-black" />
-
-              {isDropdownVisible && results.length > 0 && (
-                <div
-                  className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-80"
-                  ref={resultsRef} // Referência para o dropdown
-                >
-                  <ul className="divide-y divide-gray-300">
-                    {results.map((result, index) => (
-                      <a key={index} className="text-black" href={`/products/${result.id}`}>
-                        <li
-                          className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
-                        >
-                          <MagnifyingGlassIcon className="h-4 text-black" />
-                          {result.name}
-                        </li>
-                      </a>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
           </div>
 
-          <div className="flex h-full basis-0 items-center justify-end gap-x-6">
-            {/* Verifica se o usuário está logado */}
-            {!isLoggedIn ? (
-              <>
-                <span href="/contact" className="flex items-center gap-2">
-                  <ChatBubbleLeftRightIcon 
-                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
-                  />
-                  Entre em contato
-                </span>
-                <a href="/login" className="flex items-center gap-2 transform hover:scale-110 duration-300" onClick={handleLogin}>
-                  <UserCircleIcon 
-                    className="size-6 text-golden-fish transition duration-300" 
-                  />
-                  Entrar
-                </a>
-              </>
-            ) : (
-              <>
-                <span className="flex items-center gap-2">
-                  <ChatBubbleLeftRightIcon 
-                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
-                  />
-                  Olá, Usuário!
-                </span>
-                <a href="/login" className="flex items-center gap-2 transform hover:scale-110 duration-300">
-                  <UserCircleIcon 
-                    className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
-                  />
-                  Minha conta
-                </a>
-                <button className="text-red-600 hover:text-red-400" onClick={handleLogout}>Sair</button>
-              </>
+          {/* Campo de busca visível apenas em telas grandes */}
+          <div className="hidden sm:flex items-center ml-5 relative" ref={searchRef}>
+            <input
+              type="text"
+              name="search"
+              placeholder="O que você procura?"
+              value={searchTerm}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              className="rounded-full border border-stone-600 px-3 py-2 focus:border-stone-500 focus:outline-none w-96 text-black"
+            />
+            <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-1/2 transform text-black" />
+
+            {isDropdownVisible && results.length > 0 && (
+              <div
+                className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                ref={resultsRef}
+              >
+                <ul className="divide-y divide-gray-300">
+                  {results.map((result, index) => (
+                    <a key={index} className="text-black" href={`/products/${result.id}`}>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
+                      >
+                        <MagnifyingGlassIcon className="h-4 text-black" />
+                        {result.name}
+                      </li>
+                    </a>
+                  ))}
+                </ul>
+              </div>
             )}
-            <a href="/cart">
-              <ShoppingCartIcon 
-                className="size-6 text-golden-fish hover:text-yellow-400 transform hover:scale-110 transition duration-300" 
-              />
+          </div>
+
+          {/* Ícones compactos para telas pequenas */}
+          <div className="flex h-full items-center gap-x-4 sm:gap-x-6">
+            <button className="block sm:hidden" onClick={toggleMobileSearch}>
+              <MagnifyingGlassIcon className="h-6 w-6 text-golden-fish hover:text-yellow-400 transition" />
+            </button>
+
+            <a href="/cart" className="flex items-center">
+              <ShoppingCartIcon className="h-6 w-6 text-golden-fish hover:text-yellow-400 transition" />
             </a>
-          </div>  
+
+            {!isLoggedIn ? (
+              <a href="/login" className="flex items-center gap-2">
+                <UserCircleIcon className="h-6 w-6 text-golden-fish transition" />
+              </a>
+            ) : (
+              <button onClick={handleLogout} className="text-red-600 hover:text-red-400">
+                Sair
+              </button>
+            )}
+          </div>
         </nav>
+
+        {/* Campo de busca móvel */}
+        {isMobileSearchVisible && (
+          <div className="flex sm:hidden items-center p-4">
+            <input
+              type="text"
+              name="mobile-search"
+              placeholder="O que você procura?"
+              value={searchTerm}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              className="flex-1 border border-stone-600 px-3 py-2 rounded-full focus:outline-none text-black"
+            />
+          </div>
+        )}
       </header>
     </div>
   );
