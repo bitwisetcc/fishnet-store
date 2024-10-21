@@ -24,7 +24,7 @@ function Login() {
 
   return (
     <article className="flex items-center justify-center h-[100vh] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[#11223a]"></div>
+      <div className="absolute inset-0 bg-accent"></div>
       <div className="absolute inset-0 flex justify-center items-center">
         <div className="w-[300px] h-[300px] bg-[#CBAD51] opacity-30 rounded-full absolute -left-20 -bottom-20 animate-pulse"></div>
         <div className="w-[200px] h-[200px] bg-[#CBAD51] opacity-20 rounded-full absolute left-40 top-40 animate-pulse"></div>
@@ -96,7 +96,7 @@ function Login() {
               Esqueceu a senha?
             </a>
             <a
-              href="/users/new"
+              href="/register"
               className="text-blue-dark hover:text-yellow-light w-max"
             >
               Não tem uma conta? Crie agora!

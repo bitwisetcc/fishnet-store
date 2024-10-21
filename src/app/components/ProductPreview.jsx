@@ -54,10 +54,10 @@ export default function ProductPreview({ product }) {
         href={`/products/${product.id}`}
         className="block m-2 flex flex-col justify-between"
       >
-        <p className="truncate text-lg font-semibold text-gray-800">{product.name}</p>
+        <p className="truncate text-sm md:text-lg font-semibold text-gray-800">{product.name}</p>
         <p className="mt-4 text-sm text-gray-500">Preço:</p>
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-gray-600">{price(product.price)}</p>
+          <p className="text-md md:text-lg font-bold text-gray-600">{price(product.price)}</p>
         </div>
       </a>
     </div>
