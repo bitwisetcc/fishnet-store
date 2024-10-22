@@ -44,7 +44,7 @@ function SlideShow() {
   const images = [
     "static/banner-lançamentos.png",
     "static/banner-betta.png",
-    "https://www.petz.com.br/blog/wp-content/uploads/2017/02/tipos-de-peixe-pet.jpg",
+    "static/banner-tetra.png",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -69,8 +69,6 @@ function SlideShow() {
         maxHeight: "375px",
         overflow: "hidden",
       }}
-      // 50% da altura da tela
-      // Ocupa toda a largura da tela e define uma altura fixa
     >
       <p className="sr-only">Slideshow Items</p>
 
@@ -79,7 +77,7 @@ function SlideShow() {
           <img
             src={images[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
-            className="h-full w-full object-cover" // Ajusta a imagem para cobrir o espaço
+            className="h-full w-full object-cover"
           />
         </li>
       </ul>
@@ -115,33 +113,33 @@ function SlideShow() {
 
 function Shipping() {
   return (
-    <section className="grid-cols-4 bg-accent-middle px-16 py-4 text-white lg:grid">
+    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-accent-middle px-4 py-4 text-white lg:px-16">
       <div className="flex items-center gap-3">
-        <ArchiveBoxIcon className="size-10 text-golden-fish" />
+        <ArchiveBoxIcon className="h-6 w-6 text-golden-fish" />
         <div>
-          <h3 className="font-semibold text-golden-fish">Frete grátis</h3>
-          <span className="text-sm">Para itens retirados na loja</span>
+          <h3 className="text-sm font-semibold text-golden-fish">Frete grátis</h3>
+          <span className="text-xs">Para itens retirados na loja</span>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <MapPinIcon className="size-10 text-golden-fish" />
+        <MapPinIcon className="h-6 w-6 text-golden-fish" />
         <div>
-          <h3 className="font-semibold text-golden-fish">Envio garantido</h3>
-          <span className="text-sm">Entregamos para todo o Brasil</span>
+          <h3 className="text-sm font-semibold text-golden-fish">Envio garantido</h3>
+          <span className="text-xs">Entregamos para todo o Brasil</span>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <CreditCardIcon className="size-10 text-golden-fish" />
+        <CreditCardIcon className="h-6 w-6 text-golden-fish" />
         <div>
-          <h3 className="font-semibold text-golden-fish">Pagamentos</h3>
-          <span className="text-sm">Aceitamos PIX, débito e crédito</span>
+          <h3 className="text-sm font-semibold text-golden-fish">Pagamentos</h3>
+          <span className="text-xs">Aceitamos PIX, débito e crédito</span>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <HandThumbUpIcon className="size-10 text-golden-fish" />
+        <HandThumbUpIcon className="h-6 w-6 text-golden-fish" />
         <div>
-          <h3 className="font-semibold text-golden-fish">Converse conosco</h3>
-          <span className="text-sm">Tire dúvidas por WhatsApp</span>
+          <h3 className="text-sm font-semibold text-golden-fish">Converse conosco</h3>
+          <span className="text-xs">Tire dúvidas por WhatsApp</span>
         </div>
       </div>
     </section>
@@ -172,7 +170,7 @@ function Categories() {
     },
     {
       name: "Carnívoros",
-      image: "https://pixfeeds.com/images/12/369931/1200-521801388-red-scorpionfish.jpg",
+      image: "https://aquaticarts.com/cdn/shop/products/Blue-Zebra-Angelfish-3_1800x1800.jpg",
       id: "carnivore",
     },
     {
@@ -193,23 +191,29 @@ function Categories() {
   ];
 
   return (
-    <section className="flex justify-center gap-10 border-b border-slate-300 bg-slate-100 py-5 pt-8 shadow-inner shadow-slate-500">
-      {categories.map((category) => (
-        <Link
-          className="flex flex-col items-center gap-2"
-          key={category.id}
-          href={`/products?category=${category.id}`}
-        >
-          <Image
-            src={category.image}
-            alt={category.name}
-            width={100}
-            height={100}
-            className="aspect-square w-24 rounded-full object-cover border-2 border-accent-middle"
-          />
-          <span>{category.name}</span>
-        </Link>
-      ))}
-    </section>
+    <section className="flex overflow-x-auto justify-center border-b border-slate-300 bg-slate-100 py-5 pt-8 shadow-inner shadow-slate-500">
+  <div className="flex flex-nowrap justify-start gap-4 min-w-[375px]">
+    {categories.map((category) => (
+      <Link
+        className="flex flex-col items-center gap-2 shrink-0 w-28" // Ajuste a largura conforme necessário
+        key={category.id}
+        href={`/products?category=${category.id}`}
+      >
+        <Image
+          src={category.image}
+          alt={category.name}
+          width={100}
+          height={100}
+          className="aspect-square w-24 rounded-full object-cover border-2 border-accent-middle"
+        />
+        <span className="text-xs">{category.name}</span>
+      </Link>
+    ))}
+  </div>
+</section>
+
+
+
+  
   );
 }
