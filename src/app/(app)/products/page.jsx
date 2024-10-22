@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ProductPreview from "@/app/components/ProductPreview";
 import { listAllProducts, getProductByFilter } from "@/app/lib/query";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 
 export default function ProductPage() {
   const [prods, setProds] = useState([]);
@@ -34,7 +35,7 @@ export default function ProductPage() {
       setProds(data);
       setLoading(false);
     },
-    [filters]
+    [filters],
   );
 
   useEffect(() => {
@@ -84,7 +85,9 @@ export default function ProductPage() {
         <h1 className="mb-5 text-3xl font-semibold text-stone-800">Produtos</h1>
 
         {noResults ? (
-          <div className="text-red-500">Nenhum produto encontrado ou existente</div>
+          <div className="text-red-500">
+            Nenhum produto encontrado ou existente
+          </div>
         ) : (
           <section className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {prods.map((prod, index) => (
@@ -129,9 +132,19 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
     handleFilterClick({ [type]: value });
   };
 
+  const [open, setOpen] = useState(false);
+
   return (
-    <aside className="w-64 min-w-[16rem] max-w-[16rem] border-stone-200 text-stone-600 md:border-b-0 md:border-r md:pr-12">
-      <ul className="flex flex-col gap-3 text-sm">
+    <aside className="w-full border-stone-200 text-stone-600 md:w-64 md:min-w-[16rem] md:max-w-[16rem] md:border-b-0 md:border-r md:pr-12">
+      <button
+        className="mb-3 flex w-full items-center gap-1 rounded-lg border border-slate-500 bg-slate-100 p-3 py-2 shadow-sm md:hidden"
+        onClick={() => setOpen(!open)}
+      >
+        Filtros <FunnelIcon className="size-5" />{" "}
+      </button>
+      <ul
+        className={`flex origin-top flex-col gap-3 text-sm transition-transform duration-150 ${!open && "h-0 scale-y-0 md:h-full md:scale-y-100"}`}
+      >
         <Category
           title="Ordenar"
           items={[
@@ -139,8 +152,8 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
               id="order-select" // Adicionando o id para resetar o select
               onChange={(e) => handleFilterClick({ ordem: e.target.value })}
               value={filters.ordem || ""} // Seleciona o valor baseado no filtro
-              className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                filters.ordem ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                filters.ordem ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               <option value="">Selecione</option> {/* Opção padrão */}
@@ -157,16 +170,16 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
           items={[
             <button
               onClick={() => handleFilterClick({ tags: "fresh" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.tags === "fresh" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.tags === "fresh" ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               🌿 Água doce
             </button>,
             <button
               onClick={() => handleFilterClick({ tags: "salt" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.tags === "salt" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.tags === "salt" ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               🌊 Água salgada
@@ -179,24 +192,24 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
           items={[
             <button
               onClick={() => handleFilterClick({ feeding: "Herb" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.feeding === "Herb" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.feeding === "Herb" ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               🌱 Herbívoro
             </button>,
             <button
               onClick={() => handleFilterClick({ feeding: "Omni" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.feeding === "Omni" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.feeding === "Omni" ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               🍽️ Onívoro
             </button>,
             <button
               onClick={() => handleFilterClick({ feeding: "Carn" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.feeding === "Carn" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.feeding === "Carn" ? "border-blue-500 bg-blue-100" : ""
               }`} // Destaque se filtro estiver ativo
             >
               🍖 Carnívoro
@@ -208,7 +221,7 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
           title="Valores"
           items={[
             <>
-              <label htmlFor="min-price" className="block mb-1">
+              <label htmlFor="min-price" className="mb-1 block">
                 Preço mínimo: R$
               </label>
               <input
@@ -217,13 +230,13 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
                 min={0}
                 step={10}
                 value={filters.minPrice || ""} // Preenche com o valor do filtro ou vazio
-                className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  filters.minPrice ? "bg-blue-100 border-blue-500" : ""
+                className={`w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  filters.minPrice ? "border-blue-500 bg-blue-100" : ""
                 }`} // Destaque se filtro estiver ativo
                 onChange={(e) => handlePriceChange(e, "minPrice")} // Atualiza o estado ao mudar o valor
               />
 
-              <label htmlFor="max-price" className="block mb-1">
+              <label htmlFor="max-price" className="mb-1 block">
                 Preço máximo: R$
               </label>
               <input
@@ -232,8 +245,8 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
                 min={0}
                 step={10}
                 value={filters.maxPrice || ""} // Preenche com o valor do filtro ou vazio
-                className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  filters.maxPrice ? "bg-blue-100 border-blue-500" : ""
+                className={`w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  filters.maxPrice ? "border-blue-500 bg-blue-100" : ""
                 }`} // Destaque se filtro estiver ativo
                 onChange={(e) => handlePriceChange(e, "maxPrice")} // Atualiza o estado ao mudar o valor
               />
@@ -246,24 +259,30 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
           items={[
             <button
               onClick={() => handleFilterClick({ behavior: "peaceful" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.behavior === "peaceful" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.behavior === "peaceful"
+                  ? "border-blue-500 bg-blue-100"
+                  : ""
               }`} // Destaque se filtro estiver ativo
             >
               🕊️ Pacífico
             </button>,
             <button
               onClick={() => handleFilterClick({ behavior: "aggressive" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.behavior === "aggressive" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.behavior === "aggressive"
+                  ? "border-blue-500 bg-blue-100"
+                  : ""
               }`} // Destaque se filtro estiver ativo
             >
               🦈 Agressivo
             </button>,
             <button
               onClick={() => handleFilterClick({ behavior: "schooling" })}
-              className={`w-full p-2 border rounded-md hover:bg-blue-100 ${
-                filters.behavior === "schooling" ? "bg-blue-100 border-blue-500" : ""
+              className={`w-full rounded-md border p-2 hover:bg-blue-100 ${
+                filters.behavior === "schooling"
+                  ? "border-blue-500 bg-blue-100"
+                  : ""
               }`} // Destaque se filtro estiver ativo
             >
               🐟 Em cardume
@@ -274,7 +293,7 @@ function SideBar({ filters, onFilterChange, onClearFilters }) {
         {/* Botão Limpar Filtros */}
         <button
           onClick={onClearFilters}
-          className="mt-4 bg-red-500 text-white rounded px-4 py-2"
+          className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
         >
           Limpar Filtros
         </button>
@@ -287,7 +306,11 @@ function Category({ title, items }) {
   return (
     <li className="rounded-lg bg-stone-100 p-4">
       <h3 className="mb-3 text-base font-semibold">{title}</h3>
-      <ul className="space-y-2">{items.map((item, index) => <li key={index}>{item}</li>)}</ul>
+      <ul className="space-y-2">
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </li>
   );
 }
