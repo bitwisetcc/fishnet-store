@@ -36,6 +36,10 @@ export default function Page() {
           title="Sugerido com base na suas buscas ✨"
         />
       </article>
+      
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2024/10/03/00/20241003004821-6U8LGXLF.js"></script>
+    
     </>
   );
 }

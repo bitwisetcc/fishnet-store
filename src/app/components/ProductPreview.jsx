@@ -10,6 +10,12 @@ export default function ProductPreview({ product }) {
     setFavorited(!favorited);
   };
 
+  // Verifica se o produto tem desconto
+  const hasDiscount = product.discount > 0;
+
+  // Calcula o preço com desconto
+  const discountedPrice = hasDiscount ? product.price * (1 - product.discount / 100) : null;
+
   return (
     <div className="group block rounded-lg shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg border relative group-hover:scale-105">
       <a
@@ -17,7 +23,7 @@ export default function ProductPreview({ product }) {
         className="block relative overflow-hidden rounded-t-lg"
       >
         <Image
-          src={product.pictures[0]}
+          src={product.pictures?.[0] || "/static/placeholder.png"}
           height={100}
           width={200}
           style={{ width: "100%", height: "160px" }}
@@ -57,7 +63,14 @@ export default function ProductPreview({ product }) {
         <p className="truncate text-sm md:text-lg font-semibold text-gray-800">{product.name}</p>
         <p className="mt-4 text-sm text-gray-500">Preço:</p>
         <div className="flex items-center justify-between">
-          <p className="text-md md:text-lg font-bold text-gray-600">{price(product.price)}</p>
+          {hasDiscount ? (
+            <div className="flex flex-col items-start">
+              <p className="text-md font-bold text-gray-600 line-through">{price(product.price)}</p>
+              <p className="text-lg font-bold text-green-500">{price(discountedPrice)}</p>
+            </div>
+          ) : (
+            <p className="text-lg font-bold text-gray-600">{price(product.price)}</p>
+          )}
         </div>
       </a>
     </div>
