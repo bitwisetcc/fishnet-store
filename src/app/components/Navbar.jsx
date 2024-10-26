@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { MagnifyingGlassIcon, ChatBubbleLeftRightIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { listProductNames } from '../lib/query';
-import debounce from 'lodash.debounce';
 
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,19 +17,38 @@ export default function Nav() {
   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
 
-  const fetchProducts = useCallback(debounce(async (query) => {
+  const fetchProducts = async (query) => {
     if (query) {
       const products = await listProductNames(query, 1, 10);
       setResults(products);
     } else {
       setResults([]);
     }
-  }, 500), []);
+  };
 
   useEffect(() => {
-    fetchProducts(searchTerm);
-  }, [searchTerm, fetchProducts]);
+    if (searchTerm) {
+      setIsDropdownVisible(true);
+      fetchProducts(searchTerm);
+    } else {
+      setIsDropdownVisible(false);
+      setResults([]);
+    }
+  }, [searchTerm]);
 
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleInputFocus = () => {
+    setIsDropdownVisible(searchTerm.length > 0 && results.length > 0);
+  };
+
+  const toggleMobileSearch = () => {
+    setIsMobileSearchVisible(!isMobileSearchVisible);
+  };
+
+  // Fecha o dropdown ao clicar fora
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -46,25 +64,6 @@ export default function Nav() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-    if (e.target.value) {
-      setIsDropdownVisible(true);
-    } else {
-      setIsDropdownVisible(false);
-    }
-  };
-
-  const handleInputFocus = () => {
-    if (searchTerm) {
-      setIsDropdownVisible(true);
-    }
-  };
-
-  const toggleMobileSearch = () => {
-    setIsMobileSearchVisible(!isMobileSearchVisible);
-  };
 
   return (
     <div className="group sticky inset-x-0 top-0 z-50 text-slate-200">
@@ -102,7 +101,7 @@ export default function Nav() {
 
             {isDropdownVisible && results.length > 0 && (
               <div
-                className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
                 ref={resultsRef}
               >
                 <ul className="divide-y divide-gray-300">
@@ -145,7 +144,7 @@ export default function Nav() {
 
         {/* Campo de busca móvel */}
         {isMobileSearchVisible && (
-          <div className="flex sm:hidden items-center p-4">
+          <div className="flex sm:hidden items-center pt-4 relative" ref={searchRef}>
             <input
               type="text"
               name="mobile-search"
@@ -155,6 +154,27 @@ export default function Nav() {
               onFocus={handleInputFocus}
               className="flex-1 border border-stone-600 px-3 py-2 rounded-full focus:outline-none text-black"
             />
+            <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-[15%] transform text-black" />
+
+            {isDropdownVisible && results.length > 0 && (
+              <div
+                className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                ref={resultsRef}
+              >
+                <ul className="divide-y divide-gray-300">
+                  {results.map((result, index) => (
+                    <a key={index} className="text-black" href={`/products/${result.id}`}>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer flex items-center gap-2"
+                      >
+                        <MagnifyingGlassIcon className="h-4 text-black" />
+                        {result.name}
+                      </li>
+                    </a>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </header>
