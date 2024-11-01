@@ -1,27 +1,37 @@
 "use client";
 
-import { listAllProducts } from "@/app/lib/query";
+import { getProductById, listAllProducts } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 import CartSummary from "@/app/components/CartSummary";
 import FancyInput from "@/app/components/FancyInput";
 import PrivacyPolicy from "@/app/components/PrivacyPolicy";
+import { listCartItems } from "@/app/lib/cart";
 
 export default () => {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    listAllProducts()
-      .then((data) =>
-        data.filter(
-          (prod) =>
-            prod.id == "665df63d63d2f7c6c73305f9" ||
-            prod.id == "665df63d63d2f7c6c7330629" ||
-            prod.id == "665df63d63d2f7c6c7330619",
-        ),
-      )
-      .then((res) => {
-        setCart(res);
-      });
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const fetchCartItems = async () => {
+      try {
+        const cartItems = await listCartItems(signal); // Fetch cart items
+        const fullCartItems = await Promise.all(
+          cartItems.map(async (item) => {
+            const product = await getProductById(item.id);
+            return { ...product, ...item };
+          }),
+        );
+        setCart(fullCartItems || []); // Ensure fullCartItems is an array
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchCartItems();
+
+    return () => abortController.abort();
   }, []);
 
   const calculateTotal = () => {
@@ -34,7 +44,7 @@ export default () => {
     <section className="gap-16 p-8 pr-12 md:flex">
       <Checkout />
       <section className="hidden flex-1 md:block">
-        <CartSummary total={calculateTotal()} />
+        <CartSummary subtotal={calculateTotal()} />
       </section>
     </section>
   );
