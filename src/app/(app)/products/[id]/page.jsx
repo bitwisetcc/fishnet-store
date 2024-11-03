@@ -12,7 +12,7 @@ import Counter from "@/app/components/Counter";
 import Options from "@/app/components/Options";
 import ProductRail from "@/app/components/ProductRail";
 
-export default () => {
+export default function ProductPage() {
   const { id } = useParams();
   const [prod, setProd] = useState(undefined);
   const [loading, setLoading] = useState(true);
@@ -20,9 +20,9 @@ export default () => {
 
   useEffect(() => {
     getProductById(id)
-    .then((p) => {
-      setProd(p);
-    })
+      .then((p) => {
+        setProd(p);
+      })
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -54,7 +54,7 @@ export default () => {
       <RelatedProducts prod={prod} />
     </div>
   );
-};
+}
 
 function ProductOverview({ prod, openImg }) {
   let sizeState = useState(prod.sizes[0]);
@@ -92,9 +92,7 @@ function ProductOverview({ prod, openImg }) {
         <hr className="my-5" />
 
         <div className="mb-5 flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {price(prod.price)}
-          </h2>
+          <h2 className="text-2xl font-semibold">{price(prod.price)}</h2>
 
           <div className="flex items-center justify-between gap-2">
             <Counter state={quantityState} max={prod.quantity} />
