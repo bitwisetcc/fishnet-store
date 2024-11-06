@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { listProductNames } from '../lib/query';
+import debounce from 'lodash.debounce';
 
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,38 +18,28 @@ export default function Nav() {
   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
 
-  const fetchProducts = async (query) => {
+  // Função para busca de produtos
+  const fetchProducts = useCallback(debounce(async (query) => {
     if (query) {
-      const products = await listProductNames(query, 1, 10);
-      setResults(products);
+      try {
+        const products = await listProductNames(query, 1, 10);
+        setResults(products);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+      }
     } else {
       setResults([]);
     }
-  };
+  }, 500), []);
 
   useEffect(() => {
     if (searchTerm) {
-      setIsDropdownVisible(true);
       fetchProducts(searchTerm);
     } else {
-      setIsDropdownVisible(false);
       setResults([]);
     }
-  }, [searchTerm]);
+  }, [searchTerm, fetchProducts]);
 
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleInputFocus = () => {
-    setIsDropdownVisible(searchTerm.length > 0 && results.length > 0);
-  };
-
-  const toggleMobileSearch = () => {
-    setIsMobileSearchVisible(!isMobileSearchVisible);
-  };
-
-  // Fecha o dropdown ao clicar fora
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -64,6 +55,22 @@ export default function Nav() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setIsDropdownVisible(!!value);
+  };
+
+  const handleInputFocus = () => {
+    if (searchTerm) {
+      setIsDropdownVisible(true);
+    }
+  };
+
+  const toggleMobileSearch = () => {
+    setIsMobileSearchVisible(!isMobileSearchVisible);
+  };
 
   return (
     <div className="group sticky inset-x-0 top-0 z-50 text-slate-200">
@@ -86,7 +93,7 @@ export default function Nav() {
             </a>
           </div>
 
-          {/* Campo de busca visível apenas em telas grandes */}
+          {/* Campo de busca: visível em telas grandes, escondido em telas pequenas */}
           <div className="hidden sm:flex items-center ml-5 relative" ref={searchRef}>
             <input
               type="text"
@@ -101,7 +108,7 @@ export default function Nav() {
 
             {isDropdownVisible && results.length > 0 && (
               <div
-                className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
                 ref={resultsRef}
               >
                 <ul className="divide-y divide-gray-300">
@@ -120,7 +127,7 @@ export default function Nav() {
             )}
           </div>
 
-          {/* Ícones compactos para telas pequenas */}
+          {/* Ícones compactos e busca para telas pequenas */}
           <div className="flex h-full items-center gap-x-4 sm:gap-x-6">
             <button className="block sm:hidden" onClick={toggleMobileSearch}>
               <MagnifyingGlassIcon className="h-6 w-6 text-golden-fish hover:text-yellow-400 transition" />
@@ -142,9 +149,9 @@ export default function Nav() {
           </div>
         </nav>
 
-        {/* Campo de busca móvel */}
+        {/* Campo de busca para telas pequenas */}
         {isMobileSearchVisible && (
-          <div className="flex sm:hidden items-center pt-4 relative" ref={searchRef}>
+          <div className="flex sm:hidden items-center p-4">
             <input
               type="text"
               name="mobile-search"
@@ -154,11 +161,9 @@ export default function Nav() {
               onFocus={handleInputFocus}
               className="flex-1 border border-stone-600 px-3 py-2 rounded-full focus:outline-none text-black"
             />
-            <MagnifyingGlassIcon className="absolute right-3 top-1/2 h-5 -translate-y-[15%] transform text-black" />
-
             {isDropdownVisible && results.length > 0 && (
               <div
-                className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                className="absolute left-0 right-0 top-full mt-20 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
                 ref={resultsRef}
               >
                 <ul className="divide-y divide-gray-300">
