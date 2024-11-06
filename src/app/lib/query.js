@@ -7,10 +7,9 @@ function parseProduct(prod) {
     id: prod._id,
     image: prod.image || "/static/placeholder.png", 
     quantity: 5,
-    feeding: String(prod.feeding || "Alimentação não informada"),
-    tankSize: String(prod.tank_size || "Tamanho do tanque não informado"),
-    sizes: (prod.size ? String(prod.size).match(/\d+\s*cm/g) : null) || ["Tamanho não informado"],
-    price: prod.price ? Number(String(prod.price).replace("$", "").trim()) : 0,
+    feeding: String(prod.feeding),
+    tankSize: String(prod.tank_size),
+    sizes: prod.size.match(/(\d*\scm)+/g) || ["Tamanho não informado"],
   };
 }
 

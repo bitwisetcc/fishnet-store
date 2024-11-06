@@ -2,7 +2,7 @@ import { price } from "@/app/lib/format";
 
 export default function CartSummary({ subtotal, follow }) {
   const shipping = subtotal > 0 ? 29.99 : 0; // Frete só é cobrado se o subtotal for maior que 0
-  const tax = subtotal * 0.1; // 10% de impostos sobre o subtotal
+  const tax = subtotal * 0.05; // 10% de impostos sobre o subtotal
   const total = subtotal + shipping + tax;
 
   return (

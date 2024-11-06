@@ -2,7 +2,7 @@
 
 import CartItems from "@/app/components/CartItems";
 import CartSummary from "@/app/components/CartSummary";
-import { addCartItem, listCartItems, removeFromCart } from "@/app/lib/cart";
+import { listCartItems, removeFromCart } from "@/app/lib/cart";
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 
@@ -30,35 +30,8 @@ export default function CartPage() {
 
     fetchCartItems();
 
-    return () => {
-      abortController.abort(); // Cancels the request when the component is unmounted
-    };
+    return () => abortController.abort();
   }, []);
-
-  const handleAddToCart = (productId, size, quantity) => {
-    getProductById(productId).then((prod) => {
-      const productToAdd = {
-        id: productId,
-        name: prod.name,
-        quantity: quantity,
-        price: prod.price,
-        img: prod.pictures[0],
-      };
-      setProds((prevProds) => {
-        const existingItem = prevProds.find((item) => item.id === productId);
-        if (existingItem) {
-          return prevProds.map((item) =>
-            item.id === productId
-              ? { ...item, quantity: item.quantity + quantity }
-              : item,
-          );
-        } else {
-          return [...prevProds, productToAdd];
-        }
-      });
-      addCartItem(productId, size, quantity);
-    });
-  };
 
   const handleRemoveFromCart = (productId) => {
     setProds((prevProds) => {
@@ -66,10 +39,9 @@ export default function CartPage() {
         .map((item) => {
           if (item.id === productId) {
             if (item.quantity > 1) {
-              return { ...item, quantity: item.quantity - 1 };
-            } else {
-              return null; // Flag for removal
-            }
+              item.quantity--;
+              return item;
+            } else return null; // Flag for removal
           }
           return item;
         })
@@ -105,10 +77,4 @@ export default function CartPage() {
       <CartSummary subtotal={calculateTotal()} follow />
     </section>
   );
-}
-
-// Assuming price function is defined elsewhere
-function price(amount) {
-  // Implement your price formatting logic here
-  return `$${amount.toFixed(2)}`;
 }
