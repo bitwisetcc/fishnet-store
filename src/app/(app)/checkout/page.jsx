@@ -1,13 +1,13 @@
 "use client";
 
-import { getProductById, listAllProducts } from "@/app/lib/query";
+import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 import CartSummary from "@/app/components/CartSummary";
 import FancyInput from "@/app/components/FancyInput";
 import PrivacyPolicy from "@/app/components/PrivacyPolicy";
 import { listCartItems } from "@/app/lib/cart";
 
-export default () => {
+export default function ChecloutPage() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -48,28 +48,36 @@ export default () => {
       </section>
     </section>
   );
-};
+}
 
 function Checkout() {
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("pix"); // credit-***, debit-***, pix
+
   return (
     <section className="flex-[2] pr-4 lg:px-24">
       <h1 className="mb-8 text-2xl font-semibold">Finalização</h1>
-      <article>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(Object.fromEntries(new FormData(e.target)));
+        }}
+      >
         <h2 className="mb-4 text-xl">Endereço de entrega</h2>
-        <form className="grid gap-4 md:grid-cols-2">
-          <FancyInput label="Nome" required />
-          <FancyInput label="Sobrenome" required />
-          <FancyInput label="Endereço" required />
-          <FancyInput label="CEP" required />
-          <FancyInput label="Cidade" />
-          <FancyInput label="Estado" />
-          <FancyInput label="E-mail" required />
-          <FancyInput label="Telefone" />
-        </form>
-      </article>
-      <hr className="my-6" />
-      <form>
+        <section className="grid gap-4 md:grid-cols-2">
+          <FancyInput name="username" label="Nome" required />
+          <FancyInput name="surname" label="Sobrenome" required />
+          <FancyInput name="addr" label="Endereço" required />
+          <FancyInput name="cep" label="CEP" required />
+          <FancyInput name="city" label="Cidade" />
+          <FancyInput name="state" label="Estado" />
+          <FancyInput name="email" label="E-mail" htmlAccept="email" required />
+          <FancyInput name="tel" label="Telefone" />
+        </section>
+
+        <hr className="my-6" />
+
         <h2 className="mb-4 text-xl">Entrega</h2>
         <ul className="radio-list">
           <FancyRadio
@@ -93,21 +101,52 @@ function Checkout() {
             value="loggi"
           />
         </ul>
-      </form>
-      <hr className="my-6" />
-      <form action="/">
+
+        <hr className="my-6" />
+
         <h2 className="mb-4 text-xl">Pagamento</h2>
         <ul className="radio-list">
-          <FancyRadio label="Cartão de débito" name="payment" value="debito" />
+          <FancyRadio
+            label="Cartão de débito"
+            name="payment_method"
+            value="debit"
+            checked={paymentMethod == "debit"}
+            onChecked={() => setPaymentMethod("debit")}
+          />
           <FancyRadio
             label="Cartão de crédito"
-            name="payment"
-            value="credito"
+            name="payment_method"
+            value="credit"
+            checked={paymentMethod == "credit"}
+            onChecked={() => setPaymentMethod("credit")}
           />
-          <FancyRadio label="PIX" name="payment" value="pix" />
+          <FancyRadio
+            label="PIX"
+            name="payment_method"
+            value="pix"
+            checked={paymentMethod == "pix"}
+            onChecked={() => setPaymentMethod("pix")}
+          />
         </ul>
 
-        <button className="action">Finalizar compra</button>
+        {paymentMethod !== "pix" && (
+          <>
+            <h3 className="mt-5 text-lg">Operadora de cartão</h3>
+            <div className="mt-4 w-full rounded-lg border border-stone-300 bg-transparent py-4 pl-10 pr-10 shadow-sm">
+              <select
+                name="payment_provider"
+                id="sl-payment_provider"
+                className="w-full bg-transparent *:font-sans"
+              >
+                <option value="visa">Visa</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="americanexpress">American Express</option>
+              </select>
+            </div>
+          </>
+        )}
+
+        <button className="action mt-4">Finalizar compra</button>
 
         <p className="mt-3 text-xs md:text-sm">
           Ao finalizar a compra você concorda com a nossa{" "}
@@ -125,10 +164,17 @@ function Checkout() {
   );
 }
 
-function FancyRadio({ label, name, value }) {
+function FancyRadio({ label, name, value, checked = null, onChecked = null }) {
   return (
     <li className="has-[:checked]:border-cyan-600 has-[:checked]:bg-sky-100">
-      <input type="radio" name={name} value={value} required />
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChecked}
+        required
+      />
       <label>{label}</label>
     </li>
   );

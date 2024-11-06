@@ -34,23 +34,15 @@ export default function CartPage() {
   }, []);
 
   const handleRemoveFromCart = (productId) => {
-    setProds((prevProds) => {
-      const updatedProds = prevProds
-        .map((item) => {
-          if (item.id === productId) {
-            if (item.quantity > 1) {
-              item.quantity--;
-              return item;
-            } else return null; // Flag for removal
-          }
-          return item;
-        })
-        .filter(Boolean); // Remove flagged items
-      if (!updatedProds.find((item) => item.id === productId)) {
-        removeFromCart(productId);
-      }
-      return updatedProds;
-    });
+    setProds((prev) =>
+      prev.filter((item) => {
+        if (item.id === productId) {
+          removeFromCart(productId);
+          return false;
+        }
+        return true;
+      }),
+    );
   };
 
   const handleConfirmRemove = (productId) => {
