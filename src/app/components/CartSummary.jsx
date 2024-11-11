@@ -1,14 +1,12 @@
 import { price } from "@/app/lib/format";
 
-export default function CartSummary({ subtotal, follow }) {
-  const shipping = subtotal > 0 ? 29.99 : 0; // Frete só é cobrado se o subtotal for maior que 0
-  const tax = subtotal * 0.05; // 10% de impostos sobre o subtotal
+export default function CartSummary({ subtotal, tax, shipping, follow }) {
   const total = subtotal + shipping + tax;
 
   return (
-    <article className="flex-1 mt-10">
-      <h2 className="text-2xl pb-5">Resumo</h2>
-      <ul className="border-y border-y-stone-300 py-8 flex flex-col gap-6">
+    <article className="mt-10 flex-1">
+      <h2 className="pb-5 text-2xl">Resumo</h2>
+      <ul className="flex flex-col gap-6 border-y border-y-stone-300 py-8">
         <li className="flex justify-between text-sm">
           <span>Subtotal:</span>
           <span>{price(subtotal)}</span>
@@ -22,7 +20,7 @@ export default function CartSummary({ subtotal, follow }) {
           <span>{price(tax)}</span>
         </li>
       </ul>
-      <div className="border-b border-b-stone-300 py-8 flex gap-6 justify-between">
+      <div className="flex justify-between gap-6 border-b border-b-stone-300 py-8">
         <span>Total:</span>
         <span>{price(total)}</span>
       </div>

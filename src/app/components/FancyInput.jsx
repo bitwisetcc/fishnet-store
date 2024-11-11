@@ -17,9 +17,9 @@ export function StatefullFancyInput({
   label,
   required,
   name,
-  clingy,
   htmlAccept = "text",
   setter = null,
+  bye = null,
   state = "",
 }) {
   return (
@@ -30,7 +30,7 @@ export function StatefullFancyInput({
         type={htmlAccept}
         required={required}
         placeholder=" "
-        onBlur={(e) => clingy && setter(e.target.value)}
+        onBlur={(e) => bye && bye(e.target.value)}
         onChange={(e) => setter(e.target.value)}
         value={state}
       />
