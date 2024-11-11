@@ -1,11 +1,12 @@
 "use client";
 
-import { API_URL, getProductById } from "@/app/lib/query";
-import { useEffect, useState } from "react";
 import CartSummary from "@/app/components/CartSummary";
 import FancyInput, { StatefullFancyInput } from "@/app/components/FancyInput";
 import PrivacyPolicy from "@/app/components/PrivacyPolicy";
-import { listCartItems } from "@/app/lib/cart";
+import { clearCart, listCartItems } from "@/app/lib/cart";
+import { API_URL, getProductById } from "@/app/lib/query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ChecloutPage() {
   const [cart, setCart] = useState([]);
@@ -62,6 +63,8 @@ function Checkout({ tax, shipping }) {
   const [estado, setState] = useState("");
   const [city, setCity] = useState("");
 
+  const router = useRouter();
+
   async function submit(e) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
@@ -109,7 +112,11 @@ function Checkout({ tax, shipping }) {
           "Content-Type": "application/json",
         },
       });
+
       const inserted = await res.json();
+      clearCart();
+      router.push("/");
+
       console.log(inserted);
     } catch (err) {
       console.error(err);

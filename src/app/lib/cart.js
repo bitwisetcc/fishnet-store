@@ -38,3 +38,7 @@ export function addCartItem(id, size, quantity) {
   }
   localStorage.setItem("cart", JSON.stringify(cart));
 }
+
+export function clearCart() {
+  localStorage.removeItem("cart");
+}
