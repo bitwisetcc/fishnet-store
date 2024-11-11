@@ -3,7 +3,7 @@
 import { getProductById } from "@/app/lib/query";
 import { useEffect, useState } from "react";
 import CartSummary from "@/app/components/CartSummary";
-import FancyInput from "@/app/components/FancyInput";
+import FancyInput, { StatefullFancyInput } from "@/app/components/FancyInput";
 import PrivacyPolicy from "@/app/components/PrivacyPolicy";
 import { listCartItems } from "@/app/lib/cart";
 
@@ -53,25 +53,70 @@ export default function ChecloutPage() {
 function Checkout() {
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("pix"); // credit-***, debit-***, pix
+  const [cep, setCep] = useState("");
+  const [street, setStreet] = useState("");
+  const [estado, setState] = useState("");
+  const [city, setCity] = useState("");
+
+  async function submit(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    console.log(data);
+  }
+
+  async function getAddrFromCep(cep) {
+    setCep(cep);
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json`, {
+        headers: { "Access-Control-Allow-Origin": "https://viacep.com.br" },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setStreet(data.logradouro);
+      setCity(data.localidade);
+      setState(data.uf);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <section className="flex-[2] pr-4 lg:px-24">
       <h1 className="mb-8 text-2xl font-semibold">Finalização</h1>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(Object.fromEntries(new FormData(e.target)));
-        }}
-      >
+      <form onSubmit={submit}>
         <h2 className="mb-4 text-xl">Endereço de entrega</h2>
         <section className="grid gap-4 md:grid-cols-2">
           <FancyInput name="username" label="Nome" required />
           <FancyInput name="surname" label="Sobrenome" required />
-          <FancyInput name="addr" label="Endereço" required />
-          <FancyInput name="cep" label="CEP" required />
-          <FancyInput name="city" label="Cidade" />
-          <FancyInput name="state" label="Estado" />
+          <StatefullFancyInput
+            name="cep"
+            label="CEP"
+            required
+            clingy
+            setter={getAddrFromCep}
+            state={cep}
+          />
+          <StatefullFancyInput
+            name="addr"
+            label="Endereço"
+            required
+            setter={setStreet}
+            state={street}
+          />
+          <StatefullFancyInput
+            name="city"
+            label="Cidade"
+            setter={setCity}
+            state={city}
+          />
+          <StatefullFancyInput
+            name="state"
+            label="Estado"
+            setter={setState}
+            state={estado}
+          />
           <FancyInput name="email" label="E-mail" htmlAccept="email" required />
           <FancyInput name="tel" label="Telefone" />
         </section>
