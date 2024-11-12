@@ -1,11 +1,12 @@
 "use client";
 
-import { getProductById } from "@/app/lib/query";
-import { useEffect, useState } from "react";
 import CartSummary from "@/app/components/CartSummary";
-import FancyInput from "@/app/components/FancyInput";
+import FancyInput, { StatefullFancyInput } from "@/app/components/FancyInput";
 import PrivacyPolicy from "@/app/components/PrivacyPolicy";
-import { listCartItems } from "@/app/lib/cart";
+import { clearCart, listCartItems } from "@/app/lib/cart";
+import { API_URL, getProductById } from "@/app/lib/query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ChecloutPage() {
   const [cart, setCart] = useState([]);
@@ -40,38 +41,140 @@ export default function ChecloutPage() {
       : 0;
   };
 
+  const subtotal = calculateTotal();
+  const tax = subtotal * 0.05;
+  const shipping = subtotal > 0 ? 29.99 : 0;
+
   return (
     <section className="gap-16 p-8 pr-12 md:flex">
-      <Checkout />
+      <Checkout tax={tax} shipping={shipping} />
       <section className="hidden flex-1 md:block">
-        <CartSummary subtotal={calculateTotal()} />
+        <CartSummary subtotal={subtotal} tax={tax} shipping={shipping} />
       </section>
     </section>
   );
 }
 
-function Checkout() {
+function Checkout({ tax, shipping }) {
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("pix"); // credit-***, debit-***, pix
+  const [cep, setCep] = useState("");
+  const [street, setStreet] = useState("");
+  const [estado, setState] = useState("");
+  const [city, setCity] = useState("");
+
+  const router = useRouter();
+
+  async function submit(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    console.log(data);
+    data.customer = {
+      name: data.username,
+      surname: data.surname,
+      email: data.email,
+      tel: data.tel,
+      cep: data.cep,
+      addr: data.addr,
+      city: data.city,
+      state: data.state,
+    };
+
+    delete data.username;
+    delete data.surname;
+    delete data.email;
+    delete data.tel;
+    delete data.cep;
+    delete data.addr;
+    delete data.city;
+    delete data.state;
+
+    data.items = listCartItems().map((item) => {
+      item.qty = item.quantity;
+      delete item.quantity;
+      return item;
+    });
+
+    data.tax = tax;
+    data.shipping = shipping;
+
+    if (data.shipping_provider == undefined) {
+      data.shipping_provider = "";
+    }
+
+    data.status = data.payment_method == "credit" ? 0 : 1;
+
+    try {
+      const res = await fetch(`${API_URL}/sales/new`, {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const inserted = await res.json();
+      clearCart();
+      router.push("/");
+
+      console.log(inserted);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function getAddrFromCep(cep) {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json`, {
+        headers: { "Access-Control-Allow-Origin": "https://viacep.com.br" },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setStreet(data.logradouro);
+      setCity(data.localidade);
+      setState(data.uf);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <section className="flex-[2] pr-4 lg:px-24">
       <h1 className="mb-8 text-2xl font-semibold">Finalização</h1>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(Object.fromEntries(new FormData(e.target)));
-        }}
-      >
+      <form onSubmit={submit}>
         <h2 className="mb-4 text-xl">Endereço de entrega</h2>
         <section className="grid gap-4 md:grid-cols-2">
           <FancyInput name="username" label="Nome" required />
           <FancyInput name="surname" label="Sobrenome" required />
-          <FancyInput name="addr" label="Endereço" required />
-          <FancyInput name="cep" label="CEP" required />
-          <FancyInput name="city" label="Cidade" />
-          <FancyInput name="state" label="Estado" />
+          <StatefullFancyInput
+            name="cep"
+            label="CEP"
+            required
+            bye={getAddrFromCep}
+            setter={setCep}
+            state={cep}
+          />
+          <StatefullFancyInput
+            name="addr"
+            label="Endereço"
+            required
+            setter={setStreet}
+            state={street}
+          />
+          <StatefullFancyInput
+            name="city"
+            label="Cidade"
+            setter={setCity}
+            state={city}
+          />
+          <StatefullFancyInput
+            name="state"
+            label="Estado"
+            setter={setState}
+            state={estado}
+          />
           <FancyInput name="email" label="E-mail" htmlAccept="email" required />
           <FancyInput name="tel" label="Telefone" />
         </section>
@@ -82,22 +185,22 @@ function Checkout() {
         <ul className="radio-list">
           <FancyRadio
             label="Correios (5-7 dias úteis)"
-            name="shipping"
+            name="shipping_provider"
             value="correios"
           />
           <FancyRadio
             label="Fedex (2-3 dias úteis)"
-            name="shipping"
+            name="shipping_provider"
             value="fedex"
           />
           <FancyRadio
             label="Jadlog (2-3 dias úteis)"
-            name="shipping"
+            name="shipping_provider"
             value="jadlog"
           />
           <FancyRadio
             label="Loggi (2-3 dias úteis)"
-            name="shipping"
+            name="shipping_provider"
             value="loggi"
           />
         </ul>
