@@ -1,6 +1,5 @@
 "use client";
 
-import { price } from "@/app/lib/format";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ProductPreview from "@/app/components/ProductPreview";
