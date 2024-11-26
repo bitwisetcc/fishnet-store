@@ -57,8 +57,6 @@ export default function ProductPage() {
 }
 
 function ProductOverview({ prod, openImg }) {
-  let sizeState = useState(prod.sizes[0]);
-  let [size] = sizeState;
   let quantityState = useState(1);
   let [quantity] = quantityState;
 
@@ -68,7 +66,7 @@ function ProductOverview({ prod, openImg }) {
 
   function addToCart() {
     ensureCart();
-    addCartItem(prod.id, size, quantity);
+    addCartItem(prod.id, quantity);
     setDone(true);
     console.log(addCartItem);
   }
@@ -108,11 +106,6 @@ function ProductOverview({ prod, openImg }) {
                 className={`ml-3 inline size-6 transition-opacity duration-500 ${done ? "opacity-80" : "opacity-0"}`}
               />
             </a>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <h3 className="text-lg">Tamanho:</h3>
-            <Options options={prod.sizes} state={sizeState} />
           </div>
         </div>
 

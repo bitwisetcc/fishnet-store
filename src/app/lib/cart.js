@@ -27,14 +27,14 @@ export function removeFromCart(id) {
   return newCart;
 }
 
-export function addCartItem(id, size, quantity) {
+export function addCartItem(id, quantity) {
   ensureCart();
   const cart = listCartItems();
   const existingItem = cart.find((item) => item.id === id);
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ id, size, quantity });
+    cart.push({ id, quantity });
   }
   localStorage.setItem("cart", JSON.stringify(cart));
 }
