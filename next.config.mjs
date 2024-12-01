@@ -9,7 +9,8 @@ const nextConfig = {
       "cdn.shopify.com",
       "github.com",
       "github.githubassets.com",
-      "f.i.bol.com.br"
+      "f.i.bol.com.br",
+      "images-americanas.b2w.io"
     ],
   },
 };

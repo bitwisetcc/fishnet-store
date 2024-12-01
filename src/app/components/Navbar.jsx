@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { listProductNames } from '../lib/query';
 import debounce from 'lodash.debounce';
+import { Squares2X2Icon } from '@heroicons/react/24/outline';
 
 export default function Nav() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -66,6 +67,10 @@ export default function Nav() {
     if (searchTerm) {
       setIsDropdownVisible(true);
     }
+  };
+
+  const handleNavigateToProducts = () => {
+    navigate('/products');
   };
 
   const toggleMobileSearch = () => {
@@ -133,6 +138,11 @@ export default function Nav() {
               <MagnifyingGlassIcon className="h-6 w-6 text-golden-fish hover:text-yellow-400 transition" />
             </button>
 
+            <a href="/products" className="flex items-center gap-2 text-golden-fish hover:text-yellow-400" title="Catálogo">
+              <Squares2X2Icon className="h-6 w-6 transition" /> Catálogo
+            </a>
+
+            
             <a href="/cart" className="flex items-center">
               <ShoppingCartIcon className="h-6 w-6 text-golden-fish hover:text-yellow-400 transition" />
             </a>

@@ -1,45 +1,43 @@
 "use client";
 
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  FunnelIcon,
+} from "@heroicons/react/24/outline";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ProductPreview from "@/app/components/ProductPreview";
-import { listAllProducts, getProductByFilter } from "@/app/lib/query";
-import { FunnelIcon } from "@heroicons/react/24/outline";
+import {getProductByFilter } from "@/app/lib/query";
 
 export default function ProductPage() {
   const [prods, setProds] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({});
   const [noResults, setNoResults] = useState(false);
   const params = useParams();
-  const PRODUCTS_PER_PAGE = 20;
 
   const loadProducts = useCallback(
-    async (page, limit) => {
+    async (page) => {
       setLoading(true);
-      let data;
-      if (Object.keys(filters).length > 0) {
-        data = await getProductByFilter(filters);
-      } else {
-        data = await listAllProducts(page, limit);
-      }
-
-      if (data.length === 0) {
-        setNoResults(true);
-      } else {
-        setNoResults(false);
-      }
-
-      setProds(data);
+      const { products, pageCount}  = await getProductByFilter({ ...filters, page });
+      setProds(products);
+      setTotalPages(pageCount);
+      setNoResults(products.length === 0);
       setLoading(false);
     },
-    [filters],
+    [filters]
   );
 
   useEffect(() => {
-    loadProducts(page, PRODUCTS_PER_PAGE);
-  }, [loadProducts, page]);
+    loadProducts(page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Para uma rolagem suave
+    });
+  }, [page, filters, loadProducts]);  
 
   useEffect(() => {
     // Sort products based on params
@@ -52,24 +50,31 @@ export default function ProductPage() {
     }
   }, [params.sort, prods]);
 
-  const loadMore = () => setPage((prevPage) => prevPage + 1);
-
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      handleFilterChange({ page: page - 1 });
+    }
+  };
+  
+  const handleNextPage = () => {
+    handleFilterChange({ page: page + 1 });
+  };
+  
   const handleFilterChange = (newFilter) => {
-    setPage(1);
+    const updatedPage = newFilter.page || 1; // Verifica se o filtro contém a página
+    setPage(updatedPage);
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilter }));
   };
 
   const clearFilters = async () => {
-    setFilters({}); // Limpar todos os filtros
-    setNoResults(false); // Resetar o estado de produtos não encontrados
-    await loadProducts(1, PRODUCTS_PER_PAGE); // Recarregar produtos sem filtros
-    setProds([]); // Limpar produtos exibidos
-    setPage(1); // Resetar a página para 1
-
-    // Resetar valores de ordenação e campos de preço
-    document.getElementById("order-select").value = ""; // Resetar ordenação para "Selecione"
-    document.getElementById("min-price").value = ""; // Limpar campo de preço mínimo
-    document.getElementById("max-price").value = ""; // Limpar campo de preço máximo
+    setFilters({});
+    setNoResults(false);
+    await loadProducts(1); 
+    setProds([]); 
+    setPage(1); 
+    document.getElementById("order-select").value = ""; 
+    document.getElementById("min-price").value = ""; 
+    document.getElementById("max-price").value = ""; 
   };
 
   return (
@@ -107,15 +112,29 @@ export default function ProductPage() {
           </div>
         )}
 
-        {prods.length > 0 && !loading && (
-          <button
-            onClick={loadMore}
-            className="bg-white-500 mt-5 rounded border border-black px-4 py-2 text-black hover:bg-black hover:text-white"
-            disabled={loading}
-          >
-            Ver mais
-          </button>
+        {!loading && (
+          <footer className="flex justify-between my-8 items-center">
+            <button
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#11223a] bg-[#11223a] text-white hover:bg-[#11223a] focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-200 ease-in-out"
+              onClick={handlePreviousPage}
+              disabled={page === 1} // Desabilitar botão anterior na primeira página
+            >
+              <ChevronLeftIcon className="w-5 h-5" />
+              Anterior
+            </button>
+            <span> {page} / {totalPages} </span> {/* Exibir a página atual */}
+            <button
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#11223a] bg-[#11223a] text-white hover:bg-[#11223a] focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-200 ease-in-out"
+              onClick={handleNextPage}
+              disabled={page === totalPages} // Desabilitar botão próxima na última página
+            >
+              Próxima
+              <ChevronRightIcon className="w-5 h-5" />
+            </button>
+          </footer>
         )}
+
+
       </div>
     </div>
   );
