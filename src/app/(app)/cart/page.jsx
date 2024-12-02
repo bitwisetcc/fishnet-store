@@ -59,6 +59,10 @@ export default function CartPage() {
       : 0;
   };
 
+  const subtotal = calculateTotal();
+  const tax = subtotal * 0.05;
+  const shipping = subtotal > 0 ? 29.99 : 0;
+
   return (
     <section className="gap-16 p-5 lg:mr-16 lg:flex">
       <CartItems
@@ -66,7 +70,7 @@ export default function CartPage() {
         onConfirmRemove={handleConfirmRemove}
         onRemove={handleRemoveFromCart}
       />
-      <CartSummary subtotal={calculateTotal()} follow />
+      <CartSummary subtotal={subtotal} tax={tax} shipping={shipping} follow />
     </section>
   );
 }
