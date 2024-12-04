@@ -16,6 +16,8 @@ export async function listAllProducts(page = 1, limit = 10) {
   try {
     const data = await fetch(`${API_URL}/prods`);
     const prods = await data.json();
+    
+    //console.log(prods);
 
     if (!Array.isArray(prods)) {
       return [];
@@ -62,17 +64,30 @@ export async function listProductNames(query = "", page = 1, limit = 10) {
 
 export async function getProductByFilter(filters) {
   try {
-    const query = new URLSearchParams(filters).toString();
+    // Filtra os valores nulos, indefinidos ou vazios
+    const filteredFilters = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([, value]) => value !== null && value !== undefined && value !== ""
+      )
+    );
+
+    const query = new URLSearchParams(filteredFilters).toString();
     const data = await fetch(`${API_URL}/prods/filtros?${query}`);
     const prods = await data.json();
 
-    if (!Array.isArray(prods.match)) {
-      return [];
+    // Verifica se o resultado é válido e se 'match' é um array
+    if (!prods || !Array.isArray(prods.match)) {
+      return { products: [], pageCount: 0 };
     }
 
-    return prods.match.map(parseProduct);
+    // Retorna os produtos mapeados e o pageCount, se disponível
+    return {
+      products: prods.match.map(parseProduct),
+      pageCount: prods.page_count || 1,  // Atribui 1 como valor padrão para pageCount
+    };
   } catch (error) {
     console.error(error.message);
-    return [];
+    return { products: [], pageCount: 0 };
   }
 }
+
